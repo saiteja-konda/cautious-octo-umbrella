@@ -35,11 +35,11 @@ const SignUp = () => {
       <div
         className="container"
         className="container"
-        style={{ width: "500px" }}
+        style={{ width: "300px" }}
         onSubmit={handleSignUp}
       >
         <form className="form-signin">
-          <h5 className="text-center mb-4 form-signin-heading">
+          <h5 className="text-center mb-4 mt-5 form-signin-heading">
             Please Register
           </h5>
           <input

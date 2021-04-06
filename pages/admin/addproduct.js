@@ -177,7 +177,7 @@ function AddProduct() {
                   <label>Price </label>
                   <input
                     className="form-control mr-3 "
-                    style={{ width: "150px" }}
+                    style={{ width: "50%" }}
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
@@ -186,7 +186,7 @@ function AddProduct() {
                   <label> Units In Stock </label>
                   <input
                     className="form-control"
-                    style={{ width: "150px" }}
+                    style={{ width: "50%" }}
                     value={unitsInStock}
                     onChange={(e) => setUnitsInStock(e.target.value)}
                   />
@@ -221,7 +221,7 @@ function AddProduct() {
             </div>
           </div>
 
-          <div className="d-flex">
+          <div className="d-flex mt-2">
             <div>
               <button
                 type="submit"

@@ -25,11 +25,11 @@ const Login = ({ user, setUser }) => {
       <Navbar />
       <div
         className="container"
-        style={{ width: "500px" }}
+        style={{ width: "300px" }}
         onSubmit={handleLogin}
       >
         <form className="form-signin">
-          <h5 className="text-center mb-4 form-signin-heading">Please login</h5>
+          <h5 className="text-center mb-4 mt-5 form-signin-heading">Please login</h5>
           <input
             type="text"
             className="form-control mb-4"

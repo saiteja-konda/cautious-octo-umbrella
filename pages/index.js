@@ -1,9 +1,13 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import { useStoreState } from "easy-peasy";
-
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { useEffect } from "react";
 export default function Home({ user, setUser }) {
   const { products } = useStoreState((state) => state.vox);
+  const { getProducts } = useStoreActions((state) => state.vox);
+  useEffect(() => {
+    getProducts();
+  },[]);
   return (
     <div>
       <Head>
