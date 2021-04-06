@@ -3,6 +3,7 @@ import AdminNavBar from "../../components/AdminNavBar";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { baseUrl } from "../../utils/urlConfig";
 
 function AddProduct() {
   const hiddenFileInput = React.useRef(null);
@@ -74,7 +75,7 @@ function AddProduct() {
     e.preventDefault();
     try {
       axios
-        .post("http://localhost:8080/api/products", {
+        .post(`${baseUrl}/products`, {
           title,
           description,
           category,
