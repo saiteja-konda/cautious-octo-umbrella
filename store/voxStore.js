@@ -1,13 +1,14 @@
 import { action, thunk, computed } from "easy-peasy";
 import axios from "axios";
-import { baseUrl } from "../utils/urlConfig";
+import { baseUrl, authUrl } from "../utils/urlConfig";
 import { store } from "./store";
 import products from "../pages/admin/products";
+
 export const voxStore = {
   products: [],
   product: {},
   cart: [],
-
+  token: {},
   setProducts: action((state, data) => {
     state.products = data;
   }),
@@ -42,7 +43,7 @@ export const voxStore = {
   }),
   updateProduct: thunk(async (actions, payload) => {
     axios
-    // console.log(payload);
+      // console.log(payload);
       .put(`${baseUrl}/products/${payload.id}`, payload)
       .then((res) => actions.performProductUpdate(res.data));
   }),
@@ -57,6 +58,20 @@ export const voxStore = {
     });
   }),
 
+  signup: thunk(async (actions, payload) => {
+    axios
+      .post(`${authUrl}/users/register`, payload)
+      .then((res) => console.log(res.data));
+  }),
+  setToken: action((state, data) => {
+    state.token = data;
+    localStorage.setItem("token", JSON.stringify(data.token));
+  }),
+  login: thunk(async (actions, payload) => {
+    axios.post(`${authUrl}/users/login`, payload).then((res) => {
+      actions.setToken(res.data);
+    });
+  }),
   setToCart: action((state, payload) => {
     if (state.cart.includes(payload)) state.cart.push(payload);
   }),

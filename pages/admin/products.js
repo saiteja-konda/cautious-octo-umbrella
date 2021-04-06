@@ -36,7 +36,7 @@ function products() {
   return (
     <div
       style={{
-        backgroundColor: "#00203FFF",
+        backgroundColor: "#161e2e",
         height: "100vh",
         color: "#fff",
       }}
@@ -90,8 +90,8 @@ function products() {
                     <button
                       className="btn btn-sm m-0 "
                       style={{
-                        backgroundColor: "#ADEFD1FF",
-                        color: "#00203FFF",
+                        backgroundColor: "#ff4154",
+                        color: "#fff",
                         // width: "100%",
                         // padding:"0px"
                       }}
@@ -108,8 +108,8 @@ function products() {
             <button
               className="btn btn-sm  btn-block btn-lg"
               style={{
-                backgroundColor: "#ADEFD1FF",
-                color: "#00203FFF",
+                backgroundColor: "#ff4154",
+                color: "#fff",
               }}
             >
               Add New Category

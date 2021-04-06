@@ -7,6 +7,7 @@ function AdminNavBar() {
 
   const LogoutFun = (e) => {
     e.preventDefault();
+    localStorage.removeItem('admin')
     router.push("/");
   };
   return (

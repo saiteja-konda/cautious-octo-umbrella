@@ -38,3 +38,14 @@ tr:nth-child(even) {
   max-width: 500px;
   width: 100%;
 }
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: block;
+  background-image: url(https://wallpapercave.com/wp/Ex06wbF.jpg);
+  height: 100vh;
+  background-size: cover;
+}
