@@ -9,7 +9,7 @@ function EditModal({ setOpen }) {
   const [description, setDescription] = useState(product.description);
   const [category, setCategory] = useState(product.categoryId);
   const [price, setPrice] = useState(product.price);
-  const [stockInUnits, setStockInUnits] = useState(product.stockInUnits);
+  const [stockInUnits, setstockInUnits] = useState(product.stockInUnits);
   const [image, setImage] = useState(product.image);
 
   return (
@@ -53,7 +53,7 @@ function EditModal({ setOpen }) {
               <input
                 className="form-control"
                 value={stockInUnits}
-                onChange={(e) => setStockInUnits(e.target.value)}
+                onChange={(e) => setstockInUnits(e.target.value)}
               />
             </div>
 
@@ -71,7 +71,7 @@ function EditModal({ setOpen }) {
                   description,
                   category,
                   price,
-                  unitsInStock,
+                  stockInUnits,
                   id: product.id,
                   image,
                 });

@@ -21,7 +21,7 @@ function AddProduct() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
-  const [stockInUnits, setStockInUnits] = useState(0);
+  const [stockInUnits, setstockInUnits] = useState(0);
 
   const { categories } = useStoreState((state) => state.vox);
 
@@ -82,9 +82,9 @@ function AddProduct() {
         .post(`${baseUrl}/products`, {
           title,
           description,
-          categoryId:category,
+          categoryId: category,
           price,
-          unitsInStock,
+          stockInUnits,
           image: await imageUpload(),
         })
         .then((res) => console.log(res.data))
@@ -194,7 +194,7 @@ function AddProduct() {
                     className="form-control"
                     style={{ width: "50%" }}
                     value={stockInUnits}
-                    onChange={(e) => setStockInUnits(e.target.value)}
+                    onChange={(e) => setstockInUnits(e.target.value)}
                   />
                 </div>
               </div>
