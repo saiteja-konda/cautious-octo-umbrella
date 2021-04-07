@@ -14,6 +14,11 @@ export default function Home({ user, setUser }) {
       <Head>
         <title>Bask In Nature</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Bask in Nature Beauty, Cosmetic,Personal Care 🍃 100% Natural Skin & Hair Recipes🍃 Handcrafted, Fresh"
+        />
       </Head>
       <Navbar user={user} setUser={setUser} />
       <div style={{ display: "flex", flexWrap: "wrap" }} className="container">
