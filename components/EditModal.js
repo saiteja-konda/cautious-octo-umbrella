@@ -53,7 +53,7 @@ function EditModal({ setOpen }) {
               <input
                 className="form-control"
                 value={stockInUnits}
-                onChange={(e) => setUnitsInStock(e.target.value)}
+                onChange={(e) => setStockInUnits(e.target.value)}
               />
             </div>
 
