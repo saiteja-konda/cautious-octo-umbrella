@@ -21,7 +21,7 @@ function AddProduct() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
-  const [unitsInStock, setUnitsInStock] = useState(0);
+  const [stockInUnits, setStockInUnits] = useState(0);
 
   const { categories } = useStoreState((state) => state.vox);
 
@@ -193,8 +193,8 @@ function AddProduct() {
                   <input
                     className="form-control"
                     style={{ width: "50%" }}
-                    value={unitsInStock}
-                    onChange={(e) => setUnitsInStock(e.target.value)}
+                    value={stockInUnits}
+                    onChange={(e) => setStockInUnits(e.target.value)}
                   />
                 </div>
               </div>

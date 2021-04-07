@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import voxStore from "../store/voxStore";
 
-function EditModal({setOpen}) {
-  const { product } = useStoreState((state) => state.vox);
+function EditModal({ setOpen }) {
+  const { product, categories } = useStoreState((state) => state.vox);
   const { updateProduct } = useStoreActions((state) => state.vox);
   const [title, setTitle] = useState(product.title);
   const [description, setDescription] = useState(product.description);
-  const [category, setCategory] = useState(product.category);
+  const [category, setCategory] = useState(product.categoryId);
   const [price, setPrice] = useState(product.price);
-  const [unitsInStock, setUnitsInStock] = useState(product.setUnitsInStock);
+  const [stockInUnits, setStockInUnits] = useState(product.stockInUnits);
   const [image, setImage] = useState(product.image);
 
   return (
@@ -25,17 +25,24 @@ function EditModal({setOpen}) {
                 onChange={(e) => setTitle(e.target.value)}
               />
               <label>Description</label>
-              <input
+              <textarea
+                style={{ height: "300px" }}
                 className="form-control"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
               <label>Category</label>
-              <input
+              <select
                 className="form-control"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
+              >
+                {categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
               <label>Price</label>
               <input
                 className="form-control"
@@ -45,7 +52,7 @@ function EditModal({setOpen}) {
               <label>Units In Stock</label>
               <input
                 className="form-control"
-                value={unitsInStock}
+                value={stockInUnits}
                 onChange={(e) => setUnitsInStock(e.target.value)}
               />
             </div>

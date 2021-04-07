@@ -23,14 +23,15 @@ export default function Home({ user, setUser }) {
               className="card-img-top"
               style={{
                 width: "100%",
-                height: "180px",
+                height: "300px",
                 objectFit: "cover",
-                // margin: "10px",
               }}
             />
             <div className="card-body">
               <h5 class="card-title text-center">{product.title}</h5>
-              {/* <p class="card-text text-small">{product.description}</p> */}
+              <center>
+                <button className="btn btn-success btn-sm">Add to Cart</button>
+              </center>
             </div>
           </div>
         ))}
