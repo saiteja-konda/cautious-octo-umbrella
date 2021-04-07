@@ -21,7 +21,7 @@ export default function Home({ user, setUser }) {
         />
       </Head>
       <Navbar user={user} setUser={setUser} />
-      <div style={{ display: "flex", flexWrap: "wrap" }} className="container">
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent:"space-between" }} className="container">
         {products?.map((product) => (
           <div className="card m-3">
             <img
