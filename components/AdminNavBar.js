@@ -7,7 +7,7 @@ function AdminNavBar() {
 
   const LogoutFun = (e) => {
     e.preventDefault();
-    localStorage.removeItem('admin')
+    localStorage.removeItem("admin");
     router.push("/");
   };
   return (
@@ -41,6 +41,11 @@ function AdminNavBar() {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
+          <button className="btn" type="submit">
+            <Link href="/">
+              <i class="fas fa-globe-americas"></i>
+            </Link>
+          </button>
           <button
             className="btn my-2 my-sm-0"
             type="submit"

@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { baseUrl } from "../../utils/urlConfig";
+import { useStoreState } from "easy-peasy";
 
 function AddProduct() {
   const hiddenFileInput = React.useRef(null);
@@ -21,6 +22,9 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [unitsInStock, setUnitsInStock] = useState(0);
+
+  const { categories } = useStoreState((state) => state.vox);
+
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file);
@@ -78,7 +82,7 @@ function AddProduct() {
         .post(`${baseUrl}/products`, {
           title,
           description,
-          category,
+          categoryId:category,
           price,
           unitsInStock,
           image: await imageUpload(),
@@ -167,9 +171,11 @@ function AddProduct() {
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
-                  <option value="Hair">Hair</option>
-                  <option value="Body">Body</option>
-                  <option value="Skin">Skin</option>
+                  {categories?.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div style={{ display: "flex" }}>

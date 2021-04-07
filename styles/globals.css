@@ -27,9 +27,9 @@ td, th {
   padding: 8px;
 } */
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: rgba(1, 51, 100, 0.3);
-}
+} */
 .customOverlay {
   background: rgba(36, 123, 160, 0.7);
 }
@@ -48,4 +48,25 @@ tr:nth-child(even) {
   background-image: url(https://wallpapercave.com/wp/Ex06wbF.jpg);
   height: 100vh;
   background-size: cover;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #161e2e; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

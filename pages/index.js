@@ -22,10 +22,10 @@ export default function Home({ user, setUser }) {
               src={product.image}
               className="card-img-top"
               style={{
-                width: "286px",
+                width: "100%",
                 height: "180px",
                 objectFit: "cover",
-                margin: "10px",
+                // margin: "10px",
               }}
             />
             <div className="card-body">
