@@ -2,12 +2,13 @@ import Head from "next/head";
 import Navbar from "../components/Navbar";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { useEffect } from "react";
+import Footer from "../components/Footer";
 export default function Home({ user, setUser }) {
   const { products } = useStoreState((state) => state.vox);
   const { getProducts } = useStoreActions((state) => state.vox);
   useEffect(() => {
     getProducts();
-  },[]);
+  }, []);
   return (
     <div>
       <Head>
@@ -15,7 +16,7 @@ export default function Home({ user, setUser }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar user={user} setUser={setUser} />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flexWrap: "wrap" }} className="container">
         {products?.map((product) => (
           <div className="card m-3">
             <img
@@ -36,6 +37,7 @@ export default function Home({ user, setUser }) {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

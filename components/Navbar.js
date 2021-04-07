@@ -23,6 +23,8 @@ function Navbar({ user, setUser }) {
     if (!user) {
       return (
         <form className="form-inline my-2 my-lg-0">
+          <i class="fas fa-shopping-cart"></i>
+
           <Link
             style={{ textDecoration: "none", color: "#fff" }}
             href="/user/login"
@@ -44,15 +46,7 @@ function Navbar({ user, setUser }) {
     } else {
       return (
         <form className="form-inline my-2 my-lg-0">
-          {/* <Link
-                style={{ textDecoration: "none", color: "#fff" }}
-                href="/user/login"
-              >
-                <button className="btn my-2 my-sm-0" type="submit">
-                  Login
-                </button>
-              </Link> */}
-          {/* <Link style={{ textDecoration: "none", color: "#fff" }} href="/"> */}
+   
           <button
             className="btn my-2 my-sm-0 ml-2"
             type="submit"
