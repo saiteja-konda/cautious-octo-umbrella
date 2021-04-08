@@ -1,17 +1,12 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import { useStoreState, useStoreActions } from "easy-peasy";
-// import { useEffect } from "react";
-import Footer from "../components/Footer";
 import { fetchAPI } from "../lib/api";
-import Link from "next/link";
+import Link from "../components/Link";
+import Navbar01scrollToColor from "../components/Navbar01scrollToColor";
+import StickyFooter from "../components/StickyFooter";
+import SecondayNav from "../components/SecondayNav";
+import ProductCard from "../components/ProductCard";
 const Home = ({ user, setUser, products }) => {
-  // const { products } = useStoreState((state) => state.vox);
-  const { addToCart } = useStoreActions((state) => state.vox);
-  // useEffect(() => {
-  // getProducts();
-  // console.log(products)
-  // }, []);
   return (
     <div>
       <Head>
@@ -23,49 +18,40 @@ const Home = ({ user, setUser, products }) => {
           content="Bask in Nature Beauty, Cosmetic,Personal Care 🍃 100% Natural Skin & Hair Recipes🍃 Handcrafted, Fresh"
         />
       </Head>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar01scrollToColor
+        title="Baskin In Nature"
+        user={user}
+        setUser={setUser}
+      />
+      <img
+        style={{ height: "660px", width: "100%", objectFit: "cover" }}
+        src="https://res.cloudinary.com/saiteja/image/upload/v1617876518/bondi_media/chalo-garcia-rrpOLKrkqV8-unsplash_vrait7.jpg"
+      />
+
+      <SecondayNav />
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: "space-between",
         }}
         className="container"
       >
         {products?.map((product) => (
-          <div className="card m-3">
-            <Link href={`/products/${product.id}`}>
-              <img
-                src={product.image}
-                className="card-img-top"
-                style={{
-                  width: "300px",
-                  height: "300px",
-                  objectFit: "cover",
-                }}
-              />
-            </Link>
-
-            <div className="card-body">
-              <Link href={`/products/${product.id}`}>
-                <h5 class="card-title text-center">{product.title}</h5>
-              </Link>
-
-              <center>
-                <button
-                  onClick={() => {
-                    addToCart(product);
-                  }}
-                  className="btn btn-success btn-sm"
-                >
-                  Add to Cart
-                </button>
-              </center>
-            </div>
-          </div>
+          <Link
+            href={`/products/${product.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <ProductCard
+              title={product.title}
+              image={product.image}
+              price={product.price}
+              description={product.description}
+              product={product}
+            />
+          </Link>
         ))}
       </div>
-      <Footer />
+      <StickyFooter />
     </div>
   );
 };

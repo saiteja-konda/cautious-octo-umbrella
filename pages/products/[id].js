@@ -1,30 +1,39 @@
 import React from "react";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
 import { fetchAPI } from "../../lib/api";
 import { useStoreActions, useStoreState } from "easy-peasy";
-
+import PlainBar from "../../components/PlainBar";
+import { Button, Grid, makeStyles } from "@material-ui/core";
+import { SideBySideMagnifier } from "react-image-magnifiers";
+import StickyFooter from "../../components/StickyFooter";
+const useStyles = makeStyles({
+  button: {
+    textTransform: "none",
+    backgroundColor: "#1DB954",
+    color: "white",
+  },
+});
 function product({ product, user, setUser }) {
   const { addToCart, setToCart } = useStoreActions((actions) => actions.vox);
+  const classes = useStyles();
   return (
-    <>
-      <Navbar user={user} setUser={setUser} />
-      <div className="container mt-5">
-        <div className="row">
-          <div className="col">
-            <div className="container">
-              <div className="product mt-5">
-                <img
-                  src={product.image}
-                  width="300px"
-                  height="300px"
-                  style={{ objectFit: "contain", padding: "0px" }}
-                  alt={product.title}
-                />
-              </div>
-            </div>
+    <div>
+      <PlainBar title="Baskin In Nature" user={user} setUser={setUser} />
+
+      <div className="container" style={{ height: "80vh" }}>
+        <div className="row mt-5">
+          <div className="col-md-4 col-sm-12 col-xs-12 ">
+            <SideBySideMagnifier
+              imageAlt={product.title}
+              imageSrc={product.image}
+              alwaysInPlace="true"
+              fillAvailableSpace="true"
+              style={{
+                objectFit: "contain",
+                padding: "0px",
+              }}
+            />
           </div>
-          <div className="col mt-5" style={{ padding: "0px" }}>
+          <div className="col-md-8">
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <div className="d-flex">
@@ -34,19 +43,23 @@ function product({ product, user, setUser }) {
               </p>
               <p></p>
             </div>
-            <button
+            <Button
               onClick={() => {
                 addToCart(product);
               }}
-              className="btn btn-sm btm-block btn-warning"
+              // className="btn btn-sm btm-block btn-warning"
+              className={classes.button}
+              size="medium"
+              variant="contained"
             >
               Add to Cart
-            </button>
+            </Button>
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+
+      <StickyFooter />
+    </div>
   );
 }
 
