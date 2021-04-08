@@ -12,7 +12,7 @@ import {
   Badge,
 } from "@material-ui/core";
 import ScrollToColor01 from "./ScrollToColor01";
-import { useRouter } from "next/Router";
+import { useRouter } from "next/router";
 import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import { useStoreActions, useStoreState } from "easy-peasy";
