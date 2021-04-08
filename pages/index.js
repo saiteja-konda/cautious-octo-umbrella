@@ -1,14 +1,17 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import Footer from "../components/Footer";
-export default function Home({ user, setUser }) {
-  const { products } = useStoreState((state) => state.vox);
-  const { getProducts } = useStoreActions((state) => state.vox);
-  useEffect(() => {
-    getProducts();
-  }, []);
+import { fetchAPI } from "../lib/api";
+import Link from "next/link";
+const Home = ({ user, setUser, products }) => {
+  // const { products } = useStoreState((state) => state.vox);
+  const { addToCart } = useStoreActions((state) => state.vox);
+  // useEffect(() => {
+  // getProducts();
+  // console.log(products)
+  // }, []);
   return (
     <div>
       <Head>
@@ -21,22 +24,42 @@ export default function Home({ user, setUser }) {
         />
       </Head>
       <Navbar user={user} setUser={setUser} />
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent:"space-between" }} className="container">
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
+        className="container"
+      >
         {products?.map((product) => (
           <div className="card m-3">
-            <img
-              src={product.image}
-              className="card-img-top"
-              style={{
-                width: "300px",
-                height: "300px",
-                objectFit: "cover",
-              }}
-            />
+            <Link href={`/products/${product.id}`}>
+              <img
+                src={product.image}
+                className="card-img-top"
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  objectFit: "cover",
+                }}
+              />
+            </Link>
+
             <div className="card-body">
-              <h5 class="card-title text-center">{product.title}</h5>
+              <Link href={`/products/${product.id}`}>
+                <h5 class="card-title text-center">{product.title}</h5>
+              </Link>
+
               <center>
-                <button className="btn btn-success btn-sm">Add to Cart</button>
+                <button
+                  onClick={() => {
+                    addToCart(product);
+                  }}
+                  className="btn btn-success btn-sm"
+                >
+                  Add to Cart
+                </button>
               </center>
             </div>
           </div>
@@ -45,4 +68,15 @@ export default function Home({ user, setUser }) {
       <Footer />
     </div>
   );
+};
+
+export async function getStaticProps() {
+  const products = await fetchAPI("/products");
+  return {
+    props: {
+      products,
+    },
+    revalidate: 21600,
+  };
 }
+export default Home;

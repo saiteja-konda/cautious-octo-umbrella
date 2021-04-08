@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import {  StoreProvider, } from "easy-peasy";
 import { store } from "../store/store";
 import {useState} from "react"

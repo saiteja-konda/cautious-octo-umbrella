@@ -163,9 +163,11 @@ export const voxStore = {
   }),
 
   //Cart
-
+  len: computed((state) => state.cart.length),
   setToCart: action((state, payload) => {
-    if (state.cart.includes(payload)) state.cart.push(payload);
+    if (!state.cart.find((prod) => prod.id === payload.id)) {
+      state.cart.push(payload);
+    }
   }),
 
   addToCart: thunk(async (actions, id) => {

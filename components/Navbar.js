@@ -2,29 +2,39 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useRouter } from "next/router";
+import { useStoreActions, useStoreState } from "easy-peasy";
 
 function Navbar({ user, setUser }) {
-  // const [user, setUser] = useState(false);
+  const [userName, setUserName] = useState(false);
+  const { len } = useStoreState((actions) => actions.vox);
+
   const router = useRouter();
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
       setUser(true);
       jwt_decode(localStorage.getItem("token"));
+      setUserName(jwt_decode(localStorage.getItem("token")).fullName);
     }
-  },[user]);
+  },);
 
   const handleLogout = () => {
     setUser(false);
     localStorage.removeItem("token");
     router.push("/");
-    
   };
   const Options = () => {
     if (!user) {
       return (
         <form className="form-inline my-2 my-lg-0">
-          <i class="fas fa-shopping-cart"></i>
-
+          <Link href="/cart">
+            <button className="btn">
+              {" "}
+              <i class="fas fa-shopping-bag"></i>{" "}
+              <span class="badge badge-warning" id="lblCartCount">
+                {len}
+              </span>
+            </button>
+          </Link>
           <Link
             style={{ textDecoration: "none", color: "#fff" }}
             href="/user/login"
@@ -46,7 +56,18 @@ function Navbar({ user, setUser }) {
     } else {
       return (
         <form className="form-inline my-2 my-lg-0">
-   
+          <Link href="/cart">
+            <button className="btn">
+              {" "}
+              <i class="fas fa-shopping-bag"></i>{" "}
+              <span class="badge badge-warning" id="lblCartCount">
+                {len}
+              </span>
+            </button>
+          </Link>
+          <button className="btn my-2 my-sm-0" type="submit">
+            {userName}
+          </button>
           <button
             className="btn my-2 my-sm-0 ml-2"
             type="submit"
@@ -54,7 +75,6 @@ function Navbar({ user, setUser }) {
           >
             Logout
           </button>
-          {/* </Link> */}
         </form>
       );
     }
