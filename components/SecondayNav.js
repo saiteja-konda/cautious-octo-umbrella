@@ -31,10 +31,10 @@ function SecondayNav() {
           Blog
         </Typography>
         <Typography variant="p" component="button" className="btn btn-light">
-          About Us
+          About
         </Typography>
         <Typography variant="p" component="button" className="btn btn-light">
-          Contact Us
+          Contact
         </Typography>
       </Toolbar>
     </center>

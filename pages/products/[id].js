@@ -17,9 +17,13 @@ function product({ product, user, setUser }) {
   const classes = useStyles();
   return (
     <div>
-      <PlainBar title="Baskin In Nature" user={user} setUser={setUser} />
+      <PlainBar
+        title="Baskin In Nature"
+        user={user}
+        setUser={setUser}
+      />
 
-      <div className="container" style={{ height: "80vh" }}>
+      <div className="container" style={{ height: "100vh" }}>
         <div className="row mt-5">
           <div className="col-md-4 col-sm-12 col-xs-12 ">
             <SideBySideMagnifier
@@ -30,10 +34,11 @@ function product({ product, user, setUser }) {
               style={{
                 objectFit: "contain",
                 padding: "0px",
+                marginBottom: "50px",
               }}
             />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-8 col-sm-12 col-xs-12">
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <div className="d-flex">

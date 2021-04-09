@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import excerpts from "excerpts";
 import { useStoreState, useStoreActions } from "easy-peasy";
-
+import Link from "next/link";
 const useStyles = makeStyles({
   card: {
     maxWidth: 300,
@@ -51,9 +51,18 @@ const useStyles = makeStyles({
     marginTop: "15px",
     marginBottom: "0px",
   },
+  link: {
+    color: "black",
+  },
 });
 
-export default function ProductCard({ title, image, price, description,product }) {
+export default function ProductCard({
+  title,
+  image,
+  price,
+  description,
+  product,
+}) {
   const classes = useStyles();
   const { addToCart } = useStoreActions((state) => state.vox);
 
@@ -68,15 +77,35 @@ export default function ProductCard({ title, image, price, description,product }
     <div className="App">
       <ThemeProvider theme={theme}>
         <Card className={classes.card}>
-          <CardMedia className={classes.media} image={image} />
-          <CardContent className={classes.content}>
-            <Typography
-              className={"MuiTypography--heading"}
-              variant={"h6"}
-              gutterBottom
+          <Link href={`/products/${product.id}`} className={classes.link}>
+            <a
+              style={{
+                textDecoration: "none",
+                color: "black",
+                cursor: "pointer",
+              }}
             >
-              {title}
-            </Typography>
+              <CardMedia className={classes.media} image={image} />
+            </a>
+          </Link>
+          <CardContent className={classes.content}>
+            <Link href={`/products/${product.id}`}>
+              <a
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  cursor: "pointer",
+                }}
+              >
+                <Typography
+                  className={"MuiTypography--heading"}
+                  variant={"h6"}
+                  gutterBottom
+                >
+                  {title}
+                </Typography>
+              </a>
+            </Link>
             <Typography
               className={"MuiTypography--subheading"}
               variant={"caption"}

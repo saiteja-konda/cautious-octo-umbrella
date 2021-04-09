@@ -7,10 +7,15 @@ import theme from "../lib/theme";
 import { StoreProvider } from "easy-peasy";
 import { store } from "../store/store";
 import { useState } from "react";
+import WhatsAppWidget from "react-whatsapp-widget";
+import "react-whatsapp-widget/dist/index.css";
+import "../styles/globals.scss";
+// import { useRouter } from "next/router";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   const [user, setUser] = useState(false);
+  // const router = useRouter();
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -39,6 +44,26 @@ export default function MyApp(props) {
             user={user}
             {...pageProps}
           />
+          {/* <div
+        style={{
+          position: "absolute !important",
+          zIndex: "3px",
+          top: "1em",
+          right: "1em",
+        }}
+      > */}
+          <WhatsAppWidget
+            phoneNumber="9666934040"
+            companyName="Bask In Nature"
+            message="Hi, this is Gai from Bask In Nature, How can I help you?"
+            style={{
+              position: "absolute !important",
+              zIndex: "3px",
+              top: "1em",
+              right: "1em",
+            }}
+          />
+          {/* </div> */}
         </ThemeProvider>
       </StoreProvider>
     </React.Fragment>

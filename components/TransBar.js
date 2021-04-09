@@ -33,14 +33,17 @@ const useStyles = makeStyles({
     margin: "5px",
   },
   appBar: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     color: "black",
     boxShadow: "none",
     padding: "10px 0px",
   },
+  cart: {
+    color: "white",
+  },
 });
 
-function PlainBar(props, { user, setUser }) {
+function TransBar(props, { user, setUser }) {
   const classes = useStyles();
   const { len } = useStoreState((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
@@ -85,7 +88,7 @@ function PlainBar(props, { user, setUser }) {
               <Box display={{ sm: "none", xs: "none", md: "block" }}>
                 <IconButton color="inherit" aria-label="Edit">
                   <Badge badgeContent={cartlen} color="error">
-                    <LocalMallIcon />
+                    <LocalMallIcon className={classes.cart} />
                   </Badge>
                 </IconButton>
                 <Link href="/user/login">
@@ -110,10 +113,10 @@ function PlainBar(props, { user, setUser }) {
             </section>
           </Toolbar>
         </AppBar>
-        <Toolbar />
+        {/* <Toolbar /> */}
       </ThemeProvider>
     </div>
   );
 }
 
-export default PlainBar;
+export default TransBar;
