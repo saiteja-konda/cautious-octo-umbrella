@@ -68,7 +68,7 @@ function products() {
             }}
             onClick={() => router.push("/admin/addproduct")}
           >
-            <i class="fas fa-plus"></i> New Product
+            <i className="fas fa-plus"></i> New Product
           </button>
           <button
             className="btn"
@@ -81,7 +81,7 @@ function products() {
               setOpenCatCreate(true);
             }}
           >
-            <i class="fas fa-plus"></i> New Category
+            <i className="fas fa-plus"></i> New Category
           </button>
         </div>
 
@@ -118,7 +118,7 @@ function products() {
                         value={product.id}
                         onClick={() => deleteProduct(product.id)}
                       >
-                        <i class="fas fa-trash"></i>
+                        <i className="fas fa-trash"></i>
                       </button>
                     </td>
                   </tr>
@@ -159,7 +159,7 @@ function products() {
                         value={category.id}
                         onClick={() => deleteCategory(category.id)}
                       >
-                        <i class="fas fa-trash"></i>
+                        <i className="fas fa-trash"></i>
                       </button>
                     </td>
                   </tr>

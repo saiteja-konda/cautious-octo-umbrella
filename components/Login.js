@@ -1,18 +1,23 @@
 import React, { useRef } from "react";
 import { useRouter } from "next/router";
-import { useStoreActions, useStoreState } from "easy-peasy";
+
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+
 import TransBar from "./TransBar";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "material-ui-formik-components/TextField";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import axios from "axios";
+import { authUrl } from "../utils/urlConfig";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Login({ user, setUser }) {
   const classes = useStyles();
   const router = useRouter();
-  const { login } = useStoreActions((state) => state.vox);
-  const { error } = useStoreState((state) => state.vox);
   const formRef = useRef();
   const note = () => {
     toast.error("Invalid Username or Password please try again", {
@@ -69,34 +72,23 @@ export default function Login({ user, setUser }) {
     });
   };
   const handleLogin = () => {
-    // event.preventDefault();
     const loginObject = {
       username: formRef.current.values.username,
       password: formRef.current.values.password,
     };
 
-    login(loginObject).then(() => {
-      // if (error === "yes") {
-      //   // toast.error("🦄 Wow so easy!", {
-
-      //   // });
-      //   note()
-      // } else {
-      //   setUser(true);
-      //   router.push("/");
-      // }
-
-      if (error === "yes") {
-        note();
-      } else if (error === "no") {
+    axios
+      .post(`${authUrl}/users/login`, loginObject)
+      .then((res) => {
+        localStorage.setItem("token", JSON.stringify(res.data));
+      })
+      .then(() => {
         setUser(true);
         router.push("/");
-      }
-    });
-
-    // router.push("/");
-
-    console.log(formRef.current.values);
+      })
+      .catch((err) => {
+        note();
+      });
   };
 
   const validationSchema = Yup.object({

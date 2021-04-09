@@ -24,16 +24,16 @@ function SecondayNav() {
   return (
     <center>
       <Toolbar>
-        <Typography variant="p" component="button" className="btn btn-light">
+        <Typography  component="button" className="btn btn-light">
           Shop
         </Typography>
-        <Typography variant="p" component="button" className="btn btn-light">
+        <Typography  component="button" className="btn btn-light">
           Blog
         </Typography>
-        <Typography variant="p" component="button" className="btn btn-light">
+        <Typography  component="button" className="btn btn-light">
           About
         </Typography>
-        <Typography variant="p" component="button" className="btn btn-light">
+        <Typography  component="button" className="btn btn-light">
           Contact
         </Typography>
       </Toolbar>

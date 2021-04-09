@@ -128,7 +128,7 @@ function TransBar(props, { user, setUser }) {
           </Toolbar>
         </AppBar>
         {/* <Toolbar /> */}
-      {/* <Cart openCart={openCart} setOpenCart={setOpenCart} /> */}
+      {/* <Cart openCart={openCart} setOpenCart={setOpenCart} style={{position:""}} /> */}
       </ThemeProvider>
     </>
   );

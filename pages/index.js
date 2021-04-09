@@ -7,7 +7,7 @@ import Newsletter from "../components/Newsletter";
 import Testmonials from "../components/Testmonials";
 import Hero from "../components/Hero";
 import ProductsSection from "../components/ProductsSection";
-
+import HeroSection from "../components/HeroSection";
 
 const Home = ({ user, setUser, products }) => {
   return (
@@ -26,7 +26,7 @@ const Home = ({ user, setUser, products }) => {
         user={user}
         setUser={setUser}
       />
-      <Hero />
+      <HeroSection />
       <SecondayNav />
       <ProductsSection products={products} />
       <Testmonials />

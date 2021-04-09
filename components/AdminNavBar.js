@@ -43,7 +43,7 @@ function AdminNavBar() {
         <form className="form-inline my-2 my-lg-0">
           <button className="btn" type="submit">
             <Link href="/">
-              <i class="fas fa-globe-americas"></i>
+              <i className="fas fa-globe-americas"></i>
             </Link>
           </button>
           <button

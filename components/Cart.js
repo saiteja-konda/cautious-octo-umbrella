@@ -63,8 +63,8 @@ export default function Cart({ openCart, setOpenCart }) {
       return (
         <>
           {cart?.map((product) => (
-            <div className="row mt-4">
-              <co1 className="col-4">
+            <div key={product.id} className="row mt-4">
+              <div className="col-4">
                 <img
                   src={product.image}
                   style={{
@@ -75,8 +75,8 @@ export default function Cart({ openCart, setOpenCart }) {
                     marginBottom: "10px",
                   }}
                 />
-              </co1>
-              <co1 className="col-6">
+              </div>
+              <div className="col-6">
                 <div className="row">
                   <div className="col-12">
                     <h6 style={{ fontSize: "14px" }}> {product.title}</h6>
@@ -89,8 +89,8 @@ export default function Cart({ openCart, setOpenCart }) {
                     </div>
                   </div>
                 </div>
-              </co1>
-              <co1 className="col-2">
+              </div>
+              <div className="col-2">
                 <h5 style={{ fontSize: "14px" }}>₹{product.price}</h5>
                 <IconButton
                   onClick={() => {
@@ -99,7 +99,7 @@ export default function Cart({ openCart, setOpenCart }) {
                 >
                   <DeleteTwoTone color="error" size="small" />
                 </IconButton>
-              </co1>
+              </div>
             </div>
           ))}
           <h5 className="mt-5"></h5>

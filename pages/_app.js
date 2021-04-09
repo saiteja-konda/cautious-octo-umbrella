@@ -10,6 +10,8 @@ import { useState } from "react";
 import WhatsAppWidget from "react-whatsapp-widget";
 import "react-whatsapp-widget/dist/index.css";
 import "../styles/globals.scss";
+import "../styles/style.scss";
+
 // import { useRouter } from "next/router";
 
 export default function MyApp(props) {

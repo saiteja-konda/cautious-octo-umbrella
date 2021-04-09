@@ -11,40 +11,40 @@ function Cart({ user, setUser }) {
       <Navbar user={user} setUser={setUser} />
       <body>
         <main>
-          <div class="basket">
-            <div class="basket-module">
+          <div className="basket">
+            <div className="basket-module">
               <label for="promo-code">Enter a promotional code</label>
               <input
                 id="promo-code"
                 type="text"
                 name="promo-code"
                 maxlength="5"
-                class="promo-code-field input"
+                className="promo-code-field input"
               />
-              <button class="promo-code-cta button ">Apply</button>
+              <button className="promo-code-cta button ">Apply</button>
             </div>
-            <div class="basket-labels">
+            <div className="basket-labels">
               <ul>
-                <li class="item item-heading">Item</li>
-                <li class="price">Price</li>
-                <li class="quantity">Quantity</li>
-                <li class="subtotal">Subtotal</li>
+                <li className="item item-heading">Item</li>
+                <li className="price">Price</li>
+                <li className="quantity">Quantity</li>
+                <li className="subtotal">Subtotal</li>
               </ul>
             </div>
             {cart.map((product) => (
-              <div class="basket-product mb-5">
-                <div class="item">
-                  <div class="product-image">
+              <div key={product.id} className="basket-product mb-5">
+                <div className="item">
+                  <div className="product-image">
                     <img
                       src={product.image}
                       alt="Placholder Image 2"
-                      class="product-frame"
+                      className="product-frame"
                     />
                   </div>
-                  <div class="product-details">
+                  <div className="product-details">
                     <h1>
                       <strong>
-                        <span class="item-quantity">4 </span> x{" "}
+                        <span className="item-quantity">4 </span> x{" "}
                       </strong>
                       {product.title}
                     </h1>
@@ -54,49 +54,56 @@ function Cart({ user, setUser }) {
                     <p>Product Code - 232321939</p> */}
                   </div>
                 </div>
-                <div class="price"> {product.price}</div>
-                <div class="quantity">
+                <div className="price"> {product.price}</div>
+                <div className="quantity">
                   <input
                     type="number"
                     value="4"
                     min="1"
-                    class="quantity-field input"
+                    className="quantity-field input"
                   />
                 </div>
-                <div class="subtotal">104.00</div>
-                <div class="remove">
-                  <button class="">
-                    <i class="far fa-trash-alt"></i>
+                <div className="subtotal">104.00</div>
+                <div className="remove">
+                  <button className="">
+                    <i className="far fa-trash-alt"></i>
                   </button>
                 </div>
               </div>
             ))}
-            <Link href="/" class="btn" style={{ paddingTop: "20px" }}>
+            <Link href="/" className="btn" style={{ paddingTop: "20px" }}>
               <button>
                 {" "}
-                <i class="fas fa-long-arrow-alt-left"></i> <b>Back to shop</b>
+                <i className="fas fa-long-arrow-alt-left"></i>{" "}
+                <b>Back to shop</b>
               </button>
             </Link>
           </div>
           <aside>
-            <div class="summary">
-              <div class="summary-total-items">
-                <span class="total-items"></span> Items in your Bag
+            <div className="summary">
+              <div className="summary-total-items">
+                <span className="total-items"></span> Items in your Bag
               </div>
-              <div class="summary-subtotal">
-                <div class="subtotal-title">Subtotal</div>
-                <div class="subtotal-value final-value" id="basket-subtotal">
+              <div className="summary-subtotal">
+                <div className="subtotal-title">Subtotal</div>
+                <div
+                  className="subtotal-value final-value"
+                  id="basket-subtotal"
+                >
                   130.00
                 </div>
-                <div class="summary-promo hide">
-                  <div class="promo-title">Promotion</div>
-                  <div class="promo-value final-value" id="basket-promo"></div>
+                <div className="summary-promo hide">
+                  <div className="promo-title">Promotion</div>
+                  <div
+                    className="promo-value final-value"
+                    id="basket-promo"
+                  ></div>
                 </div>
               </div>
-              <div class="summary-delivery">
+              <div className="summary-delivery">
                 <select
                   name="delivery-collection"
-                  class="summary-delivery-selection"
+                  className="summary-delivery-selection"
                 >
                   <option value="0" selected="selected">
                     Select Collection or Delivery
@@ -109,14 +116,14 @@ function Cart({ user, setUser }) {
                   </option>
                 </select>
               </div>
-              <div class="summary-total">
-                <div class="total-title">Total</div>
-                <div class="total-value final-value" id="basket-total">
+              <div className="summary-total">
+                <div className="total-title">Total</div>
+                <div className="total-value final-value" id="basket-total">
                   130.00
                 </div>
               </div>
-              <div class="summary-checkout">
-                <button class="button checkout-cta">
+              <div className="summary-checkout">
+                <button className="button checkout-cta">
                   Go to Secure Checkout
                 </button>
               </div>

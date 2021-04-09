@@ -78,8 +78,7 @@ function Newsletter() {
                   JOIN US FOR FREE TO GET INSTANT EMAIL UPDATES!
                 </Typography>
                 <Typography
-                  variant="p"
-                  component="p"
+         
                   className="text-center mb-4 mt-0 form-signin-heading"
                 >
                   Subscribe and get notified at first on the latest update and

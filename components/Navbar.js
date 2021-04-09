@@ -15,7 +15,7 @@ function Navbar({ user, setUser }) {
       jwt_decode(localStorage.getItem("token"));
       setUserName(jwt_decode(localStorage.getItem("token")).fullName);
     }
-  },);
+  });
 
   const handleLogout = () => {
     setUser(false);
@@ -29,8 +29,8 @@ function Navbar({ user, setUser }) {
           <Link href="/cart">
             <button className="btn">
               {" "}
-              <i class="fas fa-shopping-bag"></i>{" "}
-              <span class="badge badge-warning" id="lblCartCount">
+              <i className="fas fa-shopping-bag"></i>{" "}
+              <span className="badge badge-warning" id="lblCartCount">
                 {len}
               </span>
             </button>
@@ -59,8 +59,8 @@ function Navbar({ user, setUser }) {
           <Link href="/cart">
             <button className="btn">
               {" "}
-              <i class="fas fa-shopping-bag"></i>{" "}
-              <span class="badge badge-warning" id="lblCartCount">
+              <i className="fas fa-shopping-bag"></i>{" "}
+              <span className="badge badge-warning" id="lblCartCount">
                 {len}
               </span>
             </button>

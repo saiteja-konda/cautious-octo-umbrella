@@ -4,7 +4,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
-
+import FacebookIcon from "@material-ui/icons/Facebook";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import { IconButton } from "@material-ui/core";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
@@ -23,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     // minHeight: "100vh",
-  
   },
   main: {
     marginTop: theme.spacing(12),
@@ -42,14 +43,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StickyFooter() {
   const classes = useStyles();
-
+  const pimages = [
+    {
+      img:
+        "https://res.cloudinary.com/saiteja/image/upload/v1617990450/bondi_media/icons8-mastercard-50_l8cuua.png",
+    },
+    {
+      img:
+        "https://res.cloudinary.com/saiteja/image/upload/v1617990450/bondi_media/icons8-visa-50_sipt0b.png",
+    },
+    {
+      img:
+        "https://res.cloudinary.com/saiteja/image/upload/v1617990450/bondi_media/icons8-phone-pe-50_k114ac.png",
+    },
+    {
+      img:
+        "https://res.cloudinary.com/saiteja/image/upload/v1617990450/bondi_media/icons8-bhim-upi-50_zrwqoq.png",
+    },
+  ];
   return (
     <div className={classes.root} style={{ marginTop: "400px" }}>
       <CssBaseline />
       <Container component="main" className={classes.main} maxWidth="lg">
         <div className="row">
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h6" component="h1" gutterBottom>
               Bask In Nature
             </Typography>
             {/* <ul
@@ -68,21 +86,24 @@ export default function StickyFooter() {
             <p>About</p> <p>Contact</p> <p>Feedback</p>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h6" component="h1" gutterBottom>
               Follow us
             </Typography>
-            <Typography variant="h6" component="h2" gutterBottom>
-              Facebook
-            </Typography>
-            <Typography variant="h6" component="h2" gutterBottom>
-              Instagram
-            </Typography>
+            <IconButton>
+              <FacebookIcon />
+            </IconButton>
+            <IconButton>
+              <InstagramIcon />
+            </IconButton>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 ">
-            <Typography variant="h4" component="h1" gutterBottom>
-              Newsletter
+            <Typography variant="h6" component="h1" gutterBottom>
+              We Accept
             </Typography>
-            <form className="form-group">
+            {pimages.map((image, index) => (
+              <img key={index} src={image.img} />
+            ))}
+            {/* <form className="form-group">
               <div className="form-group">
                 <input
                   type="text"
@@ -98,7 +119,7 @@ export default function StickyFooter() {
                   placeholder="Email Address"
                 />
               </div>
-            </form>
+            </form> */}
           </div>
         </div>
       </Container>

@@ -17,6 +17,7 @@ function ProductsSection({products}) {
         >
           {products?.map((product) => (
             <ProductCard
+            key={product.id}
               title={product.title}
               image={product.image}
               price={product.price}
