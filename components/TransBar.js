@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Link from "next/link";
+import Cart from "./Cart";
 const useStyles = makeStyles({
   // This group of buttons will be aligned to the right
   rightToolbar: {
@@ -47,6 +48,15 @@ function TransBar(props, { user, setUser }) {
   const classes = useStyles();
   const { len } = useStoreState((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
+  const [openCart, setOpenCart] = useState(false);
+
+  const showCart = () => {
+    if (!openCart) {
+      setOpenCart(true);
+    } else {
+      setOpenCart(false);
+    }
+  };
   useEffect(() => {
     setCartlen(len);
   });
@@ -58,7 +68,7 @@ function TransBar(props, { user, setUser }) {
     },
   });
   return (
-    <div>
+    <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
@@ -86,7 +96,11 @@ function TransBar(props, { user, setUser }) {
                 </IconButton>
               </Box>
               <Box display={{ sm: "none", xs: "none", md: "block" }}>
-                <IconButton color="inherit" aria-label="Edit">
+                <IconButton
+                  color="inherit"
+                  aria-label="Edit"
+                  onClick={showCart}
+                >
                   <Badge badgeContent={cartlen} color="error">
                     <LocalMallIcon className={classes.cart} />
                   </Badge>
@@ -115,7 +129,8 @@ function TransBar(props, { user, setUser }) {
         </AppBar>
         {/* <Toolbar /> */}
       </ThemeProvider>
-    </div>
+      <Cart openCart={openCart} setOpenCart={setOpenCart} />
+    </>
   );
 }
 
