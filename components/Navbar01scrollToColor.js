@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import jwt_decode from "jwt-decode";
+import { useStoreActions, useStoreState } from "easy-peasy";
+
 import {
   AppBar,
   Toolbar,
@@ -16,8 +21,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
 
-import { useStoreActions, useStoreState } from "easy-peasy";
-import Link from "next/link";
+
 import Cart from "./Cart";
 
 const useStyles = makeStyles({
@@ -42,6 +46,8 @@ const Navbar01scrollToColor = (props) => {
   const { len } = useStoreState((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
   const [openCart, setOpenCart] = useState(false);
+  const [userName, setUserName] = useState(false);
+  const router = useRouter();
 
   const showCart = () => {
     if (!openCart) {
@@ -61,6 +67,61 @@ const Navbar01scrollToColor = (props) => {
       },
     },
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      props.setUser(true);
+      jwt_decode(localStorage.getItem("token"));
+      setUserName(jwt_decode(localStorage.getItem("token")).fullName);
+    }
+  });
+
+
+  const handleLogout = () => {
+    props.setUser(false);
+    localStorage.removeItem("token");
+    router.push("/");
+  };
+
+  const options = () => {
+    if (!props.user) {
+      return (
+        <>
+          <Link href="/user/login">
+            <Button size="small" variant="contained" className={classes.button}>
+              Login
+            </Button>
+          </Link>
+          <Link href="/user/signup">
+            <Button size="small" variant="contained" className={classes.button}>
+              Signup
+            </Button>
+          </Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {/* <Link href="/"> */}
+          <Button size="small" variant="contained" className={classes.button}>
+            {userName}
+          </Button>
+          {/* </Link> */}
+          <Link href="/">
+            <Button
+              size="small"
+              onClick={handleLogout}
+              variant="contained"
+              className={classes.button}
+            >
+              Logout
+            </Button>
+          </Link>
+        </>
+      );
+    }
+  };
+  const RenderOptions = options();
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -98,24 +159,7 @@ const Navbar01scrollToColor = (props) => {
                       <LocalMallIcon />
                     </Badge>
                   </IconButton>
-                  <Link href="/user/login">
-                    <Button
-                      size="small"
-                      variant="contained"
-                      className={classes.button}
-                    >
-                      Login
-                    </Button>
-                  </Link>
-                  <Link href="/user/signup">
-                    <Button
-                      size="small"
-                      variant="contained"
-                      className={classes.button}
-                    >
-                      Signup
-                    </Button>
-                  </Link>
+                  <>{RenderOptions}</>
                 </Box>
               </section>
             </Toolbar>

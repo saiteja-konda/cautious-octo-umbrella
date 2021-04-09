@@ -9,7 +9,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Button, Container } from "@material-ui/core";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 import { DeleteTwoTone } from "@material-ui/icons";
 
 const drawerWidth = 375;
@@ -48,6 +48,7 @@ export default function Cart({ openCart, setOpenCart }) {
   const classes = useStyles();
   const theme = useTheme();
   const { cart } = useStoreState((state) => state.vox);
+  const { removeFromCart } = useStoreActions((state) => state.vox);
   const cartTotalCounter = () => {
     let count = 0;
     cart.forEach((e) => {
@@ -56,31 +57,11 @@ export default function Cart({ openCart, setOpenCart }) {
     return count;
   };
   const sum = cartTotalCounter();
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={openCart}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={() => setOpenCart(false)}>
-            {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Container maxWidth="xl">
-          <Typography variant="h5" component="h1">
-            Shopping Cart
-          </Typography>
+
+  const Items = () => {
+    if (cart.length != 0) {
+      return (
+        <>
           {cart?.map((product) => (
             <div className="row mt-4">
               <co1 className="col-4">
@@ -111,7 +92,11 @@ export default function Cart({ openCart, setOpenCart }) {
               </co1>
               <co1 className="col-2">
                 <h5 style={{ fontSize: "14px" }}>₹{product.price}</h5>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    removeFromCart(product.id);
+                  }}
+                >
                   <DeleteTwoTone color="error" size="small" />
                 </IconButton>
               </co1>
@@ -129,6 +114,62 @@ export default function Cart({ openCart, setOpenCart }) {
           <Button variant="contained" size="small" className={classes.button2}>
             Checkout
           </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div
+            style={{
+              display: "flex",
+              // flexDirection: "column",
+              justifyContent: "center",
+              marginTop: "200px",
+            }}
+          >
+            <div>
+              <img
+                src="https://res.cloudinary.com/saiteja/image/upload/v1617965375/bondi_media/empty_ku28ra.png"
+                style={{ height: "100px", width: "100px", objectFit: "cover" }}
+              />
+            </div>
+          </div>
+          <div>
+            <h6 className="text-danger text-center mt-4">
+              Oops! Your cart is empty
+            </h6>
+          </div>
+        </>
+      );
+    }
+  };
+  const RenderItems = Items();
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={openCart}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={() => setOpenCart(false)}>
+            {theme.direction === "rtl" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Container maxWidth="xl">
+          <Typography variant="h5" component="h1">
+            Shopping Cart
+          </Typography>
+          {RenderItems}
         </Container>
       </Drawer>
     </div>

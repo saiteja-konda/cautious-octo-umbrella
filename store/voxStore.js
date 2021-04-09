@@ -9,6 +9,17 @@ export const voxStore = {
   category: {},
   cart: [],
   token: {},
+  error: {},
+
+  // Error
+
+  setError: action((state, error) => {
+    if (error.hasError === "no") {
+      state.error = "no";
+    } else {
+      state.error = "yes";
+    }
+  }),
 
   //Products
 
@@ -157,8 +168,13 @@ export const voxStore = {
       .then((res) => {
         actions.setToken(res.data);
       })
+      .then(() => {
+        actions.setError({ hasError: "no" });
+      })
       .catch((err) => {
-        console.error(err);
+        actions.setError({
+          hasError: "yes",
+        });
       });
   }),
 
@@ -172,6 +188,13 @@ export const voxStore = {
 
   addToCart: thunk(async (actions, id) => {
     actions.setToCart(id);
+  }),
+  deleteFromCart: action((state, id) => {
+    const newList = state.cart.filter((product) => product.id != id);
+    state.cart = newList;
+  }),
+  removeFromCart: thunk(async (actions, id) => {
+    actions.deleteFromCart(id);
   }),
 };
 

@@ -128,8 +128,8 @@ function TransBar(props, { user, setUser }) {
           </Toolbar>
         </AppBar>
         {/* <Toolbar /> */}
+      {/* <Cart openCart={openCart} setOpenCart={setOpenCart} /> */}
       </ThemeProvider>
-      <Cart openCart={openCart} setOpenCart={setOpenCart} />
     </>
   );
 }
