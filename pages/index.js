@@ -89,7 +89,7 @@ const Home = ({ user, setUser, products }) => {
         {/* The care you've always needed A RANGE OF PRODUCTS FOR YOU Shop now  */}
       </div>
       <SecondayNav />
-      <Typography variant="h5" className="text-center" component="h3">
+      <Typography variant="h5" className="text-center" component="h1">
         Featured Products
       </Typography>
       <div
@@ -109,8 +109,21 @@ const Home = ({ user, setUser, products }) => {
           />
         ))}
       </div>
-      <div style={{ display: "flex", marginBottom: "100px" }}>
-        <MyTestmonialCard /> <MyTestmonialCard /> <MyTestmonialCard />
+      <div>
+        <Typography variant="h5" className="text-center" component="h1">
+          Customers Love
+        </Typography>
+        <div className="test">
+          <div>
+            <MyTestmonialCard />
+          </div>
+          <div>
+            <MyTestmonialCard />
+          </div>
+          <div>
+            <MyTestmonialCard />
+          </div>
+        </div>
       </div>
       <Newsletter />
       <StickyFooter />
