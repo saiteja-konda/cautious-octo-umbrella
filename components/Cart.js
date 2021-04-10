@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,7 +10,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { Button, Container } from "@material-ui/core";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { DeleteTwoTone } from "@material-ui/icons";
-
+import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 const drawerWidth = 375;
 
 const useStyles = makeStyles((theme) => ({
@@ -46,24 +46,62 @@ const useStyles = makeStyles((theme) => ({
 export default function Cart({ openCart, setOpenCart }) {
   const classes = useStyles();
   const theme = useTheme();
-  const { cart } = useStoreState((state) => state.vox);
+  const { cart, len } = useStoreState((state) => state.vox);
   const { removeFromCart, increase, decrease } = useStoreActions(
     (state) => state.vox
   );
   const cartTotalCounter = () => {
     let count = 0;
-    cart?.lineItems?.filter((p) => p.quantity >= 1).forEach((e) => {
-        count = (e.price * e.quantity) + count;
+    cart?.lineItems
+      ?.filter((p) => p.quantity >= 1)
+      .forEach((e) => {
+        count = e.price * e.quantity + count;
       });
     return count;
   };
   const sum = cartTotalCounter();
-
-  const Items = () => {
-    if (cart.lineItems.length != 0) {
+  const Oops = () => {
+    if (len === 0) {
       return (
-        <>
-          {cart?.lineItems?.filter((product) => product.quantity >= 1).map((product) => (
+        <Container maxWidth="xl">
+          <Typography variant="h5" component="h1">
+            Shopping Cart
+          </Typography>
+          {/* <div
+            style={{
+              display: "flex",
+              // flexDirection: "column",
+              justifyContent: "center",
+              marginTop: "200px",
+            }}
+          >
+            <div>
+              <img
+                src="https://res.cloudinary.com/saiteja/image/upload/v1617965375/bondi_media/empty_ku28ra.png"
+                style={{ height: "100px", width: "100px", objectFit: "cover" }}
+              />
+            </div>
+          </div>
+          <div> */}
+          <div
+            className="text-danger text-center"
+            style={{ marginTop: "30vh" }}
+          >
+            <RemoveShoppingCartIcon fontSize="large" className="mb-5" />
+            <h6>Oops! Your cart is empty</h6>
+          </div>
+          {/* </div> */}
+        </Container>
+      );
+    } else if (len >= 0) {
+      return (
+        <Container maxWidth="xl">
+          <Typography variant="h5" component="h1">
+            Shopping Cart
+          </Typography>
+          {cart?.lineItems
+            ?.filter((product) => product.quantity >= 1)
+            .map((product) => (
               <div key={product.id} className="row mt-4">
                 <div className="col-4">
                   <img
@@ -94,8 +132,7 @@ export default function Cart({ openCart, setOpenCart }) {
                           onClick={() => increase(product)}
                         ></span>
                       </div>
-                      <div className="col-12 mt-1">
-                      </div>
+                      <div className="col-12 mt-1"></div>
                     </div>
                   </div>
                 </div>
@@ -111,48 +148,11 @@ export default function Cart({ openCart, setOpenCart }) {
                 </div>
               </div>
             ))}
-          <h5 className="mt-5"></h5>
-          <Divider />
-          <h5 className="mt-3" style={{ color: "#a5a5a5", fontSize: "14px" }}>
-            Subtotal{" "}
-            <span style={{ color: "#000", fontSize: "14px" }}> ₹ {sum}</span>
-          </h5>
-          <Button variant="contained" size="small" className={classes.button1}>
-            Continue Shopping
-          </Button>
-          <Button variant="contained" size="small" className={classes.button2}>
-            Checkout
-          </Button>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div
-            style={{
-              display: "flex",
-              // flexDirection: "column",
-              justifyContent: "center",
-              marginTop: "200px",
-            }}
-          >
-            <div>
-              <img
-                src="https://res.cloudinary.com/saiteja/image/upload/v1617965375/bondi_media/empty_ku28ra.png"
-                style={{ height: "100px", width: "100px", objectFit: "cover" }}
-              />
-            </div>
-          </div>
-          <div>
-            <h6 className="text-danger text-center mt-4">
-              Oops! Your cart is empty
-            </h6>
-          </div>
-        </>
+        </Container>
       );
     }
   };
-  const RenderItems = Items();
+  const RenderCart = Oops();
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -174,12 +174,7 @@ export default function Cart({ openCart, setOpenCart }) {
             )}
           </IconButton>
         </div>
-        <Container maxWidth="xl">
-          <Typography variant="h5" component="h1">
-            Shopping Cart
-          </Typography>
-          {RenderItems}
-        </Container>
+        {RenderCart}
       </Drawer>
     </div>
   );

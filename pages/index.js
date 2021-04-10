@@ -7,6 +7,7 @@ import Newsletter from "../components/Newsletter";
 import Testmonials from "../components/Testmonials";
 import ProductsSection from "../components/ProductsSection";
 import HeroSection from "../components/HeroSection";
+import { useStoreActions } from "easy-peasy";
 
 const Home = ({ user, setUser, products }) => {
   return (
@@ -15,7 +16,11 @@ const Home = ({ user, setUser, products }) => {
         <title>Bask In Nature</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar01scrollToColor title="Baskin In Nature" user={user} setUser={setUser}/>
+      <Navbar01scrollToColor
+        title="Baskin In Nature"
+        user={user}
+        setUser={setUser}
+      />
       <HeroSection />
       <SecondayNav />
       <ProductsSection products={products} />

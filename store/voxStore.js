@@ -193,16 +193,11 @@ export const voxStore = {
       state.cart.lineItems.push(payload);
     }
   }),
-  addToCart: thunk(async (actions, id) => {
-    actions.setToCart(id);
-  }),
   deleteFromCart: action((state, id) => {
     const newList = state.cart.lineItems.filter((product) => product.id != id);
     state.cart.lineItems = newList;
   }),
-  removeFromCart: thunk(async (actions, id) => {
-    actions.deleteFromCart(id);
-  }),
+
   increaseProductQty: action((state, id) => {
     state.cart.lineItems.forEach((product) => {
       if (product.id === id) {
@@ -210,15 +205,21 @@ export const voxStore = {
       }
     });
   }),
-  increase: thunk(async (actions, product) => {
-    actions.increaseProductQty(product.id);
-  }),
   decreaseProductQty: action((state, id) => {
     state.cart.lineItems.forEach((product) => {
       if (product.id === id && product.quantity >= 0) {
         product.quantity = product.quantity - 1;
       }
     });
+  }),
+  addToCart: thunk(async (actions, id) => {
+    actions.setToCart(id);
+  }),
+  removeFromCart: thunk(async (actions, id) => {
+    actions.deleteFromCart(id);
+  }),
+  increase: thunk(async (actions, product) => {
+    actions.increaseProductQty(product.id);
   }),
   decrease: thunk(async (actions, product) => {
     if (product.quantity === 1) {

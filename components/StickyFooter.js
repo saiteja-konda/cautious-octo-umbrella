@@ -70,19 +70,6 @@ export default function StickyFooter() {
             <Typography variant="h6" component="h1" gutterBottom>
               Bask In Nature
             </Typography>
-            {/* <ul
-              className="text-left"
-              style={{
-                textAlign: "left",
-                listStyle: "none",
-                display: "flex",
-                justifyContent:"flex-start"
-              }}
-            >
-              <li className="ml-2">About</li>
-              <li className="ml-2">Contact</li>
-              <li className="ml-2">Feedback</li>
-            </ul> */}
             <p>About</p> <p>Contact</p> <p>Feedback</p>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
@@ -90,10 +77,10 @@ export default function StickyFooter() {
               Follow us
             </Typography>
             <IconButton>
-              <FacebookIcon />
+              <FacebookIcon fontSize="large" />
             </IconButton>
             <IconButton>
-              <InstagramIcon />
+              <InstagramIcon fontSize="large" />
             </IconButton>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 ">
@@ -103,23 +90,6 @@ export default function StickyFooter() {
             {pimages.map((image, index) => (
               <img key={index} src={image.img} />
             ))}
-            {/* <form className="form-group">
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Name"
-                />
-              </div>
-              <div className="form-group">
-                {" "}
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Email Address"
-                />
-              </div>
-            </form> */}
           </div>
         </div>
       </Container>
