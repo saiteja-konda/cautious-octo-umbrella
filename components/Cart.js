@@ -48,60 +48,70 @@ export default function Cart({ openCart, setOpenCart }) {
   const classes = useStyles();
   const theme = useTheme();
   const { cart } = useStoreState((state) => state.vox);
-  const { removeFromCart } = useStoreActions((state) => state.vox);
+  const { removeFromCart, increase, decrease } = useStoreActions(
+    (state) => state.vox
+  );
   const cartTotalCounter = () => {
     let count = 0;
-    cart.forEach((e) => {
-      count = e.price + count;
-    });
+    cart?.lineItems?.filter((p) => p.quantity >= 1).forEach((e) => {
+        count = (e.price * e.quantity) + count;
+      });
     return count;
   };
   const sum = cartTotalCounter();
 
   const Items = () => {
-    if (cart.length != 0) {
+    if (cart.lineItems.length != 0) {
       return (
         <>
-          {cart?.map((product) => (
-            <div key={product.id} className="row mt-4">
-              <div className="col-4">
-                <img
-                  src={product.image}
-                  style={{
-                    height: "100px",
-                    width: "100px",
-                    objectFit: "contain",
-                    marginLeft: "10px",
-                    marginBottom: "10px",
-                  }}
-                />
-              </div>
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-12">
-                    <h6 style={{ fontSize: "14px" }}> {product.title}</h6>
-                  </div>
-                  <div className="col-12 mt-1">
-                    <div className="product-quantity">
-                      <span className="product-quantity-minus"></span>
-                      <input type="number" value="0" />
-                      <span className="product-quantity-plus"></span>
+          {cart?.lineItems?.filter((product) => product.quantity >= 1).map((product) => (
+              <div key={product.id} className="row mt-4">
+                <div className="col-4">
+                  <img
+                    src={product.image}
+                    style={{
+                      height: "100px",
+                      width: "100px",
+                      objectFit: "contain",
+                      marginLeft: "10px",
+                      marginBottom: "10px",
+                    }}
+                  />
+                </div>
+                <div className="col-6">
+                  <div className="row">
+                    <div className="col-12">
+                      <h6 style={{ fontSize: "14px" }}> {product.title}</h6>
+                    </div>
+                    <div className="col-12 mt-1">
+                      <div className="product-quantity">
+                        <span
+                          className="product-quantity-minus"
+                          onClick={() => decrease(product)}
+                        ></span>
+                        <input type="number" value={product.quantity} />
+                        <span
+                          className="product-quantity-plus"
+                          onClick={() => increase(product)}
+                        ></span>
+                      </div>
+                      <div className="col-12 mt-1">
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="col-2">
+                  <h5 style={{ fontSize: "14px" }}>₹{product.price}</h5>
+                  <IconButton
+                    onClick={() => {
+                      removeFromCart(product.id);
+                    }}
+                  >
+                    <DeleteTwoTone color="error" size="small" />
+                  </IconButton>
+                </div>
               </div>
-              <div className="col-2">
-                <h5 style={{ fontSize: "14px" }}>₹{product.price}</h5>
-                <IconButton
-                  onClick={() => {
-                    removeFromCart(product.id);
-                  }}
-                >
-                  <DeleteTwoTone color="error" size="small" />
-                </IconButton>
-              </div>
-            </div>
-          ))}
+            ))}
           <h5 className="mt-5"></h5>
           <Divider />
           <h5 className="mt-3" style={{ color: "#a5a5a5", fontSize: "14px" }}>

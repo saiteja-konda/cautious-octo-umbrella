@@ -5,7 +5,6 @@ import StickyFooter from "../components/StickyFooter";
 import SecondayNav from "../components/SecondayNav";
 import Newsletter from "../components/Newsletter";
 import Testmonials from "../components/Testmonials";
-import Hero from "../components/Hero";
 import ProductsSection from "../components/ProductsSection";
 import HeroSection from "../components/HeroSection";
 
@@ -15,17 +14,8 @@ const Home = ({ user, setUser, products }) => {
       <Head>
         <title>Bask In Nature</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Bask in Nature Beauty, Cosmetic,Personal Care 🍃 100% Natural Skin & Hair Recipes🍃 Handcrafted, Fresh"
-        />
       </Head>
-      <Navbar01scrollToColor
-        title="Baskin In Nature"
-        user={user}
-        setUser={setUser}
-      />
+      <Navbar01scrollToColor title="Baskin In Nature" user={user} setUser={setUser}/>
       <HeroSection />
       <SecondayNav />
       <ProductsSection products={products} />

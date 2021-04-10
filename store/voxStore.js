@@ -1,13 +1,17 @@
 import { action, thunk, computed } from "easy-peasy";
 import axios from "axios";
 import { baseUrl, authUrl } from "../utils/urlConfig";
+import shortid from "shortid";
 
 export const voxStore = {
   products: [],
   product: {},
   categories: [],
   category: {},
-  cart: [],
+  cart: {
+    id: "false",
+    lineItems: [],
+  },
   token: {},
   error: {},
 
@@ -179,22 +183,47 @@ export const voxStore = {
   }),
 
   //Cart
-  len: computed((state) => state.cart.length),
+  len: computed((state) => state.cart.lineItems.length),
   setToCart: action((state, payload) => {
-    if (!state.cart.find((prod) => prod.id === payload.id)) {
-      state.cart.push(payload);
+    if (state.cart.id === "false") {
+      state.cart.id = shortid();
+    }
+    if (!state.cart.lineItems.find((prod) => prod.id === payload.id)) {
+      payload.quantity = 1;
+      state.cart.lineItems.push(payload);
     }
   }),
-
   addToCart: thunk(async (actions, id) => {
     actions.setToCart(id);
   }),
   deleteFromCart: action((state, id) => {
-    const newList = state.cart.filter((product) => product.id != id);
-    state.cart = newList;
+    const newList = state.cart.lineItems.filter((product) => product.id != id);
+    state.cart.lineItems = newList;
   }),
   removeFromCart: thunk(async (actions, id) => {
     actions.deleteFromCart(id);
+  }),
+  increaseProductQty: action((state, id) => {
+    state.cart.lineItems.forEach((product) => {
+      if (product.id === id) {
+        product.quantity = product.quantity + 1;
+      }
+    });
+  }),
+  increase: thunk(async (actions, product) => {
+    actions.increaseProductQty(product.id);
+  }),
+  decreaseProductQty: action((state, id) => {
+    state.cart.lineItems.forEach((product) => {
+      if (product.id === id && product.quantity >= 0) {
+        product.quantity = product.quantity - 1;
+      }
+    });
+  }),
+  decrease: thunk(async (actions, product) => {
+    if (product.quantity === 1) {
+      actions.deleteFromCart(product.id);
+    } else actions.decreaseProductQty(product.id);
   }),
 };
 

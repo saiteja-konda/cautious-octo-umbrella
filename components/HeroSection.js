@@ -48,7 +48,7 @@ function HeroSection() {
         color: "white",
       }}
     >
-      <Carousel indicators={false}>
+      <Carousel indicators={false} animation="slide">
         {images.map((item, i) => (
           <img
             style={{ height: "660px", width: "100%", objectFit: "cover" }}
