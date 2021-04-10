@@ -7,7 +7,6 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { Button, Container } from "@material-ui/core";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { DeleteTwoTone } from "@material-ui/icons";
