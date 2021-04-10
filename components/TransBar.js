@@ -16,7 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Link from "next/link";
-import Cart from "./Cart";
+import Cart from "./Cart/Cart";
 const useStyles = makeStyles({
   // This group of buttons will be aligned to the right
   rightToolbar: {

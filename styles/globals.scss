@@ -19,13 +19,33 @@
 }
 
 @font-face {
-  font-family: PDB ;
+  font-family: PDB;
   src: url("../public/fonts/PlayfairDisplay-Black.ttf");
 }
 
+input :focus {
+  outline: none !important;
+}
+button :focus {
+  outline: none !important;
+}
+select :focus {
+  outline: none !important;
+}
+
+btn:focus, a:focus
+{
+         outline: none;
+}
+.navbar-toggler:focus
+{
+         outline: none !important;
+         box-shadow: none;
+}
+
 * {
-  font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
 }
 table {
   font-family: arial, sans-serif;
@@ -42,7 +62,6 @@ table {
   width: 100%;
 }
 
-
 .background-image {
   position: fixed;
   left: 0;
@@ -54,9 +73,7 @@ table {
   background-size: cover;
 }
 
-
 // scroll
-
 
 /* width */
 ::-webkit-scrollbar {
@@ -78,7 +95,7 @@ table {
   background: #555;
 }
 
-// hero 
+// hero
 
 .hero {
   position: relative;
@@ -92,7 +109,6 @@ table {
   transform: translate(-50%, -50%);
 }
 
-
 // testmonials
 
 .gtco-testimonials {
@@ -103,15 +119,13 @@ table {
 .test {
   margin-bottom: 100px;
   display: flex;
-  
 }
-
 
 @media (max-width: 767px) {
   .gtco-testimonials {
     margin-top: 20px;
   }
-  .test{
+  .test {
     flex-direction: column;
   }
 }
@@ -207,7 +221,7 @@ table {
 // incrementer
 
 .product-quantity > * {
-    width: 32.9px;
+  width: 32.9px;
 }
 
 .product-quantity > input[type="number"]::-webkit-inner-spin-button,
@@ -245,12 +259,14 @@ table {
   content: "-";
 }
 
-.product-quantity-plus, .product-quantity-minus{
+.product-quantity-plus,
+.product-quantity-minus {
   cursor: pointer;
 }
 
-.product-quantity-plus:before, .product-quantity-minus:before {
-    width: 11px;
-    display: block;
-    margin: 0 auto;
+.product-quantity-plus:before,
+.product-quantity-minus:before {
+  width: 11px;
+  display: block;
+  margin: 0 auto;
 }
