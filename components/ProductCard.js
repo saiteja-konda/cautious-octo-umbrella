@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   createMuiTheme,
   makeStyles,
@@ -10,6 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
+import Chip from "@material-ui/core/Chip";
+
 import excerpts from "excerpts";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Link from "next/link";
@@ -65,7 +67,12 @@ export default function ProductCard({
 }) {
   const classes = useStyles();
   const { addToCart } = useStoreActions((state) => state.vox);
+  const [ops, setOps] = useState([]);
 
+  let test = JSON.parse(product.list.options);
+  useEffect(() => {
+    setOps(test[0]);
+  },[]);
   const theme = createMuiTheme({
     props: {
       MuiButton: {
@@ -113,8 +120,13 @@ export default function ProductCard({
               {excerpts(description, { characters: 150 })}
             </Typography>
             <Divider className={classes.divider} light />
+            <Chip
+              size="small"
+              className={classes.divider}
+              label={`size ${ops.label}`}
+            />
             <Typography variant="h6" className={classes.price}>
-              ₹{price}
+              ₹{ops.price}
             </Typography>
             <Button
               size="small"

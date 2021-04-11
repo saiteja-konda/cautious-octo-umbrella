@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import voxStore from "../store/voxStore";
+import voxStore from "../data/voxStore";
 
 function EditModal({ setOpen }) {
   const { product, categories } = useStoreState((state) => state.vox);
@@ -73,7 +73,7 @@ function EditModal({ setOpen }) {
                   price,
                   stockInUnits,
                   id: product.id,
-                  image,
+                  image:product.image,
                 });
 
                 setOpen(false);

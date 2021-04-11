@@ -22,8 +22,18 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [stockInUnits, setstockInUnits] = useState(0);
-
+  const [q1, setQ1] = useState({ lable: null, price: null });
+  const [q2, setQ2] = useState({ lable: null, price: null });
+  const [q3, setQ3] = useState({ lable: null, price: null });
+  const [q4, setQ4] = useState({ lable: null, price: null });
   const { categories } = useStoreState((state) => state.vox);
+
+  const test = [
+    { label: q1.lable, price: q1.price },
+    { label: q2.lable, price: q2.price },
+    { label: q3.lable, price: q3.price },
+    { label: q4.lable, price: q4.price },
+  ];
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -86,6 +96,10 @@ function AddProduct() {
           price,
           stockInUnits,
           image: await imageUpload(),
+          list: {
+            title: "size",
+            options: JSON.stringify(test),
+          },
         })
         .then((res) => console.log(res.data))
         .then(() => router.push("/admin/products"));
@@ -134,15 +148,12 @@ function AddProduct() {
       style={{
         height: "100vh",
         color: "#fff",
-        backgroundColor: "#00203FFF",
+        // backgroundColor: "#00203FFF",
       }}
     >
       <AdminNavBar />
 
-      <div
-        className="container mt-5 p-5 "
-        style={{ backgroundColor: "#00203FFF" }}
-      >
+      <div className="container  p-5 " style={{ color: "#00203FFF" }}>
         <h5 className="mb-4">Add Product</h5>
         <form onSubmit={handProductSubmit}>
           <div className="row">
@@ -180,13 +191,13 @@ function AddProduct() {
               </div>
               <div style={{ display: "flex" }}>
                 <div className="form-group">
-                  <label>Price </label>
+                  {/* <label>Price </label>
                   <input
                     className="form-control mr-3 "
                     style={{ width: "50%" }}
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                  />
+                  /> */}
                 </div>
                 <div className="form-group">
                   <label> Units In Stock </label>
@@ -196,6 +207,95 @@ function AddProduct() {
                     value={stockInUnits}
                     onChange={(e) => setstockInUnits(e.target.value)}
                   />
+                </div>
+              </div>
+
+              <h6 className="form-group">Sizes</h6>
+              <div className="d-flex">
+                <br />
+                <div className="form-group">
+                  <label>Quanity 1</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q1.lable}
+                    onChange={(e) => setQ1({ ...q1, lable: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Price</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q1.price}
+                    onChange={(e) => setQ1({ ...q1, price: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex">
+                <br />
+                <div className="form-group">
+                  <label>Quanity</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q2.lable}
+                    onChange={(e) => setQ2({ ...q2, lable: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Price</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q2.price}
+                    onChange={(e) => setQ2({ ...q2, price: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex">
+                <br />
+                <div className="form-group">
+                  <label>Quanity</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q3.lable}
+                    onChange={(e) => setQ3({ ...q3, lable: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Price</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q3.price}
+                    onChange={(e) => setQ3({ ...q3, price: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="d-flex">
+                <br />
+                <div className="form-group">
+                  <label>Quanity</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q4.lable}
+                    onChange={(e) => setQ4({ ...q4, lable: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Price</label>
+                  <input
+                    className="form-control"
+                    style={{ width: "50%" }}
+                    value={q4.price}
+                    onChange={(e) => setQ4({ ...q4, price: e.target.value })}
+                  />
+                  
                 </div>
               </div>
             </div>
