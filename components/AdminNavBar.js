@@ -5,7 +5,7 @@ import Link from "next/link";
 function AdminNavBar() {
   const router = useRouter();
 
-  export const LogoutFun = (e) => {
+ const LogoutFun = (e) => {
     e.preventDefault();
     localStorage.removeItem("admin");
     router.push("/");
