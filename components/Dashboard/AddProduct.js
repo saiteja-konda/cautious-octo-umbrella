@@ -129,9 +129,9 @@ function AddProduct({ handleClose, categories, getProducts }) {
           onClick={handleClick}
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-LIuw85eKZxCJ2cIWs0bAmdWbdlMbPBtoKR6PLl8VjMUelxkCEtB7IHm9j4Vy_xEYAr4&usqp=CAU"
           style={{
-            height: "150px",
+            height: "350px",
             backgroundColor: "#606060FF",
-            width: "150px",
+            width: "300px",
             objectFit: "cover",
             borderRadius: "8px",
           }}
@@ -144,8 +144,8 @@ function AddProduct({ handleClose, categories, getProducts }) {
             src={previewSource}
             alt="chosen"
             style={{
-              height: "150px",
-              width: "150px",
+              height: "350px",
+              width: "300px",
               objectFit: "contain",
               borderRadius: "8px",
             }}
@@ -256,46 +256,8 @@ function AddProduct({ handleClose, categories, getProducts }) {
         size={400}
       />
       <div className="container-xl">
-        <div className="row mt-3">
-          <div className="col-6"></div>
-          <div
-            className="col-6"
-            style={{
-              position: "absolute",
-              top: "68%",
-              left: "50%",
-            }}
-          >
-            <div>{renderDummy}</div>
-            <input
-              id="fileInput"
-              type="file"
-              name="image"
-              onChange={handleFileInputChange}
-              value={fileInputState}
-              className="form-input"
-              ref={hiddenFileInput}
-              style={{
-                display: "none",
-                position: "absolute",
-                marginTop: "55vh",
-              }}
-              accept="image/*"
-              component={TextField}
-            />
-            <div
-              className="btn btn-sm mt-3 mb-3"
-              style={{
-                backgroundColor: "#ADEFD1FF",
-                color: "#00203FFF",
-                width: "150px",
-              }}
-              onClick={handleClick}
-            >
-              Select Image
-            </div>
-          </div>
-          <div className="col-12">
+        <div className="row mt-3 mr-1 ml-1">
+          <div className="col-6">
             <Typography color="primary" variant="caption">
               Product Details
             </Typography>
@@ -310,8 +272,7 @@ function AddProduct({ handleClose, categories, getProducts }) {
               {(props) => (
                 <Form>
                   <div className="row">
-                    <div className="col-6">
-                      {" "}
+                    <div className="">
                       <Field
                         required
                         size="small"
@@ -352,38 +313,10 @@ function AddProduct({ handleClose, categories, getProducts }) {
                         label="Stock in Units"
                         component={TextField}
                       />
-                    </div>
-                    <div className="col-6">
-                      <Typography component="div">
-                        <Grid
-                          component="label"
-                          container
-                          alignItems="center"
-                          spacing={1}
-                        >
-                          <Grid item>
-                            <Typography variant="caption">Publish</Typography>
-                          </Grid>
-                          <Grid item>
-                            <Switch
-                              checked={publish}
-                              onChange={() =>
-                                !publish ? setPublish(true) : setPublish(false)
-                              }
-                              name="checked"
-                              color="primary"
-                            />
-                          </Grid>
-                        </Grid>
-                        <Typography color="error" variant="caption">
-                          Disable this to save this product as draft
-                        </Typography>
-                      </Typography>
-                      <div style={{ marginTop: "20px" }} />
-                      <Typography color="primary" variant="caption">
-                        Product variants
-                      </Typography>
                       <div>
+                        <Typography color="primary" variant="caption">
+                          Product variants
+                        </Typography>
                         <div
                           style={{
                             display: "flex",
@@ -543,10 +476,40 @@ function AddProduct({ handleClose, categories, getProducts }) {
                           />
                         </div>
                       </div>
+                      <Typography component="div">
+                        <Grid
+                          component="label"
+                          container
+                          alignItems="center"
+                          spacing={1}
+                        >
+                          <Grid item>
+                            <Typography variant="caption">Publish</Typography>
+                          </Grid>
+                          <Grid item>
+                            <Switch
+                              checked={publish}
+                              onChange={() =>
+                                !publish ? setPublish(true) : setPublish(false)
+                              }
+                              name="checked"
+                              color="primary"
+                            />
+                          </Grid>
+                        </Grid>
+                        <Typography color="error" variant="caption">
+                          Disable this to save this product as draft
+                        </Typography>
+                      </Typography>
+                      <div style={{ marginTop: "20px" }} />
                     </div>
-                    <div className="col-6">
+                    <div className=""></div>
+                    <div className="">
                       {" "}
-                      <div className="d-flex" style={{ marginTop: "80px" }}>
+                      <div
+                        className="d-flex"
+                        style={{ marginTop: "20px", marginBottom: "20px" }}
+                      >
                         <div>
                           <button
                             type="submit"
@@ -576,6 +539,38 @@ function AddProduct({ handleClose, categories, getProducts }) {
                 </Form>
               )}
             </Formik>
+          </div>
+          <div className="col-6">
+            <div className="col-6">
+              <div>{renderDummy}</div>
+              <input
+                id="fileInput"
+                type="file"
+                name="image"
+                onChange={handleFileInputChange}
+                value={fileInputState}
+                className="form-input"
+                ref={hiddenFileInput}
+                style={{
+                  display: "none",
+                  position: "absolute",
+                  marginTop: "55vh",
+                }}
+                accept="image/*"
+                component={TextField}
+              />
+              <div
+                className="btn btn-sm mt-3 mb-3"
+                style={{
+                  backgroundColor: "#ADEFD1FF",
+                  color: "#00203FFF",
+                  width: "150px",
+                }}
+                onClick={handleClick}
+              >
+                Select Image
+              </div>
+            </div>
           </div>
         </div>
       </div>
