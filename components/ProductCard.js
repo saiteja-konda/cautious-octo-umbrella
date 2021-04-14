@@ -9,12 +9,15 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import { Button } from "@material-ui/core";
-import Chip from "@material-ui/core/Chip";
+import { Button, Select } from "@material-ui/core";
 
 import excerpts from "excerpts";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Link from "next/link";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles({
   card: {
     maxWidth: 300,
@@ -56,20 +59,41 @@ const useStyles = makeStyles({
   link: {
     color: "black",
   },
+  chip: {
+    marginTop: "20px",
+    marginRight: "20px",
+  },
+  select: {
+    fontSize: "12px",
+  },
 });
 
-export default function ProductCard({
-  title,
-  image,
-  price,
-  description,
-  product,
-}) {
+export default function ProductCard({ title, image, description, product }) {
   const classes = useStyles();
   const { addToCart } = useStoreActions((state) => state.vox);
   const [ops, setOps] = useState([]);
-
+  const [selected, setSelected] = useState(null);
+  const { cart } = useStoreState((state) => state.vox);
+  const note = (string) => {
+    toast.dark(string, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
   let test = JSON.parse(product.list.options);
+
+  const notificationFunction = (id) => {
+    if (cart.lineItems?.some((o) => product.id === id) === true) {
+      note("Item is already in your cart");
+    } else if (cart.lineItems?.some((o) => product.id === id) === false) {
+      note("Item added to cart to successfully ");
+    }
+  };
   useEffect(() => {
     setOps(test[0]);
   },[]);
@@ -120,23 +144,66 @@ export default function ProductCard({
               {excerpts(description, { characters: 150 })}
             </Typography>
             <Divider className={classes.divider} light />
-            <Chip
-              size="small"
-              className={classes.divider}
-              label={`size ${ops.label}`}
-            />
+            <div className="d-flex mt-2">
+              <div>
+                <Typography className="mr-2" variant="subtitle2">
+                  Quantity
+                </Typography>
+              </div>
+              <div>
+                <Select
+                  native
+                  onChange={(e) => {
+                    setSelected(e.target.value);
+                  }}
+                  displayEmpty
+                  className={classes.select}
+                >
+                  {test
+                    .filter((o) => o.label != null)
+                    .map((o) => (
+                      <option key={o.label} id={o.label} value={o.price}>
+                        {o.label}
+                      </option>
+                    ))}
+                </Select>
+              </div>
+            </div>
             <Typography variant="h6" className={classes.price}>
-              ₹{ops.price}
+              M R P ₹{selected === null ? ops.price : selected}
             </Typography>
             <Button
               size="small"
               className={classes.button}
               variant="contained"
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                product["choice"] =
+                  selected === null
+                    ? test.filter((o) => o.price === ops.price)
+                    : test.filter((o) => o.price === selected);
+                product["options"] = test.filter((o) => o.label !== null);
+                product.price = parseInt(
+                  selected === null ? ops.price : selected
+                );
+                addToCart(product);
+                notificationFunction(product.id);
+              }}
             >
               Add to Card
             </Button>
           </CardContent>
+
+          <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Card>
       </ThemeProvider>
     </div>

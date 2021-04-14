@@ -1,5 +1,5 @@
 import AdminNavBar from "../../components/AdminNavBar";
-import Dashboard from "./dashboard";
+import Paperbase from "../../components/Dashboard/Paperbase";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import AdminLogin from "./login";
@@ -19,14 +19,10 @@ const Admin = () => {
     if (!isLoggedIn) {
       return <AdminLogin />;
     } else {
-      return <Dashboard />;
+      return <Paperbase />;
     }
   };
   const renderAdminArea = admin();
-  return (
-    <>
-      {renderAdminArea}
-    </>
-  );
+  return <>{renderAdminArea}</>;
 };
 export default Admin;

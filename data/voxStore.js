@@ -6,7 +6,7 @@ import shortid from "shortid";
 export const voxStore = {
   products: [],
   product: {},
-  categories: [],
+  categories: [{ name: "All Categories" }],
   category: {},
   cart: {
     id: "false",
@@ -14,6 +14,17 @@ export const voxStore = {
   },
   token: {},
   error: {},
+  tempUrl: "",
+
+  // TempUrl
+
+  getUrl: action((state, payload) => {
+    state.tempUrl = payload;
+  }),
+
+  setUrl: thunk((actions, payload) => {
+    actions.getUrl(payload);
+  }),
 
   // Error
 
@@ -87,7 +98,7 @@ export const voxStore = {
 
   // Category
   setCategories: action((state, data) => {
-    state.categories = data;
+    state.categories = [{ id: "", name: "All Categories " }, ...data];
   }),
   getCategories: thunk(async (actions, id) => {
     axios
@@ -116,9 +127,11 @@ export const voxStore = {
   createCategory: thunk(async (actions, payload) => {
     axios
       .post(`${baseUrl}/categories`, payload)
-      .then((res) => actions.addCategory(res.data))
+      .then((res) => {
+        actions.addCategory(res.data);
+      })
       .catch((err) => {
-        console.log(err);
+        window.alert(`Category with name ${payload.name} already exists`);
       });
   }),
 
@@ -157,7 +170,7 @@ export const voxStore = {
   signup: thunk(async (actions, payload) => {
     axios
       .post(`${authUrl}/users/register`, payload)
-      .then((res) => console.log(res.data))
+      // .then((res) => console.log(res.data))
       .catch((err) => {
         console.error(err);
       });
@@ -184,6 +197,7 @@ export const voxStore = {
 
   //Cart
   len: computed((state) => state.cart.lineItems.length),
+
   setToCart: action((state, payload) => {
     if (state.cart.id === "false") {
       state.cart.id = shortid();
@@ -192,6 +206,13 @@ export const voxStore = {
       payload.quantity = 1;
       state.cart.lineItems.push(payload);
     }
+  }),
+  PriceChanger: action((state, payload) => {
+    state.cart.lineItems.find((o) => o.id === payload.id).price =
+      payload.newPrice;
+  }),
+  changePrice: thunk((actions, payload) => {
+    actions.PriceChanger(payload);
   }),
   deleteFromCart: action((state, id) => {
     const newList = state.cart.lineItems.filter((product) => product.id != id);

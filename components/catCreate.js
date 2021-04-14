@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStoreActions } from "easy-peasy";
 function CatCreate({setOpenCatCreate}) {
-  const { createCategory } = useStoreActions((state) => state.vox);
+  const { createCategory,getCategories } = useStoreActions((state) => state.vox);
   const [name, setName] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,6 +10,7 @@ function CatCreate({setOpenCatCreate}) {
     };
     createCategory(cat);
     setOpenCatCreate(false)
+    getCategories();
   };
   return (
     <>

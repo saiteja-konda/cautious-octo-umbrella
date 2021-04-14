@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: "auto",
+    padding: theme.spacing(0,2),
+    marginTop: "0px",
   },
   button1: {
     backgroundColor: "white",
@@ -38,7 +38,7 @@ export default function Total({ sum }) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{ marginTop: "400px" }}>
+    <div className={classes.root} >
       <CssBaseline />
       <Container
         component="main"
@@ -49,7 +49,7 @@ export default function Total({ sum }) {
         <Container maxWidth="lg">
           <Divider />
           <h5
-            className="mt-3 mb-5"
+            className="mt-3 mb-2"
             style={{ color: "#a5a5a5", fontSize: "14px" }}
           >
             Subtotal{" "}

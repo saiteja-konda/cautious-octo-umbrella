@@ -72,7 +72,7 @@ export default function Cart({ openCart, setOpenCart }) {
         className={classes.drawer}
         variant="persistent"
         anchor="right"
-        open={openCart}
+        open={true}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -102,7 +102,7 @@ export default function Cart({ openCart, setOpenCart }) {
           >
             {message}
           </span>
-          <Total />
+          <Total sum={sum}/>
         </>
       </Drawer>
     </div>

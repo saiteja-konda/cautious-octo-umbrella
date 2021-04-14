@@ -10,7 +10,9 @@ import { css } from "@emotion/core";
 import BarLoader from "react-spinners/BarLoader";
 import CatCreate from "../../components/catCreate";
 import CatEdit from "../../components/catEdit";
-
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteForeverTwoToneIcon from "@material-ui/icons/DeleteForeverTwoTone";
+import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 function products() {
   const { products, categories } = useStoreState((state) => state.vox);
   const {
@@ -51,12 +53,11 @@ function products() {
   return (
     <div
       style={{
-        backgroundColor: "#161e2e",
+        backgroundColor: "#fff",
         height: "100vh",
-        color: "#fff",
+        color: "#000",
       }}
     >
-      <AdminNavBar />
       <div className="container mt-5">
         <div className="mb-5">
           <button
@@ -68,7 +69,7 @@ function products() {
             }}
             onClick={() => router.push("/admin/addproduct")}
           >
-            <i className="fas fa-plus"></i> New Product
+            <AddCircleTwoToneIcon /> New Product
           </button>
           <button
             className="btn"
@@ -81,7 +82,7 @@ function products() {
               setOpenCatCreate(true);
             }}
           >
-            <i className="fas fa-plus"></i> New Category
+            <AddCircleTwoToneIcon /> New Category
           </button>
         </div>
 
@@ -109,7 +110,7 @@ function products() {
                         className="btn btn-sm btn-info"
                         value={product.id}
                       >
-                        <i className="fas fa-pencil-alt"></i>
+                        <EditIcon />
                       </button>
                     </td>
                     <td>
@@ -118,7 +119,7 @@ function products() {
                         value={product.id}
                         onClick={() => deleteProduct(product.id)}
                       >
-                        <i className="fas fa-trash"></i>
+                        <DeleteForeverTwoToneIcon />
                       </button>
                     </td>
                   </tr>
@@ -150,7 +151,7 @@ function products() {
                         className="btn btn-sm btn-info"
                         value={category.id}
                       >
-                        <i className="fas fa-pencil-alt"></i>
+                        <EditIcon />
                       </button>
                     </td>
                     <td>
@@ -159,7 +160,7 @@ function products() {
                         value={category.id}
                         onClick={() => deleteCategory(category.id)}
                       >
-                        <i className="fas fa-trash"></i>
+                        <DeleteForeverTwoToneIcon />
                       </button>
                     </td>
                   </tr>

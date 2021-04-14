@@ -1,22 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Select } from "@material-ui/core";
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 import RemoveCircleTwoToneIcon from "@material-ui/icons/RemoveCircleTwoTone";
 
-import { useStoreState, useStoreActions } from "easy-peasy";
+import { useStoreActions } from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({}));
 
 export default function CartItem({ product }) {
   const classes = useStyles();
-  const { removeFromCart, increase, decrease } = useStoreActions(
+  const { removeFromCart, increase, decrease, changePrice } = useStoreActions(
     (state) => state.vox
   );
+  const [localPrice, setLocalPrice] = useState(product.price);
+  const priceChanger = (e) => {
+    setLocalPrice(e.target.value);
+  };
+
+  const typesRaw = JSON.parse(product.types.options);
+  const types = typesRaw.filter((o) => o.label != null);
+
+  useEffect(() => {
+    changePrice({
+      id: product.id,
+      newPrice: parseInt(localPrice),
+    });
+  }, [localPrice]);
   return (
     <div>
       <div style={{ padding: "15px" }}>
@@ -28,7 +41,7 @@ export default function CartItem({ product }) {
                 style={{
                   width: "100px",
                   height: "100px",
-                  objectFit: "contain",
+                  objectFit: "cover",
                 }}
                 alt="complex"
                 src={product.image}
@@ -41,9 +54,20 @@ export default function CartItem({ product }) {
                 <Typography gutterBottom variant="subtitle1">
                   {product.title}
                 </Typography>
-                <Typography variant="subtitle2" gutterBottom>
-                 100 ml 500 ml
-                </Typography>
+                {product.options?.map((o) => (
+                  <button
+                    className={
+                      o.price === localPrice
+                        ? "badge badge-pill badge-info btn mr-1"
+                        : "badge badge-pill badge-light btn mr-1"
+                    }
+                    value={o.price}
+                    onClick={priceChanger}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+                <br />
                 <Typography variant="caption">Quantity</Typography>
                 <IconButton onClick={() => decrease(product)}>
                   <RemoveCircleTwoToneIcon fontSize="small" />
@@ -54,6 +78,25 @@ export default function CartItem({ product }) {
                 <IconButton onClick={() => increase(product)}>
                   <AddCircleTwoToneIcon fontSize="small" />
                 </IconButton>
+                <br />
+                {types.length > 0 ? (
+                  <>
+                    <Typography variant="caption">Choose option </Typography>
+                    <select
+                      onChange={(e) => {
+                        // voxStore Action
+                      }}
+                    >
+                      {types.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                ) : (
+                  ""
+                )}
               </Grid>
               <Grid item>
                 <Typography

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import CartItem from "./CartItem";
 import { useStoreState, useStoreActions } from "easy-peasy";
+import Total from "./Total";
 
 function CartMaterial() {
   const { cart, len } = useStoreState((state) => state.vox);
@@ -10,10 +11,9 @@ function CartMaterial() {
       {cart.lineItems
         ?.filter((product) => product.quantity >= 1)
         .map((product) => (
-          <CartItem
-            product={product}
-          />
+          <CartItem  product={product} />
         ))}
+      {/* <Total /> */}
     </div>
   );
 }

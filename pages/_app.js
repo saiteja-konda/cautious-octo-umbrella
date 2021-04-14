@@ -11,7 +11,6 @@ import WhatsAppWidget from "react-whatsapp-widget";
 import "react-whatsapp-widget/dist/index.css";
 import "../styles/globals.scss";
 import "../styles/style.scss";
-
 // import { useRouter } from "next/router";
 
 export default function MyApp(props) {
@@ -54,7 +53,7 @@ export default function MyApp(props) {
           right: "1em",
         }}
       > */}
-          <WhatsAppWidget
+          {/* <WhatsAppWidget
             phoneNumber="9666934040"
             companyName="Bask In Nature"
             message="Hi, this is Gai from Bask In Nature, How can I help you?"
@@ -64,7 +63,7 @@ export default function MyApp(props) {
               top: "1em",
               right: "1em",
             }}
-          />
+          /> */}
           {/* </div> */}
         </ThemeProvider>
       </StoreProvider>

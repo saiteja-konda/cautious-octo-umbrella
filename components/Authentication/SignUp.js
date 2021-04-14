@@ -1,23 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
-
-import Button from "@material-ui/core/Button";
+import { useStoreActions } from "easy-peasy";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-
-import TransBar from "./TransBar";
-
+import TransBar from "../TransBar";
+import { Button } from "@material-ui/core";
+import axios from "axios";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "material-ui-formik-components/TextField";
+import { authUrl } from "../../utils/urlConfig";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import axios from "axios";
-import { authUrl } from "../utils/urlConfig";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%",
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -56,46 +53,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login({ user, setUser }) {
+export default function SignUp({ user, setUser }) {
   const classes = useStyles();
   const router = useRouter();
+  const { signup } = useStoreActions((state) => state.vox);
   const formRef = useRef();
-  const note = () => {
-    toast.error("Invalid Username or Password please try again", {
-      position: "bottom-left",
-      autoClose: 5000,
-      hideProgressBar: false,
+  const [errorMessage, setErrorMessage] = useState({});
+  const note = (msg) => {
+    toast.error(msg, {
+      position: "bottom-right",
+      autoClose: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
     });
   };
-  const handleLogin = () => {
-    const loginObject = {
+  const handleSignUp = () => {
+    const registerObject = {
       username: formRef.current.values.username,
+      fullName: formRef.current.values.username,
       password: formRef.current.values.password,
+      confirmPassword: formRef.current.values.confirmPassword,
     };
 
     axios
-      .post(`${authUrl}/users/login`, loginObject)
+      .post(`${authUrl}/users/register`, registerObject)
       .then((res) => {
-        localStorage.setItem("token", JSON.stringify(res.data));
+        // localStorage.setItem("token", JSON.stringify(res.data));
+        // console.log(res.data);
       })
       .then(() => {
-        setUser(true);
-        router.push("/");
+        router.push("/user/login");
       })
       .catch((err) => {
-        note();
+        setErrorMessage(err.response.data);
+        let msg = [];
+        for (var key in errorMessage) {
+          var value = errorMessage[key].toString();
+          msg.push({ message: value });
+        }
+        console.log(msg);
+        msg.forEach((m) => {
+          note(m.message);
+        });
       });
   };
 
   const validationSchema = Yup.object({
-    username: Yup.string("Enter your username")
-      .required("Username is required")
+    username: Yup.string()
+      .email("Enter your username")
+      .required("Email is required")
       .max(40),
-    password: Yup.string().required("Password can't be empty"),
+    password: Yup.string().required("Password can't be empty").min(6),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match"
+    ),
   });
   return (
     <Grid container component="main" className={classes.root}>
@@ -115,21 +130,29 @@ export default function Login({ user, setUser }) {
             initialValues={{
               username: "",
               password: "",
+              fullName: "",
+              confirmPassword: "",
             }}
-            onSubmit={() => {
-              handleLogin();
-            }}
+            onSubmit={(values) => handleSignUp(values)}
             validationSchema={validationSchema}
             innerRef={formRef}
           >
-            {(props) => (
+            {(formik) => (
               <Form>
                 <Field
                   required
                   size="small"
                   variant="outlined"
+                  name="fullName"
+                  label="Full lName"
+                  component={TextField}
+                />
+                <Field
+                  required
+                  size="small"
+                  variant="outlined"
                   name="username"
-                  label="User Name"
+                  label="Email"
                   component={TextField}
                 />
 
@@ -139,7 +162,16 @@ export default function Login({ user, setUser }) {
                   variant="outlined"
                   type="password"
                   name="password"
-                  label="Password"
+                  label="password"
+                  component={TextField}
+                />
+                <Field
+                  required
+                  size="small"
+                  variant="outlined"
+                  type="password"
+                  name="confirmPassword"
+                  label="Confirm Password"
                   component={TextField}
                 />
                 <Button
@@ -148,22 +180,19 @@ export default function Login({ user, setUser }) {
                   className={classes.button}
                   type="submit"
                 >
-                  Login
+                  SignUp
                 </Button>
               </Form>
             )}
           </Formik>
-
           <ToastContainer
-            position="bottom-left"
-            autoClose={5000}
-            hideProgressBar={false}
+            position="bottom-right"
+            autoClose={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
             pauseOnFocusLoss
             draggable
-            pauseOnHover
           />
         </div>
       </Grid>
