@@ -32,11 +32,10 @@ function AddProduct({ handleClose, categories, getProducts }) {
   const [dvalue, setDvalue] = useState(null);
   const override = css`
     display: block;
-    margin: 0 auto;
+    // margin: 0 auto;
     border-color: red;
-    // margin-top: 20px;
     // left: 100%;
-    width: "100%";
+    width: "400px";
   `;
   const handleDesc = (value) => {
     setDvalue(value);
@@ -247,14 +246,6 @@ function AddProduct({ handleClose, categories, getProducts }) {
   };
   return (
     <div style={{ height: "120%" }}>
-      <BarLoader
-        color="red"
-        loading={isLoading}
-        height={4}
-        width={800}
-        css={override}
-        size={400}
-      />
       <div className="container-xl">
         <div className="row mt-3 mr-1 ml-1">
           <div className="col-6">
@@ -501,7 +492,16 @@ function AddProduct({ handleClose, categories, getProducts }) {
                           Disable this to save this product as draft
                         </Typography>
                       </Typography>
+
                       <div style={{ marginTop: "20px" }} />
+                      <BarLoader
+                        color="#f05945"
+                        loading={isLoading}
+                        height={4}
+                        width={150}
+                        css={override}
+                        size={400}
+                      />
                     </div>
                     <div className=""></div>
                     <div className="">

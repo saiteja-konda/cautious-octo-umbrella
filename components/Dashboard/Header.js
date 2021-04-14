@@ -16,6 +16,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
+
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -72,6 +75,17 @@ function Header(props) {
       );
     }
   };
+
+  const router = useRouter();
+  const { getAdmin } = useStoreActions((state) => state.vox);
+
+   const LogoutFun = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("admin");
+    getAdmin(false);
+    router.push("/");
+  };
+
   const wishes = Greetings();
   return (
     <React.Fragment>
@@ -133,6 +147,7 @@ function Header(props) {
                 variant="outlined"
                 color="inherit"
                 size="small"
+                onClick={LogoutFun}
               >
                 Logout
               </Button>

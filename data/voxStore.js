@@ -15,6 +15,17 @@ export const voxStore = {
   token: {},
   error: {},
   tempUrl: "",
+  admin: false,
+
+  // Admin
+
+  setAdmin: action((state, payload) => {
+    state.admin = payload;
+  }),
+
+  getAdmin: thunk(async (actions, payload) => {
+    actions.setAdmin(localStorage.getItem("admin"));
+  }),
 
   // TempUrl
 

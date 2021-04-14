@@ -72,7 +72,7 @@ export default function Cart({ openCart, setOpenCart }) {
         className={classes.drawer}
         variant="persistent"
         anchor="right"
-        open={true}
+        open={openCart}
         classes={{
           paper: classes.drawerPaper,
         }}

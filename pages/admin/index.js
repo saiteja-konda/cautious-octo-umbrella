@@ -1,28 +1,16 @@
-import AdminNavBar from "../../components/AdminNavBar";
 import Paperbase from "../../components/Dashboard/Paperbase";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 import AdminLogin from "./login";
-import { useState } from "react";
-
+import { useStoreState, useStoreActions } from "easy-peasy";
 const Admin = () => {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { admin } = useStoreState((state) => state.vox);
+  const { getAdmin } = useStoreActions((state) => state.vox);
 
-  useEffect(() => {
-    if (localStorage.getItem("admin")) {
-      setIsLoggedIn(true);
-    }
-  }, [isLoggedIn]);
+  getAdmin();
 
-  const admin = () => {
-    if (!isLoggedIn) {
-      return <AdminLogin />;
-    } else {
-      return <Paperbase />;
-    }
-  };
-  const renderAdminArea = admin();
-  return <>{renderAdminArea}</>;
+  if (admin === null || false) {
+    return <AdminLogin />;
+  } else {
+    return <Paperbase />;
+  }
 };
 export default Admin;

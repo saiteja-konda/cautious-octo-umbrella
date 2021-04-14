@@ -15,7 +15,7 @@ function AdminLogin() {
   };
   return (
     <div
-      className="background-image"
+      // className="background-image"
     >
       <form
         className="container"
@@ -28,13 +28,13 @@ function AdminLogin() {
         <div className="text-left mb-5 mt-5">
 
           <p
-            className="display-4 text-light"
+            className="display-4 text-dark"
             style={{
               fontSize: "38px",
               fontWeight: "bold",
               position: "relative",
-              textShadow:" 2px 2px  4px #000",
-              blurRadius:"2px"
+              // textShadow:" 2px 2px  4px #000",
+              // blurRadius:"2px"
             }}
           >
             Welcome back admin, <br /> please login to continue
