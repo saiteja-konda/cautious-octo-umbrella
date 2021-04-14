@@ -72,7 +72,7 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
                         <AddCircleTwoToneIcon color="primary" />
                       </IconButton>
                     </div>
-                    <SearchBar
+                    {/* <SearchBar
                       // value={this.state.value}
                       // onChange={(newValue) => this.setState({ value: newValue })}
                       // onRequestSearch={() => doSomethingWith(this.state.value)}
@@ -80,7 +80,7 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
                         margin: "0",
                         maxWidth: 500,
                       }}
-                    />
+                    /> */}
                   </form>
                 </nav>
               </div>
