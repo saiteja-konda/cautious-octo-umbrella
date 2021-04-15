@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,29 +9,22 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
-import PeopleIcon from "@material-ui/icons/People";
-import DnsRoundedIcon from "@material-ui/icons/DnsRounded";
-import PermMediaOutlinedIcon from "@material-ui/icons/PhotoSizeSelectActual";
-import PublicIcon from "@material-ui/icons/Public";
-import SettingsEthernetIcon from "@material-ui/icons/SettingsEthernet";
-import SettingsInputComponentIcon from "@material-ui/icons/SettingsInputComponent";
-import TimerIcon from "@material-ui/icons/Timer";
-import SettingsIcon from "@material-ui/icons/Settings";
-import PhonelinkSetupIcon from "@material-ui/icons/PhonelinkSetup";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
 import AnnouncementIcon from "@material-ui/icons/Announcement";
+import InfoIcon from "@material-ui/icons/Info";
+import GavelIcon from "@material-ui/icons/Gavel";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import SecurityIcon from "@material-ui/icons/Security";
+import { DashboardContext } from "../Dashboard/DashboardContext";
+import Link from "next/link";
 const categories = [
   {
     id: "Shop",
     children: [
       { id: "Products", icon: <StorefrontIcon />, active: true },
       { id: "Orders", icon: <ListAltIcon /> },
-      // { id: "Storage", icon: <PermMediaOutlinedIcon /> },
-      // { id: "Hosting", icon: <PublicIcon /> },
-      // { id: "Functions", icon: <SettingsEthernetIcon /> },
-      // { id: "ML Kit", icon: <SettingsInputComponentIcon /> },
     ],
   },
   {
@@ -39,7 +32,15 @@ const categories = [
     children: [
       { id: "Articles", icon: <DescriptionIcon /> },
       { id: "Newsletter", icon: <AnnouncementIcon /> },
-      // { id: "Test Lab", icon: <PhonelinkSetupIcon /> },
+    ],
+  },
+  {
+    id: "Setting",
+    children: [
+      { id: "About", icon: <InfoIcon /> },
+      { id: "Terms and conditions", icon: <GavelIcon /> },
+      { id: "Return Policy", icon: <RefreshIcon /> },
+      { id: "Change Credntials", icon: <SecurityIcon /> },
     ],
   },
 ];
@@ -75,6 +76,8 @@ const styles = (theme) => ({
   },
   itemPrimary: {
     fontSize: "inherit",
+    cursor: "pointer",
+    textDecoration: "none",
   },
   itemIcon: {
     minWidth: "auto",
@@ -87,7 +90,11 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   const { classes, ...other } = props;
+  const { setComponent } = useContext(DashboardContext);
 
+  const handleChoice = (id) => {
+    setComponent(id);
+  };
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
@@ -105,7 +112,9 @@ function Navigator(props) {
               primary: classes.itemPrimary,
             }}
           >
-            Go to Site
+            <Link style={{ textDecoration: "none" }} href="/">
+              Go to Site
+            </Link>
           </ListItemText>
         </ListItem>
         {categories.map(({ id, children }) => (
@@ -124,6 +133,7 @@ function Navigator(props) {
                 key={childId}
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
+                onClick={() => handleChoice(childId)}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
                 <ListItemText

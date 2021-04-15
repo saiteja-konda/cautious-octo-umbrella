@@ -11,10 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Navigator from "./Navigator";
 import Content from "./Content";
-import ProductTable from "./ProductTable";
 import Header from "./Header";
-import CategoryTable from "./CategoryTable";
-import ProductForm from "./ProductForm";
+import ComponentContextProvier from "./DashboardContext";
+import RenderComponent from "./RenderComponent";
 
 function Copyright() {
   return (
@@ -171,64 +170,39 @@ const styles = {
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [open, setOpen] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const handleOpen = () => {
-    setOpen(!open ? true : false);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpenEdit = () => {
-    setOpenEdit(!open ? true : false);
-  };
-
-  const handleCloseEdit = () => {
-    setOpenEdit(false);
-  };
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
-            <ProductForm
-              open={open}
-              openEdit={openEdit}
-              handleClose={handleClose}
-              handleCloseEdit={handleCloseEdit}
-            />
-            <ProductTable
-              handleOpen={handleOpen}
-              handleOpenEdit={handleOpenEdit}
-            />
-            <CategoryTable />
-          </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
+      <ComponentContextProvier>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
+              <RenderComponent />
+            </main>
+            <footer className={classes.footer}>
+              <Copyright />
+            </footer>
+          </div>
         </div>
-      </div>
+      </ComponentContextProvier>
     </ThemeProvider>
   );
 }

@@ -170,7 +170,7 @@ export default function ProductCard({ title, image, description, product }) {
               </div>
             </div>
             <Typography variant="h6" className={classes.price}>
-              M R P ₹{selected === null ? ops.price : selected}
+              ₹{selected === null ? ops.price : selected}
             </Typography>
             <Button
               size="small"

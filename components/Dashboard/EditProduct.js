@@ -209,6 +209,8 @@ function EditProduct({
     option4: ExtractedTypes[3].label,
   };
   const handProductSubmit = async (values, { resetForm }) => {
+    setLoading(true);
+
     let changedObject = {
       title: values.title,
       description: dvalue,

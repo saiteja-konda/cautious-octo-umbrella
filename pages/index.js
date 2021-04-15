@@ -37,7 +37,7 @@ export async function getStaticProps() {
     props: {
       products,
     },
-    revalidate: 21600,
+    revalidate: 1,
   };
 }
 export default Home;
