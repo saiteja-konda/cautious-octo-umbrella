@@ -14,25 +14,25 @@ function Pagination({
   const pages = _.range(1, pagesCount + 1);
   return (
     <>
-      <div class="hint-text">
+      <div className="hint-text">
         Showing <b>{Products.length}</b> out of <b>{ItemsCount}</b> entries
       </div>
-      <ul class="pagination">
-        <li class="page-item ">
+      <ul className="pagination">
+        <li className="page-item ">
           <a>Previous</a>
         </li>
         {pages.map((page) => (
           <li
             key={page}
-            class={page === currentPage ? "page-item active" : "page-item"}
+            className={page === currentPage ? "page-item active" : "page-item"}
           >
-            <a class="page-link" onClick={() => onPageChange(page)}>
+            <a className="page-link" onClick={() => onPageChange(page)}>
               {page}
             </a>
           </li>
         ))}
-        <li class="page-item">
-          <a class="page-link">Next</a>
+        <li className="page-item">
+          <a className="page-link">Next</a>
         </li>
       </ul>
     </>

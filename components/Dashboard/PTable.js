@@ -13,10 +13,7 @@ function PTable({
   onSort,
 }) {
   return (
-    <table
-      class="table table-striped table-hover"
-  
-    >
+    <table className="table table-striped table-hover">
       <thead>
         <tr>
           <th></th>
@@ -28,11 +25,11 @@ function PTable({
         </tr>
       </thead>
 
-      <tbody >
+      <tbody>
         {Products.map((product) => (
-          <tr>
+          <tr key={product.id}>
             <td className="p-0 m-0">
-              <span class="custom-checkbox"></span>
+              <span className="custom-checkbox"></span>
             </td>
             <td>{product.title}</td>
             <td>{product.genre}</td>

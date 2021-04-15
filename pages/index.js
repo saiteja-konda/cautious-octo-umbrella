@@ -9,7 +9,7 @@ import ProductsSection from "../components/ProductsSection";
 import HeroSection from "../components/HeroSection";
 import { useStoreActions } from "easy-peasy";
 
-const Home = ({ user, setUser, products }) => {
+const Home = ({ user, setUser, products, categories }) => {
   return (
     <div>
       <Head>
@@ -22,7 +22,7 @@ const Home = ({ user, setUser, products }) => {
         setUser={setUser}
       />
       <HeroSection />
-      <SecondayNav />
+      <SecondayNav categories={categories} />
       <ProductsSection products={products} />
       <Testmonials />
       <Newsletter />
@@ -33,9 +33,12 @@ const Home = ({ user, setUser, products }) => {
 
 export async function getStaticProps() {
   const products = await fetchAPI("/products");
+    const categories = await fetchAPI("/categories");
+
   return {
     props: {
       products,
+      categories,
     },
     revalidate: 1,
   };

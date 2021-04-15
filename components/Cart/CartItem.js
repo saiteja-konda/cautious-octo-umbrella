@@ -61,6 +61,7 @@ export default function CartItem({ product }) {
                         ? "badge badge-pill badge-info btn mr-1"
                         : "badge badge-pill badge-light btn mr-1"
                     }
+                    ley={o.price}
                     value={o.price}
                     onClick={priceChanger}
                   >

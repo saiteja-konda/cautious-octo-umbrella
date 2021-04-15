@@ -18,22 +18,35 @@ const useStyles = makeStyles({
     margin: "5px",
   },
 });
-function SecondayNav() {
+function SecondayNav({}) {
   const classes = useStyles();
-
+  const categories = [
+    { id: 27, name: "Skin Care", value: 27, label: "Skin Care" },
+    { id: 28, name: "Hair Care", value: 28, label: "Hair Care" },
+    { id: 30, name: "Baby Care", value: 30, label: "Baby Care" },
+  ];
   return (
     <center>
       <Toolbar>
-        <Typography  component="button" className="btn btn-light">
+        <Typography component="button" className="btn btn-light">
+          Skin Care
+        </Typography>
+        <Typography component="button" className="btn btn-light">
+          Hair Care
+        </Typography>
+        <Typography component="button" className="btn btn-light">
+          Baby Care
+        </Typography>
+        <Typography component="button" className="btn btn-light">
           Shop
         </Typography>
-        <Typography  component="button" className="btn btn-light">
+        <Typography component="button" className="btn btn-light">
           Blog
         </Typography>
-        <Typography  component="button" className="btn btn-light">
+        <Typography component="button" className="btn btn-light">
           About
         </Typography>
-        <Typography  component="button" className="btn btn-light">
+        <Typography component="button" className="btn btn-light">
           Contact
         </Typography>
       </Toolbar>

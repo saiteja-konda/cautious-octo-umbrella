@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   createMuiTheme,
@@ -14,6 +14,7 @@ import Content from "./Content";
 import Header from "./Header";
 import ComponentContextProvier from "./DashboardContext";
 import RenderComponent from "./RenderComponent";
+import { useStoreActions } from "easy-peasy";
 
 function Copyright() {
   return (
@@ -170,7 +171,10 @@ const styles = {
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const { getSite } = useStoreActions((state) => state.vox);
+  useEffect(() => {
+    getSite();
+  }, []);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

@@ -16,8 +16,27 @@ export const voxStore = {
   error: {},
   tempUrl: "",
   admin: false,
-
+  site: {},
   // Admin
+
+  setSite: action((state, payload) => {
+    state.site = payload;
+  }),
+  getSite: thunk(async (actions) => {
+    axios.get(`${baseUrl}/site`).then((res) => actions.setSite(res.data));
+  }),
+
+  updateSite: action((state, payload) => {
+    state.site = payload;
+  }),
+  siteUpdate: thunk(async (actions, payload) => {
+    axios
+      .put(`${baseUrl}/site`, payload)
+      .then((res) => {
+        actions.res(payload);
+      })
+      .catch((err) => console.log(err));
+  }),
 
   setAdmin: action((state, payload) => {
     state.admin = payload;
@@ -33,7 +52,7 @@ export const voxStore = {
     state.tempUrl = payload;
   }),
 
-  setUrl: thunk((actions, payload) => {
+  setUrl: thunk(async (actions, payload) => {
     actions.getUrl(payload);
   }),
 

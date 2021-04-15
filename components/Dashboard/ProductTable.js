@@ -56,17 +56,17 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
     getProducts();
   }, []);
   return (
-    <div class="mr-1 ml-1" >
-      <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
-            <div class="row">
-              <div class="col-sm-6 col-md-12">
-                <nav class="navbar justify-content-between">
-                  <a class="navbar-brand">
+    <div className="mr-1 ml-1">
+      <div className="table-responsive">
+        <div className="table-wrapper">
+          <div className="table-title">
+            <div className="row">
+              <div className="col-sm-6 col-md-12">
+                <nav className="navbar justify-content-between">
+                  <a className="navbar-brand">
                     Manage <b>Products</b>
                   </a>
-                  <form class="form-inline">
+                  <form className="form-inline">
                     <div className="form-group mr-3">
                       <IconButton onClick={handleOpen}>
                         <AddCircleTwoToneIcon color="primary" />
@@ -114,7 +114,7 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
               css={override}
             />
           </div>
-          <div class="clearfix">
+          <div className="clearfix">
             <Pagination
               ItemsCount={filtered.length}
               pageSize={pageSize}

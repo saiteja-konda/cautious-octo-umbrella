@@ -9,7 +9,7 @@ import Order from "../Order/Order";
 import { DashboardContext } from "./DashboardContext";
 import ProductCrud from "./ProductCrud";
 
-function RenderComponent() {
+function RenderComponent({ site }) {
   const { component } = useContext(DashboardContext);
   const ComponentGenerator = () => {
     switch (component) {
@@ -22,7 +22,7 @@ function RenderComponent() {
       case "Newsletter":
         return <Newsletter />;
       case "About":
-        return <About />;
+        return <About site={site} />;
       case "Terms and conditions":
         return <Terms />;
       case "Return Policy":

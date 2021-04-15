@@ -46,17 +46,17 @@ function CategoryTable() {
 
   const onCloseModal = () => setOpen(false);
   return (
-    <div class="mr-1 ml-1">
-      <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
-            <div class="row">
-              <div class="col-sm-6 col-md-12">
-                <nav class="navbar justify-content-between">
-                  <a class="navbar-brand">
+    <div className="mr-1 ml-1">
+      <div className="table-responsive">
+        <div className="table-wrapper">
+          <div className="table-title">
+            <div className="row">
+              <div className="col-sm-6 col-md-12">
+                <nav className="navbar justify-content-between">
+                  <a className="navbar-brand">
                     Manage <b>Categories</b>
                   </a>
-                  <form class="form-inline">
+                  <form className="form-inline">
                     <div className="form-group mr-3">
                       <IconButton
                         onClick={() => {
@@ -69,11 +69,11 @@ function CategoryTable() {
                   </form>
                 </nav>
               </div>
-              <div class="col-sm-6"></div>
+              <div className="col-sm-6"></div>
             </div>
           </div>
 
-          <table class="table table-striped table-hover">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th></th>
@@ -86,7 +86,7 @@ function CategoryTable() {
               {categories?.map((category) => (
                 <tr key={category.id}>
                   <td>
-                    <span class="custom-checkbox"></span>
+                    <span className="custom-checkbox"></span>
                   </td>
                   <td>{category.name}</td>
 

@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 
 import parse from "html-react-parser";
 
-
 import StickyFooter from "../../components/StickyFooter";
 
 const useStyles = makeStyles({
@@ -88,6 +87,7 @@ function Product({ product, user, setUser }) {
                     selected === null
                       ? test.filter((o) => o.price === ops.price)
                       : test.filter((o) => o.price === selected);
+
                   product["options"] = test.filter((o) => o.label !== null);
                   product.price = parseInt(
                     selected === null ? ops.price : selected
@@ -116,15 +116,75 @@ function Product({ product, user, setUser }) {
         <Typography variant="h6" className="text-center" component="h1">
           You may also like
         </Typography>
-        <div>
-          {/* {products.map((o) => (
-            <h1>{o.title}</h1>
-          ))} */}
-          {products
-            .filter((o) => o.categoryId === product.id)
-            .map((product) => (
-              <div>{product.title}</div>
-            ))}
+
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div
+                id="myCarousel"
+                className="carousel slide"
+                data-ride="carousel"
+                data-interval="0"
+              >
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <div className="row">
+                      {products
+                        .filter(
+                          (o) => o.genre === product.genre && o.id != product.id
+                        )
+                        .map((product) => (
+                          <div key={product.id} className="col-sm-3">
+                            <div className="thumb-wrapper">
+                              <div className="img-box">
+                                <img
+                                  src={product.image}
+                                  className="img-fluid"
+                                  alt={product.title}
+                                />
+                              </div>
+                              <div className="thumb-content">
+                                <h4>{product.title}</h4>
+                                <p className="item-price">
+                                  {/* <strike>$400.00</strike>  */}
+                                  <span>
+                                    ₹{JSON.parse(product.list.options)[0].price}
+                                  </span>
+                                </p>
+
+                                <a
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    product["choice"] =
+                                      selected === null
+                                        ? test.filter(
+                                            (o) => o.price === ops.price
+                                          )
+                                        : test.filter(
+                                            (o) => o.price === selected
+                                          );
+
+                                    product["options"] = test.filter(
+                                      (o) => o.label !== null
+                                    );
+                                    product.price = parseInt(
+                                      selected === null ? ops.price : selected
+                                    );
+                                    addToCart(product);
+                                  }}
+                                >
+                                  Add to Cart
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <StickyFooter />

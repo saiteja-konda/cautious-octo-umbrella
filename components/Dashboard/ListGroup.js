@@ -8,12 +8,12 @@ function ListGroup({
   selectedItem,
 }) {
   return (
-    <ul class="list-group">
+    <ul className="list-group">
       {Items.map((item) => (
         <li
-          key={item[valueProperty]}
+          key={item.id}
           onClick={() => onItemSelect(item)}
-          class={
+          className={
             item == selectedItem
               ? "list-group-item active pb-3  btn btn-sm btn-block"
               : "list-group-item pb-3 btn "
@@ -28,7 +28,7 @@ function ListGroup({
 
 ListGroup.defaultProps = {
   textProperty: "name",
-  value: "id",
+  value: "name",
 };
 
 export default ListGroup;
