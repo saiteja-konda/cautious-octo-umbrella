@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { fetchAPI } from "../lib/api";
-import Navbar01scrollToColor from "../components/Navbar01scrollToColor";
+import PlainBar from "../components/PlainBar";
 import StickyFooter from "../components/StickyFooter";
 import SecondayNav from "../components/SecondayNav";
 import Newsletter from "../components/Newsletter";
@@ -16,9 +16,10 @@ const Home = ({ user, setUser, products, categories }) => {
         <title>Bask In Nature</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar01scrollToColor
+      <PlainBar
         title="Baskin In Nature"
         user={user}
+        categories={categories}
         setUser={setUser}
       />
       <HeroSection />
@@ -33,7 +34,7 @@ const Home = ({ user, setUser, products, categories }) => {
 
 export async function getStaticProps() {
   const products = await fetchAPI("/products");
-    const categories = await fetchAPI("/categories");
+  const categories = await fetchAPI("/categories");
 
   return {
     props: {

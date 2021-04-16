@@ -14,9 +14,12 @@ import {
 
 import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
+import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Link from "next/link";
 import Cart from "./Cart/Cart";
+import SideMenu from "./SideMenu";
 const useStyles = makeStyles({
   // This group of buttons will be aligned to the right
   rightToolbar: {
@@ -41,12 +44,20 @@ const useStyles = makeStyles({
   },
 });
 
-function PlainBar(props, { user, setUser }) {
+function PlainBar(props) {
   const classes = useStyles();
   const { len } = useStoreState((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
   const [openCart, setOpenCart] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
 
+  const showMenu = () => {
+    if (!openMenu) {
+      setOpenMenu(true);
+    } else {
+      setOpenMenu(false);
+    }
+  };
   const showCart = () => {
     if (!openCart) {
       setOpenCart(true);
@@ -79,12 +90,27 @@ function PlainBar(props, { user, setUser }) {
                   cursor: "pointer",
                 }}
               >
-                <Typography variant="h5" noWrap>
+                {/* <Typography variant="h5" noWrap>
                   {props.title}
-                </Typography>
+                </Typography> */}
+                <img
+                  src="/favicon.ico"
+                  style={{ height: "100px", width: "100px" }}
+                />
               </a>
             </Link>
             <section className={classes.rightToolbar}>
+              {/* <Box display={{ sm: "block", xs: "block", md: "none" }}>
+                <IconButton
+                  color="inherit"
+                  aria-label="Edit"
+                  onClick={showCart}
+                >
+                  <Badge badgeContent={cartlen} color="error">
+                    <LocalMallIcon />
+                  </Badge>
+                </IconButton>
+              </Box> */}
               <Box display={{ sm: "block", xs: "block", md: "none" }}>
                 <IconButton
                   color="inherit"
@@ -94,6 +120,13 @@ function PlainBar(props, { user, setUser }) {
                   <Badge badgeContent={cartlen} color="error">
                     <LocalMallIcon />
                   </Badge>
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label="Menu"
+                  onClick={showMenu}
+                >
+                  <MenuOpenIcon />
                 </IconButton>
               </Box>
               <Box display={{ sm: "none", xs: "none", md: "block" }}>
@@ -129,8 +162,16 @@ function PlainBar(props, { user, setUser }) {
           </Toolbar>
         </AppBar>
         <Toolbar />
+        <Toolbar />
       </ThemeProvider>
       <Cart openCart={openCart} setOpenCart={setOpenCart} />
+      <SideMenu
+        openMenu={openMenu}
+        categories={props.categories}
+        setOpenMenu={setOpenMenu}
+        user={props.user}
+        setUser={props.setUser}
+      />
     </>
   );
 }

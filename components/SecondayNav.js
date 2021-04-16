@@ -1,8 +1,7 @@
-import { makeStyles, Toolbar, Typography } from "@material-ui/core";
+import { Button, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
 
 const useStyles = makeStyles({
-  // This group of buttons will be aligned to the right
   rightToolbar: {
     marginLeft: "auto",
     marginRight: -12,
@@ -17,40 +16,33 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     margin: "5px",
   },
+  toolbar: {
+    overflowX: "scroll",
+  },
 });
-function SecondayNav({}) {
+function SecondayNav({ categories }) {
   const classes = useStyles();
-  const categories = [
-    { id: 27, name: "Skin Care", value: 27, label: "Skin Care" },
-    { id: 28, name: "Hair Care", value: 28, label: "Hair Care" },
-    { id: 30, name: "Baby Care", value: 30, label: "Baby Care" },
+  const start = [{ id: "x", name: "Shop by concern" }];
+  const end = [
+    { id: "y", name: "About us" },
+    { id: "z", name: "Contact us" },
   ];
+  const dyanmic = [...start, ...categories, ...end];
   return (
-    <center>
-      <Toolbar>
-        <Typography component="button" className="btn btn-light">
-          Skin Care
+    <Toolbar className={classes.toolbar}>
+      {dyanmic.map((o) => (
+        <Typography
+          key={o.id}
+          component="button"
+          // variant="caption"
+          className="btn btn-light"
+          style={{ fontSize: "14px", whiteSpace: "nowrap" }}
+          fullWidth
+        >
+          {o.name}
         </Typography>
-        <Typography component="button" className="btn btn-light">
-          Hair Care
-        </Typography>
-        <Typography component="button" className="btn btn-light">
-          Baby Care
-        </Typography>
-        <Typography component="button" className="btn btn-light">
-          Shop
-        </Typography>
-        <Typography component="button" className="btn btn-light">
-          Blog
-        </Typography>
-        <Typography component="button" className="btn btn-light">
-          About
-        </Typography>
-        <Typography component="button" className="btn btn-light">
-          Contact
-        </Typography>
-      </Toolbar>
-    </center>
+      ))}
+    </Toolbar>
   );
 }
 

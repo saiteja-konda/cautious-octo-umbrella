@@ -51,7 +51,7 @@ function HeroSection() {
       <Carousel indicators={false} animation="slide">
         {images.map((item, i) => (
           <img
-            style={{ height: "660px", width: "100%", objectFit: "cover" }}
+            style={{ height: "480px", width: "100%", objectFit: "cover" }}
             key={i}
             src={item}
           />

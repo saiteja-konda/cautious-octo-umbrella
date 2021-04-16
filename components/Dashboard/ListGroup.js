@@ -1,4 +1,7 @@
 import React from "react";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 function ListGroup({
   Items,
@@ -8,21 +11,33 @@ function ListGroup({
   selectedItem,
 }) {
   return (
-    <ul className="list-group">
+    // <ul className="list-group">
+    // {Items.map((item) => (
+    //   <li
+    //     key={item.id}
+    //     onClick={() => onItemSelect(item)}
+    //     className={
+    //       item.id == selectedItem.id
+    //         ? "list-group-item active pb-3  btn btn-sm btn-block"
+    //         : "list-group-item pb-3 btn "
+    //     }
+    //   >
+    //     <a>{item[textProperty]}</a>
+    //   </li>
+    // ))}
+    // </ul>
+    <List component="nav">
       {Items.map((item) => (
-        <li
+        <ListItem
           key={item.id}
           onClick={() => onItemSelect(item)}
-          className={
-            item == selectedItem
-              ? "list-group-item active pb-3  btn btn-sm btn-block"
-              : "list-group-item pb-3 btn "
-          }
+          selected={item.id === selectedItem.id ? true : false}
+          alignItems="center"
         >
-          <a>{item[textProperty]}</a>
-        </li>
+          <ListItemText primary={item[textProperty]} />
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 }
 

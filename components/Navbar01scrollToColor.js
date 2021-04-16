@@ -21,8 +21,8 @@ import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
 
-
 import Cart from "./Cart/Cart";
+import SideMenu from "./SideMenu";
 
 const useStyles = makeStyles({
   // This group of buttons will be aligned to the right
@@ -47,8 +47,16 @@ const Navbar01scrollToColor = (props) => {
   const [cartlen, setCartlen] = useState();
   const [openCart, setOpenCart] = useState(false);
   const [userName, setUserName] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
 
+  const showMenu = () => {
+    if (!openMenu) {
+      setOpenMenu(true);
+    } else {
+      setOpenMenu(false);
+    }
+  };
   const showCart = () => {
     if (!openCart) {
       setOpenCart(true);
@@ -75,7 +83,6 @@ const Navbar01scrollToColor = (props) => {
       setUserName(jwt_decode(localStorage.getItem("token")).fullName);
     }
   });
-
 
   const handleLogout = () => {
     props.setUser(false);
@@ -145,14 +152,18 @@ const Navbar01scrollToColor = (props) => {
                       <LocalMallIcon />
                     </Badge>
                   </IconButton>
-                  <IconButton color="inherit" aria-label="Edit">
+                  <IconButton
+                    color="inherit"
+                    aria-label="Menu"
+                    onClick={showMenu}
+                  >
                     <MenuOpenIcon />
                   </IconButton>
                 </Box>
                 <Box display={{ sm: "none", xs: "none", md: "block" }}>
                   <IconButton
                     color="inherit"
-                    aria-label="Edit"
+                    aria-label="Cart"
                     onClick={showCart}
                   >
                     <Badge badgeContent={cartlen} color="error">
@@ -167,6 +178,13 @@ const Navbar01scrollToColor = (props) => {
         </ScrollToColor01>
       </ThemeProvider>
       <Cart openCart={openCart} setOpenCart={setOpenCart} />
+      <SideMenu
+        openMenu={openMenu}
+        categories={props.categories}
+        setOpenMenu={setOpenMenu}
+        user={props.user}
+        setUser={props.setUser}
+      />
     </>
   );
 };

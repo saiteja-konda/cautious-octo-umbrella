@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     marginTop: "20px",
   },
 });
-function Product({ product, user, setUser }) {
+function Product({ product, user, setUser, categories }) {
   const [ops, setOps] = useState([]);
   const [selected, setSelected] = useState(null);
   const { addToCart, getProducts } = useStoreActions((actions) => actions.vox);
@@ -31,7 +31,12 @@ function Product({ product, user, setUser }) {
   const test = JSON.parse(product.list.options);
   return (
     <div>
-      <PlainBar title="Baskin In Nature" user={user} setUser={setUser} />
+      <PlainBar
+        title="Baskin In Nature"
+        user={user}
+        setUser={setUser}
+        categories={categories}
+      />
       <div className="m-5">
         <div className="row">
           <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -206,10 +211,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetchAPI(`/products/${params.id}`);
+  const categories = await fetchAPI("/categories");
+
   const products = [res];
   return {
     props: {
       product: products[0],
+      categories,
     },
     revalidate: 1,
   };

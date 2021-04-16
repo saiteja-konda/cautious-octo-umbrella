@@ -6,7 +6,7 @@ import shortid from "shortid";
 export const voxStore = {
   products: [],
   product: {},
-  categories: [{ name: "All Categories" }],
+  categories: [{ id: "", name: "All Categories" }],
   category: {},
   cart: {
     id: "false",
