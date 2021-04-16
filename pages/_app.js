@@ -13,15 +13,12 @@ import "../styles/globals.scss";
 import "../styles/style.scss";
 import "react-quill/dist/quill.snow.css";
 
-// import { useRouter } from "next/router";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   const [user, setUser] = useState(false);
-  // const router = useRouter();
 
   React.useEffect(() => {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -39,7 +36,6 @@ export default function MyApp(props) {
       </Head>
       <StoreProvider store={store}>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component
             store={store}
@@ -47,26 +43,6 @@ export default function MyApp(props) {
             user={user}
             {...pageProps}
           />
-          {/* <div
-        style={{
-          position: "absolute !important",
-          zIndex: "3px",
-          top: "1em",
-          right: "1em",
-        }}
-      > */}
-          {/* <WhatsAppWidget
-            phoneNumber="9666934040"
-            companyName="Bask In Nature"
-            message="Hi, this is Gai from Bask In Nature, How can I help you?"
-            style={{
-              position: "absolute !important",
-              zIndex: "3px",
-              top: "1em",
-              right: "1em",
-            }}
-          /> */}
-          {/* </div> */}
         </ThemeProvider>
       </StoreProvider>
     </React.Fragment>

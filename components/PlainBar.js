@@ -95,7 +95,7 @@ function PlainBar(props) {
                 </Typography> */}
                 <img
                   src="/favicon.ico"
-                  style={{ height: "100px", width: "100px" }}
+                  style={{ height: "75px", width: "75px" }}
                 />
               </a>
             </Link>
@@ -162,7 +162,7 @@ function PlainBar(props) {
           </Toolbar>
         </AppBar>
         <Toolbar />
-        <Toolbar />
+        {/* <Toolbar /> */}
       </ThemeProvider>
       <Cart openCart={openCart} setOpenCart={setOpenCart} />
       <SideMenu
