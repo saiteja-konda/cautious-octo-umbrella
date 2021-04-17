@@ -11,7 +11,7 @@ function ProductsSection({ products,title }) {
       <div
         style={{
           display: "flex",
-          flexWrap: "wrap",
+          // flexWrap: "wrap",
         }}
         className="container"
       >
