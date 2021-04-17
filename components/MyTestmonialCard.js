@@ -8,17 +8,20 @@ function MyTestmonialCard() {
           <div className="card text-center">
             <img
               className="card-img-top"
-              src="https://images.unsplash.com/photo-1572561300743-2dd367ed0c9a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=50&w=300"
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib"
               alt=""
+              style={{ objectFit: "cover" }}
             />
             <div className="card-body">
               <h5>
-                Ronne Galle <br />
-                <span> Project Manager </span>
+                Name <br />
+                <span> Role </span>
               </h5>
               <p className="card-text">
-                “ Nam libero tempore, cum soluta nobis est eligendi optio cumque
-                nihil impedit quo minus id quod maxime placeat ”{" "}
+                “ Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Autem, porro. Tempore cupiditate laborum eaque eos sunt ipsam
+                unde labore nulla quam totam hic, fuga eveniet similique
+                possimus, qui saepe? ”{" "}
               </p>
             </div>
           </div>

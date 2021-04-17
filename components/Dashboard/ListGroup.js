@@ -11,21 +11,6 @@ function ListGroup({
   selectedItem,
 }) {
   return (
-    // <ul className="list-group">
-    // {Items.map((item) => (
-    //   <li
-    //     key={item.id}
-    //     onClick={() => onItemSelect(item)}
-    //     className={
-    //       item.id == selectedItem.id
-    //         ? "list-group-item active pb-3  btn btn-sm btn-block"
-    //         : "list-group-item pb-3 btn "
-    //     }
-    //   >
-    //     <a>{item[textProperty]}</a>
-    //   </li>
-    // ))}
-    // </ul>
     <List component="nav">
       {Items.map((item) => (
         <ListItem

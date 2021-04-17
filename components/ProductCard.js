@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 const useStyles = makeStyles({
   card: {
     maxWidth: 300,
-    margin: "auto 30px",
+    margin: "auto 5px",
     marginTop: "20px",
     marginBottom: "50px",
     transition: "0.3s",
@@ -68,7 +68,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProductCard({ title, image, description, product }) {
+function ProductCard({ title, image, description, product }) {
   const classes = useStyles();
   const { addToCart } = useStoreActions((state) => state.vox);
   const [ops, setOps] = useState([]);
@@ -96,7 +96,7 @@ export default function ProductCard({ title, image, description, product }) {
   };
   useEffect(() => {
     setOps(test[0]);
-  },[]);
+  }, []);
   const theme = createMuiTheme({
     props: {
       MuiButton: {
@@ -209,3 +209,11 @@ export default function ProductCard({ title, image, description, product }) {
     </div>
   );
 }
+ProductCard.defaultProps = {
+  title: "title",
+  prite: "price",
+  description: "description",
+  image: "image",
+};
+
+export default ProductCard;

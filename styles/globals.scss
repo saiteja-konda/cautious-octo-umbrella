@@ -43,12 +43,12 @@ a:focus {
 }
 
 .store {
-  width: 500px;
+  height: 600px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 765px) {
   .store {
-    width: 300px;
+    height: 250px;
   }
 }
 // * {

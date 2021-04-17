@@ -79,7 +79,7 @@ export default function SideMenu({
   };
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
-      props.setUser(true);
+      setUser(true); 
       jwt_decode(localStorage.getItem("token"));
       setUserName(jwt_decode(localStorage.getItem("token")).fullName);
     }

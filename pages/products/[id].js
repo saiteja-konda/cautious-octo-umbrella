@@ -111,7 +111,7 @@ function Product({ product, user, setUser, categories }) {
                   className="d-sm-block d-xs-block d-md-none"
                   variant="caption"
                 >
-                  {product.description}
+                  {parse(product.description)}
                 </Typography>
               </div>
             </div>
