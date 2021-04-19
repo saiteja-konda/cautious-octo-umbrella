@@ -16,6 +16,7 @@ import { RadioGroup } from "material-ui-formik-components/RadioGroup";
 import { Select } from "material-ui-formik-components/Select";
 
 import { authUrl } from "../../utils/urlConfig";
+import NavBar from "../../components/Navigation/NavBar";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({ user, setUser }) {
+export default function SignUp({ user, setUser, products, categories }) {
   const classes = useStyles();
   const router = useRouter();
   const { signup } = useStoreActions((state) => state.vox);
@@ -158,16 +159,16 @@ export default function SignUp({ user, setUser }) {
   });
   return (
     <Grid container component="main" className={classes.root}>
-      <TransBar title="Baskin In Nature" />
-      <CssBaseline />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div
-          className={classes.paper}
-          style={{
-            marginTop: "150px",
-          }}
-        >
-          <h5 className="text-center mb-4 mt-5 form-signin-heading">
+      <NavBar
+        user={user}
+        categories={categories}
+        products={products}
+        setUser={setUser}
+      />
+      {/* <CssBaseline /> */}
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
+        <div className={classes.paper}>
+          <h5 className="text-center form-signin-heading mt-5">
             Register to become a member
           </h5>
           <Formik
@@ -302,7 +303,7 @@ export default function SignUp({ user, setUser }) {
           />
         </div>
       </Grid>
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
     </Grid>
   );
 }

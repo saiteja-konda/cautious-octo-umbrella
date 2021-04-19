@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
-import TransBar from "../TransBar";
+import NavBar from "../../components/Navigation/NavBar";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login({ user, setUser }) {
+const Login = ({ user, setUser, products, categories }) => {
   const classes = useStyles();
   const router = useRouter();
   const formRef = useRef();
@@ -103,9 +103,14 @@ export default function Login({ user, setUser }) {
   });
   return (
     <Grid container component="main" className={classes.root}>
-      <TransBar title="Baskin In Nature" />
+      <NavBar
+        user={user}
+        categories={categories}
+        products={products}
+        setUser={setUser}
+      />
       <CssBaseline />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
         <div
           className={classes.paper}
           style={{
@@ -174,4 +179,6 @@ export default function Login({ user, setUser }) {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
     </Grid>
   );
-}
+};
+
+export default Login;

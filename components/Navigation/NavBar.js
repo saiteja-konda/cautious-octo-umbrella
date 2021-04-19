@@ -17,6 +17,7 @@ import LocalMallIcon from "@material-ui/icons/LocalMall";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Cart from "../Cart/Cart";
 import Options from "./Options";
+import { useRouter } from "next/router";
 
 const NavBar = ({ user, setUser, categories, products }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ const NavBar = ({ user, setUser, categories, products }) => {
   const { len } = useStoreState((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
   const [openCart, setOpenCart] = useState(false);
-
+  const router = useRouter();
   const showCart = () => {
     if (!openCart) {
       setOpenCart(true);
@@ -44,7 +45,10 @@ const NavBar = ({ user, setUser, categories, products }) => {
         light
         expand="md"
         fixed="top"
-        style={{ backgroundColor: "#ffffff" }}
+        style={{
+          backgroundColor: "#ffffff",
+          boxShadow: "2px 2px 30px #d3d3d3",
+        }}
       >
         <NavbarBrand href="/">
           <Link href="/">
@@ -78,7 +82,7 @@ const NavBar = ({ user, setUser, categories, products }) => {
                 <Link href="/about">
                   <a
                     className="text-dark mr-2"
-                    style={{  textDecoration: "none" }}
+                    style={{ textDecoration: "none" }}
                   >
                     About us
                   </a>
@@ -90,7 +94,7 @@ const NavBar = ({ user, setUser, categories, products }) => {
                 <Link href="/about">
                   <a
                     className="text-dark mr-2"
-                    style={{  textDecoration: "none" }}
+                    style={{ textDecoration: "none" }}
                   >
                     Contact us
                   </a>
@@ -108,8 +112,18 @@ const NavBar = ({ user, setUser, categories, products }) => {
               <LocalMallIcon />
             </Badge>
           </IconButton>
-          <button className="btn btn-sm btn-light mr-2">Login</button>
-          <button className="btn btn-sm btn-light mr-2">sign up</button>
+          <button
+            className="btn btn-sm btn-light mr-2"
+            onClick={() => router.push("/user/login")}
+          >
+            Login
+          </button>
+          <button
+            className="btn btn-sm btn-light mr-2"
+            onClick={() => router.push("/user/signup")}
+          >
+            sign up
+          </button>
         </Collapse>
       </Navbar>
       <Cart openCart={openCart} setOpenCart={setOpenCart} />

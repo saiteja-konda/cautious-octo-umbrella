@@ -40,9 +40,9 @@ function ProductsSection({ products, title }) {
           itemClass="image-item"
           responsive={responsive}
           infinite={true}
-          autoPlay={true}
+          autoPlay={false}
           transitionDuration={10000}
-          arrows={false}
+          arrows={true}
         >
           {products?.map((product) => (
             <ProductCard

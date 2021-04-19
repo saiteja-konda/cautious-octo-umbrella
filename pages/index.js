@@ -53,7 +53,7 @@ const Home = ({ user, setUser, products, categories }) => {
       {tiles.map((tile) => (
         <>
           <ProductsSection
-            products={products.filter((o) => o.genre === tile.title)}
+            products={products?.filter((o) => o.genre === tile.title)}
             title={tile.excerpt}
           />
         </>
