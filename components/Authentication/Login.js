@@ -19,6 +19,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { authUrl } from "../../utils/urlConfig";
 
+import { useStoreActions } from "easy-peasy";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -60,6 +62,7 @@ export default function Login({ user, setUser }) {
   const classes = useStyles();
   const router = useRouter();
   const formRef = useRef();
+  const { getToken } = useStoreActions((state) => state.vox);
   const note = () => {
     toast.error("Invalid Username or Password please try again", {
       position: "bottom-left",
@@ -81,6 +84,7 @@ export default function Login({ user, setUser }) {
       .post(`${authUrl}/users/login`, loginObject)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data));
+        getToken(res.data);
       })
       .then(() => {
         setUser(true);

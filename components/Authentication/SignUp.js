@@ -10,7 +10,11 @@ import { Button } from "@material-ui/core";
 import axios from "axios";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+
 import { TextField } from "material-ui-formik-components/TextField";
+import { RadioGroup } from "material-ui-formik-components/RadioGroup";
+import { Select } from "material-ui-formik-components/Select";
+
 import { authUrl } from "../../utils/urlConfig";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -70,12 +74,51 @@ export default function SignUp({ user, setUser }) {
       progress: undefined,
     });
   };
+
+  let months = [];
+  let days = [];
+  let years = [];
+
+  const daysGen = () => {
+    for (let day = 1; day <= 31; day++) {
+      day.toString().length < 2
+        ? days.push({ label: `0${day}`, value: `0${day}` })
+        : days.push({ label: `${day}`, value: `${day}` });
+    }
+  };
+  const monthsGen = () => {
+    for (let month = 1; month <= 12; month++) {
+      month.toString().length < 2
+        ? months.push({ label: `0${month}`, value: `0${month}` })
+        : months.push({ label: `${month}`, value: `${month}` });
+    }
+  };
+  const yearsGen = () => {
+    for (let year = 1900; year <= 2021; year++) {
+      years.push({ label: `${year}`, value: `${year}` });
+    }
+  };
+
+  daysGen();
+  monthsGen();
+  yearsGen();
+
   const handleSignUp = () => {
+    let date =
+      formRef.current.values.year +
+      "-" +
+      formRef.current.values.month +
+      "-" +
+      formRef.current.values.day;
+
     const registerObject = {
       username: formRef.current.values.username,
-      fullName: formRef.current.values.username,
+      fullName: formRef.current.values.fullName,
       password: formRef.current.values.password,
       confirmPassword: formRef.current.values.confirmPassword,
+      gender: formRef.current.values.gender,
+      phoneNumber: formRef.current.values.phoneNumber,
+      dateOfBirth: date,
     };
 
     axios
@@ -88,7 +131,7 @@ export default function SignUp({ user, setUser }) {
         router.push("/user/login");
       })
       .catch((err) => {
-        setErrorMessage(err.response.data);
+        setErrorMessage(err.response);
         let msg = [];
         for (var key in errorMessage) {
           var value = errorMessage[key].toString();
@@ -99,6 +142,7 @@ export default function SignUp({ user, setUser }) {
           note(m.message);
         });
       });
+    console.log(registerObject);
   };
 
   const validationSchema = Yup.object({
@@ -124,14 +168,20 @@ export default function SignUp({ user, setUser }) {
           }}
         >
           <h5 className="text-center mb-4 mt-5 form-signin-heading">
-            Please login
+            Register to become a member
           </h5>
           <Formik
             initialValues={{
               username: "",
               password: "",
               fullName: "",
+              gender: "",
               confirmPassword: "",
+              phoneNumber: "",
+              dateOfBirth: "",
+              month: "",
+              day: "",
+              year: "",
             }}
             onSubmit={(values) => handleSignUp(values)}
             validationSchema={validationSchema}
@@ -155,7 +205,63 @@ export default function SignUp({ user, setUser }) {
                   label="Email"
                   component={TextField}
                 />
+                <Field
+                  required
+                  size="small"
+                  variant="outlined"
+                  name="phoneNumber"
+                  label="Mobile Number"
+                  component={TextField}
+                />
 
+                <Field
+                  required
+                  size="small"
+                  variant="outlined"
+                  // type="password"
+                  name="gender"
+                  label="Gender"
+                  options={[
+                    { value: "MALE", label: "MALE" },
+                    { value: "FEMALE", label: "FEMALE" },
+                  ]}
+                  component={RadioGroup}
+                  groupProps={{ row: true }}
+                />
+                <div className="">
+                  <div className="d-flex d-flex justify-content-around">
+                    <Field
+                      required
+                      size="small"
+                      variant="outlined"
+                      name="day"
+                      label="Day"
+                      options={days}
+                      component={Select}
+                      className="mr-2"
+                    />
+                    <Field
+                      required
+                      size="small"
+                      variant="outlined"
+                      name="month"
+                      label="Month"
+                      options={months}
+                      component={Select}
+                      className="mr-2"
+                    />
+                    <Field
+                      required
+                      size="small"
+                      variant="outlined"
+                      name="year"
+                      label="Year"
+                      options={years}
+                      component={Select}
+                      className="mr-2"
+                    />
+                  </div>
+                </div>
                 <Field
                   required
                   size="small"

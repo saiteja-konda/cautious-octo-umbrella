@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   ThemeProvider,
   CssBaseline,
   createMuiTheme,
@@ -11,22 +10,18 @@ import {
   Box,
   Badge,
 } from "@material-ui/core";
-
 import IconButton from "@material-ui/core/IconButton";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
-
 import jwt_decode from "jwt-decode";
-
 import { useStoreActions, useStoreState } from "easy-peasy";
-
 import Link from "next/link";
-
 import Cart from "./Cart/Cart";
 import SideMenu from "./SideMenu";
+import SecondaryNav from "./Navigation/Options";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles({
-  // This group of buttons will be aligned to the right
   rightToolbar: {
     marginLeft: "auto",
     marginRight: -12,
@@ -52,8 +47,10 @@ const useStyles = makeStyles({
 function PlainBar(props) {
   const classes = useStyles();
 
-  const { len } = useStoreState((actions) => actions.vox);
+  const router = useRouter();
 
+  const { len } = useStoreState((actions) => actions.vox);
+  const { removeUser } = useStoreActions((actions) => actions.vox);
   const [cartlen, setCartlen] = useState();
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -95,6 +92,7 @@ function PlainBar(props) {
   const handleLogout = () => {
     props.setUser(false);
     localStorage.removeItem("token");
+    removeUser();
     router.push("/");
   };
 
@@ -117,11 +115,11 @@ function PlainBar(props) {
     } else {
       return (
         <>
-          {/* <Link href="/"> */}
-          <Button size="small" variant="contained" className={classes.button}>
-            {userName}
-          </Button>
-          {/* </Link> */}
+          <Link href="/account">
+            <Button size="small" variant="contained" className={classes.button}>
+              {userName}
+            </Button>
+          </Link>
           <Link href="/">
             <Button
               size="small"
@@ -162,6 +160,7 @@ function PlainBar(props) {
                 />
               </a>
             </Link>
+            <SecondaryNav categories={props.categories} />
             <section className={classes.rightToolbar}>
               {/* <Box display={{ sm: "block", xs: "block", md: "none" }}>
                 <IconButton

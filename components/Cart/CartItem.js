@@ -8,6 +8,7 @@ import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 import RemoveCircleTwoToneIcon from "@material-ui/icons/RemoveCircleTwoTone";
 
 import { useStoreActions } from "easy-peasy";
+import PillGroup from "../Product/PillGroup";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -16,13 +17,20 @@ export default function CartItem({ product }) {
   const { removeFromCart, increase, decrease, changePrice } = useStoreActions(
     (state) => state.vox
   );
-  const [localPrice, setLocalPrice] = useState(product.price);
-  const priceChanger = (e) => {
-    setLocalPrice(e.target.value);
-  };
 
   const typesRaw = JSON.parse(product.types.options);
   const types = typesRaw.filter((o) => o.label != null);
+  const [localPrice, setLocalPrice] = useState(product.price);
+  const [price, setPrice] = useState(product.choice[0]);
+  const [selectedType, setSelectedType] = useState(product.type);
+
+  const priceChanger = (price) => {
+    setPrice(price);
+    setLocalPrice(price.price);
+  };
+  const onTypePillSelect = (type) => {
+    setSelectedType(type);
+  };
 
   useEffect(() => {
     changePrice({
@@ -54,20 +62,12 @@ export default function CartItem({ product }) {
                 <Typography gutterBottom variant="subtitle1">
                   {product.title}
                 </Typography>
-                {product.options?.map((o) => (
-                  <button
-                    className={
-                      o.price === localPrice
-                        ? "badge badge-pill badge-info btn mr-1"
-                        : "badge badge-pill badge-light btn mr-1"
-                    }
-                    ley={o.price}
-                    value={o.price}
-                    onClick={priceChanger}
-                  >
-                    {o.label}
-                  </button>
-                ))}
+                <PillGroup
+                  items={product.options}
+                  valueProperty="price"
+                  onPillSelect={priceChanger}
+                  selectedPill={price}
+                />
                 <br />
                 <Typography variant="caption">Quantity</Typography>
                 <IconButton onClick={() => decrease(product)}>
@@ -80,24 +80,24 @@ export default function CartItem({ product }) {
                   <AddCircleTwoToneIcon fontSize="small" />
                 </IconButton>
                 <br />
-                {types.length > 0 ? (
-                  <>
-                    <Typography variant="caption">Choose option </Typography>
-                    <select
-                      onChange={(e) => {
-                        // voxStore Action
-                      }}
-                    >
-                      {types.map((o) => (
-                        <option key={o.value} value={o.value}>
-                          {o.label}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                ) : (
-                  ""
-                )}
+                <div>
+                  {types.length > 0 ? (
+                    // null
+                    <div className="">
+                      <div>
+                        <Typography variant="caption">Choose option</Typography>
+                      </div>
+                      <PillGroup
+                        items={types}
+                        onPillSelect={onTypePillSelect}
+                        selectedPill={selectedType}
+                        // setSelected={setSelected}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </Grid>
               <Grid item>
                 <Typography

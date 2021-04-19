@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchAPI } from "../../lib/api";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import PlainBar from "../../components/PlainBar";
 import { Button, Grid, makeStyles, Select } from "@material-ui/core";
 import { SideBySideMagnifier } from "react-image-magnifiers";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import parse from "html-react-parser";
 
 import StickyFooter from "../../components/StickyFooter";
-
+import NavBar from "../../components/Navigation/NavBar";
+import ProductsSection from "../../components/Product/ProductsSection";
+import PillGroup from "../../components/Product/PillGroup";
 const useStyles = makeStyles({
   button: {
     textTransform: "none",
@@ -18,24 +19,35 @@ const useStyles = makeStyles({
     marginTop: "20px",
   },
 });
-function Product({ product, user, setUser, categories }) {
+function Product({ product, user, setUser, categories, products }) {
   const [ops, setOps] = useState([]);
   const [selected, setSelected] = useState(null);
   const { addToCart, getProducts } = useStoreActions((actions) => actions.vox);
-  const { products } = useStoreState((actions) => actions.vox);
+  const classes = useStyles();
+  const test = JSON.parse(product.list.options);
+
+  const typesRaw = JSON.parse(product.types.options);
+  const types = typesRaw.filter((o) => o.label != null);
+  const [selectedType, setSelectedType] = useState(types[0]);
+
+  const filteredProducts = products.filter(
+    (o) => o.genre === product.genre && o.id != product.id
+  );
+  const onTypePillSelect = (type) => {
+    setSelectedType(type);
+  };
+
   useEffect(() => {
     getProducts();
     setOps(test[0]);
   }, []);
-  const classes = useStyles();
-  const test = JSON.parse(product.list.options);
   return (
     <div>
-      <PlainBar
-        title="Baskin In Nature"
+      <NavBar
         user={user}
         setUser={setUser}
         categories={categories}
+        products={products}
       />
       <div className="m-5">
         <div className="row">
@@ -62,9 +74,27 @@ function Product({ product, user, setUser, categories }) {
           </div>
           <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <Typography variant="subtitle1">
-              M R P ₹{selected === null ? ops.price : selected}
+              ₹{selected === null ? ops.price : selected}
             </Typography>
             <Typography variant="caption">(Inclusive of all Taxes)</Typography>
+            <div>
+              {types.length > 0 ? (
+                // null
+                <div className="mt-3">
+                  <Typography variant="subtitle2">
+                    Choose option
+                  </Typography>
+                  <PillGroup
+                    items={types}
+                    onPillSelect={onTypePillSelect}
+                    selectedPill={selectedType}
+                    // setSelected={setSelected}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
             <Typography className="mt-5" variant="subtitle2">
               Quantity
             </Typography>
@@ -97,6 +127,8 @@ function Product({ product, user, setUser, categories }) {
                   product.price = parseInt(
                     selected === null ? ops.price : selected
                   );
+                  product["type"] = selectedType;
+
                   addToCart(product);
                 }}
                 className={classes.button}
@@ -117,80 +149,12 @@ function Product({ product, user, setUser, categories }) {
             </div>
           </div>
         </div>
-
-        <Typography variant="h6" className="text-center" component="h1">
-          You may also like
-        </Typography>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div
-                id="myCarousel"
-                className="carousel slide"
-                data-ride="carousel"
-                data-interval="0"
-              >
-                <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <div className="row">
-                      {products
-                        .filter(
-                          (o) => o.genre === product.genre && o.id != product.id
-                        )
-                        .map((product) => (
-                          <div key={product.id} className="col-sm-3">
-                            <div className="thumb-wrapper">
-                              <div className="img-box">
-                                <img
-                                  src={product.image}
-                                  className="img-fluid"
-                                  alt={product.title}
-                                />
-                              </div>
-                              <div className="thumb-content">
-                                <h4>{product.title}</h4>
-                                <p className="item-price">
-                                  {/* <strike>$400.00</strike>  */}
-                                  <span>
-                                    ₹{JSON.parse(product.list.options)[0].price}
-                                  </span>
-                                </p>
-
-                                <a
-                                  className="btn btn-primary"
-                                  onClick={() => {
-                                    product["choice"] =
-                                      selected === null
-                                        ? test.filter(
-                                            (o) => o.price === ops.price
-                                          )
-                                        : test.filter(
-                                            (o) => o.price === selected
-                                          );
-
-                                    product["options"] = test.filter(
-                                      (o) => o.label !== null
-                                    );
-                                    product.price = parseInt(
-                                      selected === null ? ops.price : selected
-                                    );
-                                    addToCart(product);
-                                  }}
-                                >
-                                  Add to Cart
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {
+          <ProductsSection
+            products={filteredProducts}
+            title={"You may also like"}
+          />
+        }
       </div>
       <StickyFooter />
     </div>
@@ -212,12 +176,15 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const res = await fetchAPI(`/products/${params.id}`);
   const categories = await fetchAPI("/categories");
+  const allProducts = await fetchAPI("/products");
 
   const products = [res];
+
   return {
     props: {
       product: products[0],
       categories,
+      products: allProducts,
     },
     revalidate: 1,
   };

@@ -11,7 +11,8 @@ import WhatsAppWidget from "react-whatsapp-widget";
 import "react-whatsapp-widget/dist/index.css";
 import "../styles/globals.scss";
 import "../styles/style.scss";
-import "react-quill/dist/quill.snow.css";
+import "react-multi-carousel/lib/styles.css";
+
 
 
 export default function MyApp(props) {

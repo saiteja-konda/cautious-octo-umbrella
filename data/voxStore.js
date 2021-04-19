@@ -2,6 +2,7 @@ import { action, thunk, computed } from "easy-peasy";
 import axios from "axios";
 import { baseUrl, authUrl } from "../utils/urlConfig";
 import shortid from "shortid";
+import jwt_decode from "jwt-decode";
 
 export const voxStore = {
   products: [],
@@ -17,6 +18,43 @@ export const voxStore = {
   tempUrl: "",
   admin: false,
   site: {},
+  userDetails: {
+    addresses: null,
+  },
+
+  // Token
+
+  setUserDetails: action((state, payload) => {
+    state.userDetails = payload;
+  }),
+  getToken: thunk(async (actions, payload) => {
+    const id = jwt_decode(JSON.stringify(payload)).id;
+    axios
+      .get(`${authUrl}/users/details/${id}`)
+      .then((res) => actions.setUserDetails(res.data));
+  }),
+
+  removeUser: action((state) => {
+    state.userDetails = {};
+  }),
+
+  // Address
+
+  setAddresses: action((state, payload) => {
+    state.userDetails.addresses = payload;
+  }),
+  getAddresses: thunk(async (actions, payload) => {
+    axios
+      .get(`${authUrl}/address/by/${payload}`)
+      .then((res) => {
+        actions.setAddresses(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    console.log(payload);
+  }),
+
   // Admin
 
   setSite: action((state, payload) => {
@@ -205,10 +243,12 @@ export const voxStore = {
         console.error(err);
       });
   }),
-  setToken: action((state, data) => {
-    state.token = data;
-    localStorage.setItem("token", JSON.stringify(data.token));
-  }),
+
+  // setToken: action((state, data) => {
+  //   state.token = data;
+  //   localStorage.setItem("token", JSON.stringify(data.token));
+  // }),
+
   login: thunk(async (actions, payload) => {
     axios
       .post(`${authUrl}/users/login`, payload)
