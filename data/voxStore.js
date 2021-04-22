@@ -16,16 +16,33 @@ export const voxStore = {
   token: {},
   error: {},
   tempUrl: "",
+  loading: false,
   admin: false,
   site: {},
-  userDetails: {
-    addresses: null,
-  },
+  userDetails: {},
+  addresses: [],
 
   // Token
 
   setUserDetails: action((state, payload) => {
-    state.userDetails = payload;
+    const {
+      username,
+      fullName,
+      phoneNumber,
+      dateOfBirth,
+      gender,
+      memberSince,
+      id,
+    } = payload;
+    state.userDetails = {
+      username,
+      fullName,
+      phoneNumber,
+      dateOfBirth,
+      gender,
+      memberSince,
+      id,
+    };
   }),
   getToken: thunk(async (actions, payload) => {
     const id = jwt_decode(JSON.stringify(payload)).id;
@@ -41,7 +58,7 @@ export const voxStore = {
   // Address
 
   setAddresses: action((state, payload) => {
-    state.userDetails.addresses = payload;
+    state.addresses = payload;
   }),
   getAddresses: thunk(async (actions, payload) => {
     axios
@@ -52,7 +69,39 @@ export const voxStore = {
       .catch((err) => {
         console.error(err);
       });
-    console.log(payload);
+  }),
+
+  addAddress: action((state, payload) => {
+    state.addresses.push(payload);
+  }),
+
+  postAddress: thunk(async (actions, payload) => {
+    axios
+      .post(`${authUrl}/address`, payload)
+      .then((res) => {
+        actions.addAddress(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }),
+
+  removeAddress: action((state, payload) => {
+    const newList = state.addresses.filter((address) => address.id != payload);
+    state.addresses = newList;
+    console.log(newList);
+  }),
+
+  deleteAddress: thunk(async (actions, payload) => {
+    axios
+      .delete(`${authUrl}/address/${payload.id}`)
+      .then((res) => {
+        actions.removeAddress(payload.id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    actions.removeAddress(payload.id);
   }),
 
   // Admin

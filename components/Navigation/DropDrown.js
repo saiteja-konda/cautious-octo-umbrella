@@ -31,14 +31,14 @@ const DropDown = ({ item, categories, products }) => {
         isOpen={dropDown}
         toggle={togglefun}
       >
-        <DropdownToggle nav caret>
+        <DropdownToggle nav style={{ color: "#000000" }}>
           {item.name}
         </DropdownToggle>
         <DropdownMenu>
           {products
             ?.filter((o) => o.categoryId === item.id)
             .map((o) => (
-              <DropdownItem>
+              <DropdownItem key={o.id}>
                 <Link href={`/products/${o.id}`}>
                   <a className="nav-link">{o.title}</a>
                 </Link>

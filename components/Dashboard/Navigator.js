@@ -17,7 +17,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import GavelIcon from "@material-ui/icons/Gavel";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SecurityIcon from "@material-ui/icons/Security";
-import { DashboardContext } from "../Dashboard/DashboardContext";
+import { DashboardContext } from "../../lib/context/DashboardContext";
 import Link from "next/link";
 const categories = [
   {

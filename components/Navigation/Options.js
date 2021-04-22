@@ -6,7 +6,7 @@ function Options({ categories, products }) {
   return (
     <>
       {categories.map((o) => (
-        <DropDown item={o} categories={categories} products={products} />
+        <DropDown key={o.id} item={o} categories={categories} products={products} />
       ))}
     </>
   );

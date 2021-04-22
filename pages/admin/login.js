@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { baseUrl } from "../../utils/urlConfig";
@@ -6,12 +6,7 @@ import { baseUrl } from "../../utils/urlConfig";
 function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [siteUsername, setSiteUsername] = useState("");
-  // const [sitePassword, setSitePassword] = useState("");
 
-  // useEffect(() => {
-  //   getAuthDetails();
-  // }, []);
   const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,9 +28,7 @@ function AdminLogin() {
       });
   };
   return (
-    <div
-    // className="background-image"
-    >
+    <div>
       <form
         className="container"
         style={{
@@ -51,8 +44,6 @@ function AdminLogin() {
               fontSize: "38px",
               fontWeight: "bold",
               position: "relative",
-              // textShadow:" 2px 2px  4px #000",
-              // blurRadius:"2px"
             }}
           >
             Welcome back admin, <br /> please login to continue

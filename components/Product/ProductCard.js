@@ -54,7 +54,7 @@ function ProductCard({ title, image, description, product }) {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="card m-2" style={{ width: "100%" }}>
+      <div className="card m-2" style={{ width: "100%", height: "340px" }}>
         <Link href={`/products/${product.id}`}>
           <img
             className=""
@@ -98,12 +98,16 @@ function ProductCard({ title, image, description, product }) {
               ""
             )}
           </div>
-          <p className=" text-center mt-4 mr-0 ml-0 mb-0">
+          <b className=" text-center mr-0 ml-0 mb-0">
             ₹{selected === null ? ops.price : selected}
-          </p>
+          </b>
           <div>
             <a
-              className="btn btn-dark text-light btn-sm  m-0 btn-block mt-3"
+              style={{
+                backgroundColor: "#2ab7ca",
+                // color: "#2ab7ca",
+              }}
+              className="btn text-light btn-sm  m-0 btn-block mt-3"
               onClick={() => {
                 product["choice"] =
                   selected === null
@@ -117,7 +121,8 @@ function ProductCard({ title, image, description, product }) {
                 addToCart(product);
               }}
             >
-              <i className="fas fa-shopping-cart"></i> Add toCart
+              <i className="fas fa-shopping-cart"></i>
+              <span>Add toCart</span>
             </a>
           </div>
 

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
+import App from "next/app";
+
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../lib/theme";
@@ -12,11 +14,14 @@ import "react-whatsapp-widget/dist/index.css";
 import "../styles/globals.scss";
 import "../styles/style.scss";
 import "react-multi-carousel/lib/styles.css";
+import { fetchAPI } from "../lib/api";
 
-
+export const NavContext = createContext();
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const { products, categories } = pageProps;
+
   const [user, setUser] = useState(false);
 
   React.useEffect(() => {
@@ -38,17 +43,22 @@ export default function MyApp(props) {
       <StoreProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component
-            store={store}
-            setUser={setUser}
-            user={user}
-            {...pageProps}
-          />
+          <NavContext.Provider value={{ products, categories, user, setUser }}>
+            <Component store={store} {...pageProps} />
+          </NavContext.Provider>
         </ThemeProvider>
       </StoreProvider>
     </React.Fragment>
   );
 }
+
+MyApp.getInitialProps = async (ctx) => {
+  const products = await fetchAPI("/products");
+  const categories = await fetchAPI("/categories");
+  const appProps = await App.getInitialProps(ctx);
+
+  return { ...appProps, pageProps: { products, categories } };
+};
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,

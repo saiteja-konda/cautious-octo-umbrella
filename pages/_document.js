@@ -15,10 +15,6 @@ class MyDocument extends Document {
         <Head>
           <meta name="description" content="Bask In Nature" />
           <meta name="theme-color" content={theme.palette.primary.main} />
-          {/* <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-          /> */}
           <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -84,27 +80,29 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+    styles: [
+      ...React.Children.toArray(initialProps.styles),
+      sheets.getStyleElement(),
+    ],
   };
 };
 
 export default MyDocument;
 
-
-          // <link
-          //   href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-          //   rel="stylesheet"
-          // />
-          // <link
-          //   href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900&display=swap"
-          //   rel="stylesheet"
-          // />
-          //           <meta property="og:title" content="Commerce.js | Demo storefront" />
-          // <meta property="og:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
-          // <meta property="og:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
-          // <meta property="og:url" content="https://commercejs-demo-store.netlify.app" />
-          // <meta property="twitter:title" content="Commerce.js | Demo storefront" />
-          // <meta name="twitter:creator" content="@commercejs" />
-          // <meta property="twitter:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
-          // <meta property="twitter:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
-          // <meta name="twitter:card" content="summary_large_image" />
+// <link
+//   href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+//   rel="stylesheet"
+// />
+// <link
+//   href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900&display=swap"
+//   rel="stylesheet"
+// />
+//           <meta property="og:title" content="Commerce.js | Demo storefront" />
+// <meta property="og:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
+// <meta property="og:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
+// <meta property="og:url" content="https://commercejs-demo-store.netlify.app" />
+// <meta property="twitter:title" content="Commerce.js | Demo storefront" />
+// <meta name="twitter:creator" content="@commercejs" />
+// <meta property="twitter:image" content="https://cdn.chec.io/email/assets/marketing/demo-preview.png" />
+// <meta property="twitter:description" content="A custom, open source demo storefront built with Next.js and Commerce.js. Take a look!" />
+// <meta name="twitter:card" content="summary_large_image" />

@@ -12,7 +12,7 @@ import Link from "@material-ui/core/Link";
 import Navigator from "./Navigator";
 import Content from "./Content";
 import Header from "./Header";
-import ComponentContextProvier from "./DashboardContext";
+import ComponentContextProvier from "../../lib/context/DashboardContext";
 import RenderComponent from "./RenderComponent";
 import { useStoreActions } from "easy-peasy";
 

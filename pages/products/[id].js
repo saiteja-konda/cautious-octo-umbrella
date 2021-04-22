@@ -43,12 +43,7 @@ function Product({ product, user, setUser, categories, products }) {
   }, []);
   return (
     <div>
-      <NavBar
-        user={user}
-        setUser={setUser}
-        categories={categories}
-        products={products}
-      />
+      <NavBar />
       <div className="m-5">
         <div className="row">
           <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -81,9 +76,7 @@ function Product({ product, user, setUser, categories, products }) {
               {types.length > 0 ? (
                 // null
                 <div className="mt-3">
-                  <Typography variant="subtitle2">
-                    Choose option
-                  </Typography>
+                  <Typography variant="subtitle2">Choose option</Typography>
                   <PillGroup
                     items={types}
                     onPillSelect={onTypePillSelect}
@@ -175,16 +168,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetchAPI(`/products/${params.id}`);
-  const categories = await fetchAPI("/categories");
-  const allProducts = await fetchAPI("/products");
 
   const products = [res];
 
   return {
     props: {
       product: products[0],
-      categories,
-      products: allProducts,
     },
     revalidate: 1,
   };

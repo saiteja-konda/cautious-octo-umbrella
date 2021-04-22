@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import Button from "@material-ui/core/Button";
@@ -20,6 +20,7 @@ import axios from "axios";
 import { authUrl } from "../../utils/urlConfig";
 
 import { useStoreActions } from "easy-peasy";
+import { NavContext } from "../../pages/_app";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,11 +59,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ user, setUser, products, categories }) => {
+const Login = () => {
   const classes = useStyles();
   const router = useRouter();
   const formRef = useRef();
   const { getToken } = useStoreActions((state) => state.vox);
+  const { user, setUser } = useContext(NavContext);
+  const [isLoading, setLoading] = useState(false);
   const note = () => {
     toast.error("Invalid Username or Password please try again", {
       position: "bottom-left",
@@ -79,18 +82,20 @@ const Login = ({ user, setUser, products, categories }) => {
       username: formRef.current.values.username,
       password: formRef.current.values.password,
     };
-
+    setLoading(true);
     axios
       .post(`${authUrl}/users/login`, loginObject)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data));
         getToken(res.data);
+        setLoading(false);
       })
       .then(() => {
-        setUser(true);
         router.push("/");
+        setUser(true);
       })
       .catch((err) => {
+        setLoading(false);
         note();
       });
   };
@@ -103,12 +108,7 @@ const Login = ({ user, setUser, products, categories }) => {
   });
   return (
     <Grid container component="main" className={classes.root}>
-      <NavBar
-        user={user}
-        categories={categories}
-        products={products}
-        setUser={setUser}
-      />
+      <NavBar />
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
         <div
@@ -151,14 +151,34 @@ const Login = ({ user, setUser, products, categories }) => {
                   label="Password"
                   component={TextField}
                 />
-                <Button
+                {isLoading ? (
+                  <button
+                    className="btn btn-dark btn-block"
+                    type="button"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                ) : (
+                  <button className="btn btn-dark btn-block" type="submit">
+                    Login
+                  </button>
+                )}
+
+                {/* <Button
                   fullWidth
                   variant="contained"
                   className={classes.button}
                   type="submit"
                 >
-                  Login
-                </Button>
+                  <div className="spinner-border text-secondary" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </Button> */}
               </Form>
             )}
           </Formik>
@@ -176,7 +196,7 @@ const Login = ({ user, setUser, products, categories }) => {
           />
         </div>
       </Grid>
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
     </Grid>
   );
 };

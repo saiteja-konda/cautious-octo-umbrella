@@ -41,11 +41,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px",
   },
 }));
-
-export default function Cart({ openCart, setOpenCart }) {
+const Cart = ({ openCart, setOpenCart, user }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { cart, len } = useStoreState((state) => state.vox);
+  const { cart, len, userDetails } = useStoreState((state) => state.vox);
   const [message, setMessage] = useState("");
   useEffect(() => {
     if (len == 0) {
@@ -102,9 +101,10 @@ export default function Cart({ openCart, setOpenCart }) {
           >
             {message}
           </span>
-          <Total sum={sum}/>
+          <Total sum={sum} len={len} user={user} id={userDetails.id} />
         </>
       </Drawer>
     </div>
   );
-}
+};
+export default Cart;

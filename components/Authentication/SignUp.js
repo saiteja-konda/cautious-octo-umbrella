@@ -64,6 +64,8 @@ export default function SignUp({ user, setUser, products, categories }) {
   const { signup } = useStoreActions((state) => state.vox);
   const formRef = useRef();
   const [errorMessage, setErrorMessage] = useState({});
+  const [isLoading, setLoading] = useState(false);
+
   const note = (msg) => {
     toast.error(msg, {
       position: "bottom-right",
@@ -105,6 +107,7 @@ export default function SignUp({ user, setUser, products, categories }) {
   yearsGen();
 
   const handleSignUp = () => {
+    setLoading(true);
     let date =
       formRef.current.values.year +
       "-" +
@@ -124,12 +127,8 @@ export default function SignUp({ user, setUser, products, categories }) {
 
     axios
       .post(`${authUrl}/users/register`, registerObject)
-      .then((res) => {
-        // localStorage.setItem("token", JSON.stringify(res.data));
-        // console.log(res.data);
-      })
       .then(() => {
-        router.push("/user/login");
+        router.push("/user/auth/login");
       })
       .catch((err) => {
         setErrorMessage(err.response);
@@ -138,10 +137,10 @@ export default function SignUp({ user, setUser, products, categories }) {
           var value = errorMessage[key].toString();
           msg.push({ message: value });
         }
-        console.log(msg);
         msg.forEach((m) => {
           note(m.message);
         });
+        setLoading(false);
       });
     console.log(registerObject);
   };
@@ -159,12 +158,7 @@ export default function SignUp({ user, setUser, products, categories }) {
   });
   return (
     <Grid container component="main" className={classes.root}>
-      <NavBar
-        user={user}
-        categories={categories}
-        products={products}
-        setUser={setUser}
-      />
+      <NavBar />
       {/* <CssBaseline /> */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
         <div className={classes.paper}>
@@ -281,14 +275,32 @@ export default function SignUp({ user, setUser, products, categories }) {
                   label="Confirm Password"
                   component={TextField}
                 />
-                <Button
+                {isLoading ? (
+                  <button
+                    className="btn btn-dark btn-block"
+                    type="button"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                ) : (
+                  <button className="btn btn-dark btn-block" type="submit">
+                    Sign up
+                  </button>
+                )}
+
+                {/* <Button
                   fullWidth
                   variant="contained"
                   className={classes.button}
                   type="submit"
                 >
                   SignUp
-                </Button>
+                </Button> */}
               </Form>
             )}
           </Formik>

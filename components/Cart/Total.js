@@ -1,4 +1,6 @@
 import React from "react";
+import { useRouter } from "next/router";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   footer: {
-    padding: theme.spacing(0,2),
+    padding: theme.spacing(0, 2),
     marginTop: "0px",
   },
   button1: {
@@ -32,13 +34,24 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     margin: "8px",
   },
+  link: {
+    textDecoration: "none",
+    color: "#fff",
+  },
 }));
 
-export default function Total({ sum }) {
+export default function Total({ sum, len, user, id }) {
   const classes = useStyles();
-
+  const router = useRouter();
+  const pushToCheckout = () => {
+    if (user) {
+      router.push(`/user/checkout/?userid=${id}`);
+    } else {
+      window.alert("Please login to continue");
+    }
+  };
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <CssBaseline />
       <Container
         component="main"
@@ -58,9 +71,16 @@ export default function Total({ sum }) {
           <Button variant="contained" size="small" className={classes.button1}>
             Continue Shopping
           </Button>
-          <Button variant="contained" size="small" className={classes.button2}>
+          <button
+            className="btn btn-sm btn-dark"
+            onClick={
+              len > 0
+                ? () => pushToCheckout()
+                : () => window.alert("No items in your cart")
+            }
+          >
             Checkout
-          </Button>
+          </button>
         </Container>
       </footer>
     </div>

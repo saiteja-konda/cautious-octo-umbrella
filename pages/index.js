@@ -7,11 +7,9 @@ import ProductsSection from "../components/Product/ProductsSection";
 import HeroSection from "../components/HeroSection";
 import NavBar from "../components/Navigation/NavBar";
 
-
 const Home = ({ user, setUser, products, categories }) => {
   const paragraph =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem molestias soluta vero voluptates sapiente magnam dolorem cum.";
-
 
   const tiles = [
     {
@@ -37,29 +35,28 @@ const Home = ({ user, setUser, products, categories }) => {
     },
   ];
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#f4f4f8",
+      }}
+    >
       <Head>
         <title>Bask In Nature</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <NavBar
-        user={user}
-        categories={categories}
-        products={products}
-        setUser={setUser}
-      />
+      <NavBar />
       <HeroSection />
       {tiles.map((tile) => (
         <>
           <ProductsSection
+            key={tile.id}
             products={products?.filter((o) => o.genre === tile.title)}
             title={tile.excerpt}
           />
         </>
       ))}
 
-  
       <Testmonials />
       <Newsletter />
       <StickyFooter />
@@ -67,16 +64,4 @@ const Home = ({ user, setUser, products, categories }) => {
   );
 };
 
-export async function getStaticProps() {
-  const products = await fetchAPI("/products");
-  const categories = await fetchAPI("/categories");
-
-  return {
-    props: {
-      products,
-      categories,
-    },
-    revalidate: 1,
-  };
-}
 export default Home;

@@ -6,7 +6,7 @@ import Terms from "../Settings/Terms";
 import ReturnsPolicy from "../Settings/ReturnsPolicy";
 import Credentials from "../Settings/Credentials";
 import Order from "../Order/Order";
-import { DashboardContext } from "./DashboardContext";
+import { DashboardContext } from "../../lib/context/DashboardContext";
 import ProductCrud from "./ProductCrud";
 
 function RenderComponent({ site }) {
