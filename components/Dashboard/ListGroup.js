@@ -12,7 +12,7 @@ function ListGroup({
 }) {
   return (
     <List component="nav">
-      {Items.map((item) => (
+      {Items?.map((item) => (
         <ListItem
           key={item.id}
           onClick={() => onItemSelect(item)}

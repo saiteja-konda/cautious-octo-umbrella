@@ -5,7 +5,7 @@ import DropDown from "./DropDrown";
 function Options({ categories, products }) {
   return (
     <>
-      {categories.map((o) => (
+      {categories?.map((o) => (
         <DropDown key={o.id} item={o} categories={categories} products={products} />
       ))}
     </>

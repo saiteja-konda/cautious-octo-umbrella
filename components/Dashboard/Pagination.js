@@ -21,7 +21,7 @@ function Pagination({
         <li className="page-item ">
           <a>Previous</a>
         </li>
-        {pages.map((page) => (
+        {pages?.map((page) => (
           <li
             key={page}
             className={page === currentPage ? "page-item active" : "page-item"}

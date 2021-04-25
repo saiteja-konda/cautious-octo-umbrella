@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useStoreState } from "easy-peasy";
 import React, { useState } from "react";
-import OrderItem from "./OrderItem";
+import OrderItem from "./OrderItems";
 import shortid from "shortid";
 import {
   Button,
@@ -15,12 +15,14 @@ import {
 const OrderList = ({ selectedAddress }) => {
   const { cart, userDetails } = useStoreState((store) => store.vox);
   const { lineItems } = cart;
+
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [isLoading, setLoading] = useState(false);
   const [payButton, setPayButton] = useState("none");
   const [confirmButton, setConfirmButton] = useState("block");
   const [paymentLink, setPaymentLink] = useState("");
+  
   const cartTotalCounter = () => {
     let count = 0;
     cart?.lineItems
@@ -74,7 +76,7 @@ const OrderList = ({ selectedAddress }) => {
   return (
     <div>
       <div style={{ backgroundColor: "honeydew", padding: "20px" }}>
-        {lineItems.map((item) => (
+        {lineItems?.map((item) => (
           <OrderItem item={item} />
         ))}
         <hr />
@@ -158,7 +160,7 @@ const OrderList = ({ selectedAddress }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {lineItems.map((o, index = 2) => (
+                  {lineItems?.map((o, index = 2) => (
                     <tr className="m-0 p-0" key={o.id}>
                       <th row>{index++}</th>
                       <td>

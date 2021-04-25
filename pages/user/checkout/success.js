@@ -1,7 +1,11 @@
-import React from 'react';
-import Success from '../../../components/Checkout/Success';
+import { useStoreActions } from "easy-peasy";
+import React, { useEffect } from "react";
+import Success from "../../../components/UserCheckout/Success";
+
 const success = () => {
-  return ( <Success/> );
-}
- 
+  const { ResetCart } = useStoreActions((store) => store.vox);
+  useEffect(() => ResetCart(), []);
+  return <Success />;
+};
+
 export default success;

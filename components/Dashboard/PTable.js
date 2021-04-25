@@ -26,7 +26,7 @@ function PTable({
       </thead>
 
       <tbody>
-        {Products.map((product) => (
+        {Products?.map((product) => (
           <tr key={product.id}>
             <td className="p-0 m-0">
               <span className="custom-checkbox"></span>

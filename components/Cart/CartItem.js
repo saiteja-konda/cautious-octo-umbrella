@@ -17,15 +17,17 @@ export default function CartItem({ product }) {
     (state) => state.vox
   );
 
-  const typesRaw = JSON.parse(product.types.options);
-  const types = typesRaw.filter((o) => o.label != null);
-  const [localPrice, setLocalPrice] = useState(product.price);
-  const [price, setPrice] = useState(product.choice[0]);
+  // const typesRaw = JSON.parse(product.types.options);
+  // const types = typesRaw.filter((o) => o.label != null);
+  const [localPrice, setLocalPrice] = useState(product.choice.price === null ? product.variants[0].price : product.choice.price);
+  const [price, setPrice] = useState(product.choice);
   const [selectedType, setSelectedType] = useState(product.type);
-
+  const { types } = product;
+  const filtedTypes = types.filter((o) => o.label && o.value != null);
   const priceChanger = (price) => {
     setPrice(price);
     setLocalPrice(price.price);
+    console.log(price);
   };
   const onTypePillSelect = (type) => {
     setSelectedType(type);
@@ -62,7 +64,7 @@ export default function CartItem({ product }) {
                   {product.title}
                 </Typography>
                 <PillGroup
-                  items={product.options}
+                  items={product.variants}
                   valueProperty="price"
                   onPillSelect={priceChanger}
                   selectedPill={price}
@@ -80,18 +82,18 @@ export default function CartItem({ product }) {
                 </IconButton>
                 <br />
                 <div>
-                  {types.length > 0 ? (
+                  {filtedTypes.length > 0 ? (
                     // null
                     <div className="">
                       <div>
                         <Typography variant="caption">Choose option</Typography>
+                        <PillGroup
+                          items={types}
+                          onPillSelect={onTypePillSelect}
+                          selectedPill={selectedType}
+                          // setSelected={setSelected}
+                        />
                       </div>
-                      <PillGroup
-                        items={types}
-                        onPillSelect={onTypePillSelect}
-                        selectedPill={selectedType}
-                        // setSelected={setSelected}
-                      />
                     </div>
                   ) : (
                     ""
@@ -111,7 +113,7 @@ export default function CartItem({ product }) {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">₹{product.price}</Typography>
+              <Typography variant="subtitle2">₹{localPrice}</Typography>
             </Grid>
           </Grid>
         </Grid>

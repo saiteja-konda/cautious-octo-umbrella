@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PillGroup from "./PillGroup";
+import { Button, makeStyles } from "@material-ui/core";
+import { lightGreen, lime, yellow, grey } from "@material-ui/core/colors";
 
 function ProductCard({ title, image, description, product }) {
   const { addToCart } = useStoreActions((state) => state.vox);
@@ -23,15 +25,29 @@ function ProductCard({ title, image, description, product }) {
       progress: undefined,
     });
   };
-  let test = JSON.parse(product.list.options);
-  let test2 = JSON.parse(product.list.options).filter((o) => o.label != null);
+  let variants = product.variants;
+  const { types } = product;
+  const filtedTypes = types.filter((o) => o.label && o.value != null);
 
-  const [selected, setSelected] = useState(test[0].price);
-  const typesRaw = JSON.parse(product.types.options);
-  const types = typesRaw.filter((o) => o.label != null);
-
-  const [selectedPill, setSelectedPill] = useState(test[0]);
+  const [selected, setSelected] = useState(variants[0].price);
+  const [selectedPill, setSelectedPill] = useState(variants[0]);
   const [selectedType, setSelectedType] = useState(types[0]);
+
+  const useStyles = makeStyles({
+    button: {
+      textTransform: "none",
+      fontWeight: "Bolder",
+      marginTop: "20px",
+      backgroundColor: yellow["A400"],
+      boxShadow: "2px 2px 15px #fff59d",
+      color: grey["800"],
+      "&:hover": {
+        backgroundColor: yellow["A700"],
+        color: grey["800"],
+      },
+    },
+  });
+  const classes = useStyles();
 
   const onPillSelect = (pill) => {
     setSelected(pill.price);
@@ -49,12 +65,12 @@ function ProductCard({ title, image, description, product }) {
     }
   };
   useEffect(() => {
-    setOps(test[0]);
+    setOps(variants[0]);
   }, []);
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="card m-2" style={{ width: "100%", height: "340px" }}>
+      <div className="card m-2" style={{ width: "100%", height: "340px"}}>
         <Link href={`/products/${product.id}`}>
           <img
             className=""
@@ -74,7 +90,7 @@ function ProductCard({ title, image, description, product }) {
           <div className="d-flex mt-2">
             <b className="p-0 m-0 mr-2">size</b>
             <PillGroup
-              items={test2}
+              items={variants}
               onPillSelect={onPillSelect}
               selectedPill={selectedPill}
               setSelected={setSelected}
@@ -82,48 +98,42 @@ function ProductCard({ title, image, description, product }) {
             />
           </div>
           <div>
-            {types.length > 0 ? (
-              <>
-                <b className="p-0 m-0 mr-2" style={{ fontSize: "10px" }}>
-                  choose option
-                </b>
-                <PillGroup
-                  items={types}
-                  onPillSelect={onTypePillSelect}
-                  selectedPill={selectedType}
-                  setSelected={setSelected}
-                />
-              </>
-            ) : (
-              ""
-            )}
+            <div>
+              {filtedTypes.length > 0 ? (
+                <div className="">
+                  <div>
+                    <b className="p-0 m-0 mr-2" style={{ fontSize: "10px" }}>
+                      choose option
+                    </b>
+                    <PillGroup
+                      items={types}
+                      onPillSelect={onTypePillSelect}
+                      selectedPill={selectedType}
+                    />
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <b className=" text-center mr-0 ml-0 mb-0">
             ₹{selected === null ? ops.price : selected}
           </b>
           <div>
-            <a
-              style={{
-                backgroundColor: "#2ab7ca",
-                // color: "#2ab7ca",
-              }}
-              className="btn text-light btn-sm  m-0 btn-block mt-3"
+            <Button
+              className={classes.button}
+              size="medium"
+              fullWidth
+              variant="contained"
               onClick={() => {
-                product["choice"] =
-                  selected === null
-                    ? test.filter((o) => o.price === ops.price)
-                    : test.filter((o) => o.price === selected);
-                product["options"] = test.filter((o) => o.label !== null);
-                product.price = parseInt(
-                  selected === null ? ops.price : selected
-                );
-                product["type"] = selectedType;
+                product.type = selectedType;
+                product.choice = selectedPill;
                 addToCart(product);
               }}
             >
-              <i className="fas fa-shopping-cart"></i>
               <span>Add toCart</span>
-            </a>
+            </Button>
           </div>
 
           <ToastContainer

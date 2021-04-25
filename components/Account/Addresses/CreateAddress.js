@@ -13,12 +13,12 @@ const CreateAddress = ({
   cancelButton,
   setComponent,
   postAddress,
-  userDetails,
+  username,
 }) => {
   const handleAddressSubmit = (values, { resetForm }) => {
-    const obj = { ...values, username: userDetails.username };
+    const obj = { ...values, userId: username };
     postAddress(obj);
-    setComponent("addresses");
+    // setComponent("addresses");
     resetForm({ values: "" });
   };
   const handleCancel = (props) => {

@@ -10,7 +10,7 @@ function CartMaterial() {
     <div>
       {cart.lineItems
         ?.filter((product) => product.quantity >= 1)
-        .map((product) => (
+        ?.map((product) => (
           <CartItem key={product.id} product={product} />
         ))}
       {/* <Total /> */}

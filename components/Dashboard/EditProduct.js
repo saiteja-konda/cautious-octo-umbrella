@@ -39,6 +39,25 @@ function EditProduct({
   const [dvalue, setDvalue] = useState(product.description);
   const [publish, setPublish] = useState(product.published);
 
+  const rawcategories = [
+    {
+      value: "",
+      label: "All Categories ",
+    },
+    {
+      value: "qdw0rjiarl80",
+      label: "Skin",
+    },
+    {
+      value: "rlan84nci2pk",
+      label: "Baby care",
+    },
+    {
+      value: "1ieuzbyl13f3r",
+      label: "Hair",
+    },
+  ];
+
   const override = css`
     display: block;
     // margin: 0 auto;
@@ -120,7 +139,7 @@ function EditProduct({
       .positive("Stock can't be negitive")
       .required("Enter Product Stock Avaliblility")
       .max(500),
-    categoryId: Yup.number("Select Product category").required(
+    categoryId: Yup.string("Select Product category").required(
       "Select Product category"
     ),
     q1: Yup.string().required("Enter Quantity label"),
@@ -180,33 +199,30 @@ function EditProduct({
 
   const renderDummy = Dummy();
 
-  const temp = JSON.parse(product.list.options);
-  const temp1 = JSON.parse(product.types.options);
-
-  const ExtractedTypes = temp1.map((o) => o);
-  const ExtractedOpts = temp.map((o) => o);
+  const temp = product.variants;
+  const temp1 = product.types;
 
   const initialValues = {
     title: product.title,
     categoryId: product.categoryId,
     stockInUnits: product.stockInUnits,
 
-    q1: ExtractedOpts[0].label,
-    p1: ExtractedOpts[0].price,
+    q1: temp[0].label,
+    p1: temp[0].price,
 
-    q2: ExtractedOpts[1].label,
-    p2: ExtractedOpts[1].price,
+    q2: temp[1].label,
+    p2: temp[1].price,
 
-    q3: ExtractedOpts[2].label,
-    p3: ExtractedOpts[2].price,
+    q3: temp[2].label,
+    p3: temp[2].price,
 
-    q4: ExtractedOpts[3].label,
-    p4: ExtractedOpts[3].price,
+    q4: temp[3].label,
+    p4: temp[3].price,
 
-    option1: ExtractedTypes[0].label,
-    option2: ExtractedTypes[1].label,
-    option3: ExtractedTypes[2].label,
-    option4: ExtractedTypes[3].label,
+    option1: temp1[0].label,
+    option2: temp1[1].label,
+    option3: temp1[2].label,
+    option4: temp1[3].label,
   };
   const handProductSubmit = async (values, { resetForm }) => {
     setLoading(true);
@@ -218,47 +234,42 @@ function EditProduct({
       categoryId: values.categoryId,
       stockInUnits: values.stockInUnits,
       image: await imageUpload(),
-      list: {
-        title: "size",
-        options: JSON.stringify([
-          {
-            label: values.q1,
-            price: values.p1,
-          },
-          {
-            label: values.q2,
-            price: values.p2,
-          },
-          {
-            label: values.q3,
-            price: values.p3,
-          },
-          {
-            label: values.q4,
-            price: values.p4,
-          },
-        ]),
-      },
-      types: {
-        options: JSON.stringify([
-          {
-            label: values.option1,
-            value: values.option1,
-          },
-          {
-            label: values.option2,
-            value: values.option2,
-          },
-          {
-            label: values.option3,
-            value: values.option3,
-          },
-          {
-            label: values.option4,
-            value: values.option4,
-          },
-        ]),
-      },
+      variants: [
+        {
+          label: values.q1,
+          price: values.p1,
+        },
+        {
+          label: values.q2,
+          price: values.p2,
+        },
+        {
+          label: values.q3,
+          price: values.p3,
+        },
+        {
+          label: values.q4,
+          price: values.p4,
+        },
+      ],
+      types: [
+        {
+          label: values.option1,
+          value: values.option1,
+        },
+        {
+          label: values.option2,
+          value: values.option2,
+        },
+        {
+          label: values.option3,
+          value: values.option3,
+        },
+        {
+          label: values.option4,
+          value: values.option4,
+        },
+      ],
     };
     let unChangedObject = {
       title: values.title,
@@ -267,47 +278,42 @@ function EditProduct({
       stockInUnits: values.stockInUnits,
       published: publish,
       image: product.image,
-      list: {
-        title: "size",
-        options: JSON.stringify([
-          {
-            label: values.q1,
-            price: values.p1,
-          },
-          {
-            label: values.q2,
-            price: values.p2,
-          },
-          {
-            label: values.q3,
-            price: values.p3,
-          },
-          {
-            label: values.q4,
-            price: values.p4,
-          },
-        ]),
-      },
-      types: {
-        options: JSON.stringify([
-          {
-            label: values.option1,
-            value: values.option1,
-          },
-          {
-            label: values.option2,
-            value: values.option2,
-          },
-          {
-            label: values.option3,
-            value: values.option3,
-          },
-          {
-            label: values.option4,
-            value: values.option4,
-          },
-        ]),
-      },
+      variants: [
+        {
+          label: values.q1,
+          price: values.p1,
+        },
+        {
+          label: values.q2,
+          price: values.p2,
+        },
+        {
+          label: values.q3,
+          price: values.p3,
+        },
+        {
+          label: values.q4,
+          price: values.p4,
+        },
+      ],
+      types: [
+        {
+          label: values.option1,
+          value: values.option1,
+        },
+        {
+          label: values.option2,
+          value: values.option2,
+        },
+        {
+          label: values.option3,
+          value: values.option3,
+        },
+        {
+          label: values.option4,
+          value: values.option4,
+        },
+      ],
     };
 
     if (imageChanged) {
@@ -373,7 +379,7 @@ function EditProduct({
                         variant="outlined"
                         name="categoryId"
                         label="Category"
-                        options={categories}
+                        options={rawcategories}
                         component={Select}
                       />
                       <SunEditor

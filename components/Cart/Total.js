@@ -45,7 +45,7 @@ export default function Total({ sum, len, user, id }) {
   const router = useRouter();
   const pushToCheckout = () => {
     if (user) {
-      router.push(`/user/checkout/?userid=${id}`);
+      router.push(`/user/checkout`);
     } else {
       window.alert("Please login to continue");
     }

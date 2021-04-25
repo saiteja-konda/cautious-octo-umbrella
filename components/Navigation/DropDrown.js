@@ -37,7 +37,7 @@ const DropDown = ({ item, categories, products }) => {
         <DropdownMenu>
           {products
             ?.filter((o) => o.categoryId === item.id)
-            .map((o) => (
+            ?.map((o) => (
               <DropdownItem key={o.id}>
                 <Link href={`/products/${o.id}`}>
                   <a className="nav-link">{o.title}</a>

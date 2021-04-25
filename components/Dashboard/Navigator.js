@@ -117,7 +117,7 @@ function Navigator(props) {
             </Link>
           </ListItemText>
         </ListItem>
-        {categories.map(({ id, children }) => (
+        {categories?.map(({ id, children }) => (
           <React.Fragment key={id}>
             <ListItem className={classes.categoryHeader}>
               <ListItemText
@@ -128,7 +128,7 @@ function Navigator(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
+            {children?.map(({ id: childId, icon, active }) => (
               <ListItem
                 key={childId}
                 button

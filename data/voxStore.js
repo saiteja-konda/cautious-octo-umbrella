@@ -80,10 +80,12 @@ export const voxStore = {
       .post(`${authUrl}/address`, payload)
       .then((res) => {
         actions.addAddress(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
       });
+    console.log(payload);
   }),
 
   removeAddress: action((state, payload) => {
@@ -333,6 +335,8 @@ export const voxStore = {
   changePrice: thunk((actions, payload) => {
     actions.PriceChanger(payload);
   }),
+
+  
   deleteFromCart: action((state, id) => {
     const newList = state.cart.lineItems.filter((product) => product.id != id);
     state.cart.lineItems = newList;
@@ -365,6 +369,13 @@ export const voxStore = {
     if (product.quantity === 1) {
       actions.deleteFromCart(product.id);
     } else actions.decreaseProductQty(product.id);
+  }),
+
+  ResetCart: action((state) => {
+    state.cart = {
+      id: "false",
+      lineItems: [],
+    };
   }),
 };
 

@@ -107,10 +107,11 @@ const NavBar = ({ shadow }) => {
         light
         expand="md"
         fixed="top"
-        className="shadow p-3 mb-5 bg-white rounded"
+        // className="shadow p-3 mb-5 bg-white rounded"
         style={{
           backgroundColor: "#ffffff",
           color: "#000000",
+          boxShadow: "2px 2px 30px #ede7f6",
         }}
       >
         <NavbarBrand href="/">

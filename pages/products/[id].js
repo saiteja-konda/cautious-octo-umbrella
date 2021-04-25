@@ -11,25 +11,29 @@ import StickyFooter from "../../components/StickyFooter";
 import NavBar from "../../components/Navigation/NavBar";
 import ProductsSection from "../../components/Product/ProductsSection";
 import PillGroup from "../../components/Product/PillGroup";
+import { lightGreen, lime, yellow, grey } from "@material-ui/core/colors";
 const useStyles = makeStyles({
   button: {
     textTransform: "none",
-    backgroundColor: "#000",
-    color: "white",
+    fontWeight: "Bolder",
     marginTop: "20px",
+    backgroundColor: yellow["A400"],
+    color: grey["800"],
+    "&:hover": {
+      backgroundColor: yellow["A700"],
+      color: grey["800"],
+    },
   },
 });
 function Product({ product, user, setUser, categories, products }) {
-  const [ops, setOps] = useState([]);
-  const [selected, setSelected] = useState(null);
   const { addToCart, getProducts } = useStoreActions((actions) => actions.vox);
   const classes = useStyles();
-  const test = JSON.parse(product.list.options);
+  const { variants, types } = product;
+  const filterTypes = types.filter((o) => o.label != null);
 
-  const typesRaw = JSON.parse(product.types.options);
-  const types = typesRaw.filter((o) => o.label != null);
+  const [localPrice, setLocalPrice] = useState(variants[0].price);
+  const [localVariant, setLocalVariant] = useState(variants[0]);
   const [selectedType, setSelectedType] = useState(types[0]);
-
   const filteredProducts = products.filter(
     (o) => o.genre === product.genre && o.id != product.id
   );
@@ -39,7 +43,7 @@ function Product({ product, user, setUser, categories, products }) {
 
   useEffect(() => {
     getProducts();
-    setOps(test[0]);
+    // setOps(variants[0]);
   }, []);
   return (
     <div>
@@ -68,20 +72,16 @@ function Product({ product, user, setUser, categories, products }) {
             />
           </div>
           <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <Typography variant="subtitle1">
-              ₹{selected === null ? ops.price : selected}
-            </Typography>
+            <Typography variant="subtitle1">₹{localPrice}</Typography>
             <Typography variant="caption">(Inclusive of all Taxes)</Typography>
             <div>
-              {types.length > 0 ? (
-                // null
+              {filterTypes.length > 0 ? (
                 <div className="mt-3">
                   <Typography variant="subtitle2">Choose option</Typography>
                   <PillGroup
-                    items={types}
+                    items={filterTypes}
                     onPillSelect={onTypePillSelect}
                     selectedPill={selectedType}
-                    // setSelected={setSelected}
                   />
                 </div>
               ) : (
@@ -96,14 +96,17 @@ function Product({ product, user, setUser, categories, products }) {
                 native
                 fullWidth
                 onChange={(e) => {
-                  setSelected(e.target.value);
+                  setLocalPrice(e.target.value);
+                  setLocalVariant(
+                    variants.filter((o) => o.price === e.target.value)
+                  );
                 }}
                 displayEmpty
                 className={classes.select}
               >
-                {test
+                {variants
                   .filter((o) => o.label != null)
-                  .map((o) => (
+                  ?.map((o) => (
                     <option key={o.label} id={o.label} value={o.price}>
                       {o.label}
                     </option>
@@ -111,17 +114,8 @@ function Product({ product, user, setUser, categories, products }) {
               </Select>
               <Button
                 onClick={() => {
-                  product["choice"] =
-                    selected === null
-                      ? test.filter((o) => o.price === ops.price)
-                      : test.filter((o) => o.price === selected);
-
-                  product["options"] = test.filter((o) => o.label !== null);
-                  product.price = parseInt(
-                    selected === null ? ops.price : selected
-                  );
-                  product["type"] = selectedType;
-
+                  product.type = selectedType;
+                  product.choice = localVariant[0];
                   addToCart(product);
                 }}
                 className={classes.button}
@@ -157,7 +151,7 @@ export async function getStaticPaths() {
   const products = await fetchAPI("/products");
 
   return {
-    paths: products.map((product) => ({
+    paths: products?.map((product) => ({
       params: {
         id: product.id.toString(),
       },

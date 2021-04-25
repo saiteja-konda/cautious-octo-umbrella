@@ -87,7 +87,7 @@ export default function StickyFooter() {
             <Typography variant="h6" component="h1" gutterBottom>
               We Accept
             </Typography>
-            {pimages.map((image, index) => (
+            {pimages?.map((image, index) => (
               <img key={index} src={image.img} />
             ))}
           </div>
