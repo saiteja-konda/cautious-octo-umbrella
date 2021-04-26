@@ -11,26 +11,31 @@ export default async (req, res) => {
   });
   const body = req.body;
   const payment = await instance.payments.fetch(body.razorpay_payment_id);
+  // const payment = await instance.payments.fetch("pay_H3cGXXYSqShvq7");
   const method = _.pick(payment, "method").method;
 
   const upiFun = () => {
-    return res.status(200).json("Upi payment");
+    const data = _.pick(payment, "vpa", "acquirer_data");
+    let used = { method: "vpa" };
+
+    return res.status(200).json({ data, used });
   };
   const cardFun = async () => {
-    const CardDetails = request(
-      `https://${key_id}:${key_secret}@api.razorpay.com/v1/payments/${payment.id}/card`,
-      function (error, response, body) {
-        return body;
-      }
-    );
+    let result;
+    let used = { method: "vpa" };
 
-    // const data = await fetch(
-    // `https://${key_id}:${key_secret}@api.razorpay.com/v1/payments/${payment.id}/card`
-    // );
-    return res.status(200).json(CardDetails);
+    const data = await fetch(
+      `https://${key_id}:${key_secret}@api.razorpay.com/v1/payments/${payment.id}/card`
+    )
+      .then((response) => response.json())
+      .then((data) => (result = { data, used }));
+
+    return res.status(200).json(result);
   };
   const walletFun = () => {
-    return res.status(200).json("Wallet payment");
+    const data = _.pick(payment, "wallet", "acquirer_data");
+    let used = { method: "wallet" };
+    return res.status(200).json({data, used});
   };
   switch (method) {
     case "upi":
@@ -43,6 +48,18 @@ export default async (req, res) => {
       walletFun();
       break;
     default:
+      () => res.status(200).json(payment)
       break;
   }
 };
+
+// const CardDetails = request(
+//   `https://${key_id}:${key_secret}@api.razorpay.com/v1/payments/${payment.id}/card`,
+//   function (error, response, body) {
+//     let result = [];
+//     let used = { method: "card" };
+//     result.push(body);
+//     result.push(used);
+//     return response;
+//   }
+// );

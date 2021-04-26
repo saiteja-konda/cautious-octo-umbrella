@@ -39,7 +39,7 @@ function EditProduct({
   const [dvalue, setDvalue] = useState(product.description);
   const [publish, setPublish] = useState(product.published);
 
-  const rawcategories = [
+   const rawcategories = [
     {
       value: "",
       label: "All Categories ",

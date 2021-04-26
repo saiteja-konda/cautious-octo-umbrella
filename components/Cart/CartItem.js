@@ -19,11 +19,13 @@ export default function CartItem({ product }) {
 
   // const typesRaw = JSON.parse(product.types.options);
   // const types = typesRaw.filter((o) => o.label != null);
-  const [localPrice, setLocalPrice] = useState(product.choice.price === null ? product.variants[0].price : product.choice.price);
+  const [localPrice, setLocalPrice] = useState(product.choice.price);
   const [price, setPrice] = useState(product.choice);
-  const [selectedType, setSelectedType] = useState(product.type);
   const { types } = product;
   const filtedTypes = types.filter((o) => o.label && o.value != null);
+  const [selectedType, setSelectedType] = useState(
+    filtedTypes.length > 0 ? product.types[0] : product.type
+  );
   const priceChanger = (price) => {
     setPrice(price);
     setLocalPrice(price.price);
@@ -87,6 +89,7 @@ export default function CartItem({ product }) {
                     <div className="">
                       <div>
                         <Typography variant="caption">Choose option</Typography>
+                        <br />
                         <PillGroup
                           items={types}
                           onPillSelect={onTypePillSelect}

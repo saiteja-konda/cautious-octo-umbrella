@@ -70,7 +70,7 @@ function ProductCard({ title, image, description, product }) {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="card m-2" style={{ width: "100%", height: "340px"}}>
+      <div className="card m-2" style={{ width: "100%", height: "340px" }}>
         <Link href={`/products/${product.id}`}>
           <img
             className=""
@@ -130,6 +130,7 @@ function ProductCard({ title, image, description, product }) {
                 product.type = selectedType;
                 product.choice = selectedPill;
                 addToCart(product);
+                console.log(product);
               }}
             >
               <span>Add toCart</span>

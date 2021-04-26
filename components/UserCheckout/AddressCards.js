@@ -120,7 +120,7 @@ const AddressCards = ({ items, selectedAddress, onSelect }) => {
                     <IconButton>
                       <EditIcon fontSize="small" />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={() => deleteAddress(address)}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                   </CardActions>

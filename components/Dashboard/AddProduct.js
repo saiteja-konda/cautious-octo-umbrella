@@ -20,6 +20,25 @@ import { css } from "@emotion/core";
 function AddProduct({ handleClose, categories, getProducts }) {
   const formRef = useRef();
 
+  const rawcategories = [
+    {
+      value: "",
+      label: "All Categories ",
+    },
+    {
+      value: "qdw0rjiarl80",
+      label: "Skin",
+    },
+    {
+      value: "rlan84nci2pk",
+      label: "Baby care",
+    },
+    {
+      value: "1ieuzbyl13f3r",
+      label: "Hair",
+    },
+  ];
+
   const hiddenFileInput = React.useRef(null);
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState(null);
@@ -167,47 +186,42 @@ function AddProduct({ handleClose, categories, getProducts }) {
             categoryId: formRef.current.values.categoryId,
             stockInUnits: formRef.current.values.stockInUnits,
             image: await imageUpload(),
-            list: {
-              title: "size",
-              options: JSON.stringify([
-                {
-                  label: formRef.current.values.q1,
-                  price: formRef.current.values.p1,
-                },
-                {
-                  label: formRef.current.values.q2,
-                  price: formRef.current.values.p2,
-                },
-                {
-                  label: formRef.current.values.q3,
-                  price: formRef.current.values.p3,
-                },
-                {
-                  label: formRef.current.values.q4,
-                  price: formRef.current.values.p4,
-                },
-              ]),
-            },
-            types: {
-              options: JSON.stringify([
-                {
-                  label: formRef.current.values.option1,
-                  value: formRef.current.values.option1,
-                },
-                {
-                  label: formRef.current.values.option2,
-                  value: formRef.current.values.option2,
-                },
-                {
-                  label: formRef.current.values.option3,
-                  value: formRef.current.values.option3,
-                },
-                {
-                  label: formRef.current.values.option4,
-                  value: formRef.current.values.option4,
-                },
-              ]),
-            },
+            variants: [
+              {
+                label: formRef.current.values.q1,
+                price: formRef.current.values.p1,
+              },
+              {
+                label: formRef.current.values.q2,
+                price: formRef.current.values.p2,
+              },
+              {
+                label: formRef.current.values.q3,
+                price: formRef.current.values.p3,
+              },
+              {
+                label: formRef.current.values.q4,
+                price: formRef.current.values.p4,
+              },
+            ],
+            types: [
+              {
+                label: formRef.current.values.option1,
+                value: formRef.current.values.option1,
+              },
+              {
+                label: formRef.current.values.option2,
+                value: formRef.current.values.option2,
+              },
+              {
+                label: formRef.current.values.option3,
+                value: formRef.current.values.option3,
+              },
+              {
+                label: formRef.current.values.option4,
+                value: formRef.current.values.option4,
+              },
+            ],
           })
           // .then((res) => console.log(res.data))
           .then(() => {
@@ -278,7 +292,7 @@ function AddProduct({ handleClose, categories, getProducts }) {
                         variant="outlined"
                         name="categoryId"
                         label="Category"
-                        options={categories}
+                        options={rawcategories}
                         component={Select}
                       />
                       <SunEditor

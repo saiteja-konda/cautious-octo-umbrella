@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import { IconButton } from "@material-ui/core";
 function Copyright() {
   return (
@@ -81,6 +82,9 @@ export default function StickyFooter() {
             </IconButton>
             <IconButton>
               <InstagramIcon fontSize="large" />
+            </IconButton>
+            <IconButton>
+              <TwitterIcon fontSize="large" />
             </IconButton>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 ">

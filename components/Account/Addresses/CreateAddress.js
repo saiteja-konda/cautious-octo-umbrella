@@ -6,6 +6,8 @@ import { Select } from "material-ui-formik-components/Select";
 import { AddressSchema, initialValues } from "./AddressSchema";
 import state from "./States";
 import { UserContext } from "../../../lib/context/UserContext";
+import { useStoreState } from "easy-peasy";
+import { CheckoutContext } from "../../../lib/context/CheckoutContext";
 
 const CreateAddress = ({
   title,
@@ -15,12 +17,14 @@ const CreateAddress = ({
   postAddress,
   username,
 }) => {
+  const { addresses } = useStoreState((store) => store.vox);
+  const { setSelectedAddress } = useContext(CheckoutContext);
   const handleAddressSubmit = (values, { resetForm }) => {
     const obj = { ...values, userId: username };
     postAddress(obj);
-    // setComponent("addresses");
     resetForm({ values: "" });
   };
+
   const handleCancel = (props) => {
     setComponent("addresses");
     props.resetForm({ values: "" });

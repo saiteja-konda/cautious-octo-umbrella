@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +9,8 @@ import Link from "@material-ui/core/Link";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { Button, Divider, IconButton } from "@material-ui/core";
+import { useStoreActions } from "easy-peasy";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,11 +42,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Total({ sum, len, user, id }) {
+export default function Total({ sum, len, user }) {
+  const { getAddresses, getToken } = useStoreActions((store) => store.vox);
+  const [isLoading, setLoading] = useState(false);
   const classes = useStyles();
   const router = useRouter();
   const pushToCheckout = () => {
     if (user) {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const id = jwt_decode(JSON.stringify(token)).id;
+      getAddresses(id);
       router.push(`/user/checkout`);
     } else {
       window.alert("Please login to continue");
@@ -68,10 +76,31 @@ export default function Total({ sum, len, user, id }) {
             Subtotal{" "}
             <span style={{ color: "#000", fontSize: "14px" }}> ₹ {sum}</span>
           </h5>
-          <Button variant="contained" size="small" className={classes.button1}>
+          {/* <Button variant="contained" size="small" className={classes.button1}>
             Continue Shopping
-          </Button>
-          <button
+          </Button> */}
+          {isLoading ? (
+            <button className="btn btn-dark btn-block" type="button" disabled>
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            </button>
+          ) : (
+            <button
+              className="btn btn-dark btn-sm mb-3 btn-block"
+              onClick={
+                len > 0
+                  ? () => pushToCheckout()
+                  : () => window.alert("No items in your cart")
+              }
+              type="submit"
+            >
+              Checkout
+            </button>
+          )}
+          {/* <button
             className="btn btn-sm btn-dark"
             onClick={
               len > 0
@@ -80,7 +109,7 @@ export default function Total({ sum, len, user, id }) {
             }
           >
             Checkout
-          </button>
+          </button> */}
         </Container>
       </footer>
     </div>

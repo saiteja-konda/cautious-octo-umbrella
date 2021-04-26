@@ -18,30 +18,22 @@ import { CheckoutContext } from "../../lib/context/CheckoutContext";
 import CreateAddress from "../Account/Addresses/CreateAddress";
 import { deepPurple } from "@material-ui/core/colors";
 
-// import MuiAlert from "@material-ui/lab/Alert";
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
-// <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-//   <Alert severity="error" onClose={handleClose}>
-//     Add address or select address to continue
-//   </Alert>
-// </Snackbar>
+import MuiAlert from "@material-ui/lab/Alert";
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // flexGrow: 1,
     justifyContent: "center",
     display: "flex",
   },
   paper: {
     padding: "0px",
-    // textAlign: "center",
     color: theme.palette.text.dark,
   },
   paper2: {
     padding: "0px",
-    // textAlign: "left",
     color: theme.palette.text.dark,
     backgroundColor: "#b79ff9",
   },
@@ -92,24 +84,39 @@ const StepZero = () => {
   useEffect(async () => {
     if (localStorage.getItem("token") != null) {
       const token = localStorage.getItem("token");
+      getToken(token);
       getAddresses(userDetails.id);
     }
   }, []);
+
+  const useAddress = () => {
+    if (addresses.length > 0) {
+      <Paper elevation={0} className={classes.paper}>
+        <AddressCards
+          items={addresses}
+          selectedAddress={selectedAddress}
+          onSelect={setAddress}
+        />
+      </Paper>;
+    } else if (addresses.length < 0) {
+      <Paper elevation={0} className={classes.paper}>
+        <CreateAddress
+          username={userDetails.id}
+          postAddress={postAddress}
+          title={"Add New Address"}
+          setSelectedAddress={setSelectedAddress}
+        />
+      </Paper>;
+    }
+  };
+  const Renderaddress = useAddress();
 
   return (
     <>
       <Container maxWidth="sm">
         <Grid container>
           <Grid item xs={12}>
-            {addresses && addresses.length < 0 ? (
-              <Paper elevation={0} className={classes.paper}>
-                <CreateAddress
-                  username={userDetails.id}
-                  postAddress={postAddress}
-                  title={"Add New Address"}
-                />
-              </Paper>
-            ) : (
+            <Paper elevation={0} className={classes.paper}>
               <Paper elevation={0} className={classes.paper}>
                 <AddressCards
                   items={addresses}
@@ -117,7 +124,17 @@ const StepZero = () => {
                   onSelect={setAddress}
                 />
               </Paper>
-            )}
+              <CreateAddress
+                username={userDetails.id}
+                postAddress={postAddress}
+                title={"Add New Address"}
+              />
+            </Paper>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert severity="error" onClose={handleClose}>
+                Add address to continue
+              </Alert>
+            </Snackbar>
           </Grid>
         </Grid>
       </Container>
@@ -126,7 +143,9 @@ const StepZero = () => {
           <Button
             variant="contained"
             size="small"
-            onClick={() => setComponent(1)}
+            onClick={() =>
+              selectedAddress === "null" ? setOpen(true) : setComponent(1)
+            }
             className={classes.button}
           >
             Next

@@ -20,7 +20,7 @@ import { CheckoutContext } from "../../lib/context/CheckoutContext";
 import CustomizedTables from "./Table";
 import clsx from "clsx";
 import { deepPurple } from "@material-ui/core/colors";
-import { useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import LinearBuffer from "../../utils/Process";
 
 import PaymentModal from "./PaymentModal";
@@ -66,7 +66,8 @@ const StepTwo = () => {
   );
   const address = selectedAddress;
 
-  const { cart, len } = useStoreState((store) => store.vox);
+  const { cart, len, userDetails } = useStoreState((store) => store.vox);
+  const { getOrder } = useStoreActions((store) => store.vox);
   const [isLoading, setLoading] = useState(false);
   const { lineItems } = cart;
   const cartTotalCounter = () => {
@@ -86,15 +87,21 @@ const StepTwo = () => {
   const handleConfirmation = () => {
     setLoading(true);
     const description = "Payment for the purchase at Bask In Nature.in";
+
     let line_items = [];
     lineItems.forEach((product) => {
+      let varaint = product.variants
+        .filter((o) => o.price === product.price.toString())
+        .map((o) => o.label);
       let finalProd = {
         name: product.title,
-        description: `${product.quantity} item of ${product.title}`,
+        description: `${product.quantity} item of  ${product.title} - ${varaint} `,
         quantity: product.quantity,
-        amount: product.price + shppingFees * 100,
+        amount: product.price,
         currency: "INR",
         type: "invoice",
+        varaint: varaint[0],
+        shppingFees,
       };
       line_items.push(finalProd);
     });
@@ -117,8 +124,13 @@ const StepTwo = () => {
         setPaymentLink(data.short_url);
       })
       .then(() => setOpen(true));
-
-    console.log(invoice);
+    getOrder({
+      invoice,
+      shppingFees,
+      line_items,
+      selectedAddress,
+      userDetails,
+    });
   };
   return (
     <>
@@ -212,7 +224,7 @@ const StepTwo = () => {
             className={clsx(classes.button, classes.secondary)}
             variant="contained"
             size="small"
-            onClick={() => setComponent(0)}
+            onClick={() => setComponent(1)}
           >
             Back
           </Button>

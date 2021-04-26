@@ -97,9 +97,11 @@ function Product({ product, user, setUser, categories, products }) {
                 fullWidth
                 onChange={(e) => {
                   setLocalPrice(e.target.value);
-                  setLocalVariant(
-                    variants.filter((o) => o.price === e.target.value)
+                  const res = variants.filter(
+                    (o) => o.price === e.target.value
                   );
+
+                  setLocalVariant(res[0]);
                 }}
                 displayEmpty
                 className={classes.select}
@@ -115,7 +117,7 @@ function Product({ product, user, setUser, categories, products }) {
               <Button
                 onClick={() => {
                   product.type = selectedType;
-                  product.choice = localVariant[0];
+                  product.choice = localVariant;
                   addToCart(product);
                 }}
                 className={classes.button}

@@ -21,6 +21,21 @@ export const voxStore = {
   site: {},
   userDetails: {},
   addresses: [],
+  order: {
+    orderDetails: {},
+    paymentDetails: {},
+  },
+
+  // Order
+  getOrder: action((state, payload) => {
+    state.order.orderDetails = payload;
+  }),
+  setPaymentDetails: action((state, payload) => {
+    state.order.paymentDetails = payload;
+  }),
+  getPaymentDetails: thunk(async (actions, payload) => {
+    actions.setPaymentDetails(payload);
+  }),
 
   // Token
 
@@ -80,12 +95,10 @@ export const voxStore = {
       .post(`${authUrl}/address`, payload)
       .then((res) => {
         actions.addAddress(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
       });
-    console.log(payload);
   }),
 
   removeAddress: action((state, payload) => {
@@ -336,7 +349,6 @@ export const voxStore = {
     actions.PriceChanger(payload);
   }),
 
-  
   deleteFromCart: action((state, id) => {
     const newList = state.cart.lineItems.filter((product) => product.id != id);
     state.cart.lineItems = newList;
