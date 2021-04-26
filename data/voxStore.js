@@ -144,9 +144,9 @@ export const voxStore = {
     state.admin = payload;
   }),
 
-  getAdmin: thunk(async (actions, payload) => {
-    actions.setAdmin(localStorage.getItem("admin"));
-  }),
+  // getAdmin: thunk(async (actions, payload) => {
+  //   actions.setAdmin(localStorage.getItem("admin"));
+  // }),
 
   // TempUrl
 
