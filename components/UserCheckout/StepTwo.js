@@ -111,7 +111,7 @@ const StepTwo = () => {
       description,
       type: "link",
       amount: (sum + shppingFees) * 100,
-      callback_url: "http://localhost:3000/user/checkout/?clan=SdRoLKRaD&",
+      callback_url: process.env.NEXT_PUBLIC_RAZORPAY_CALL_BACK_URL,
       callback_method: "get",
       // line_items,
     };

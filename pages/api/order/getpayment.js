@@ -6,8 +6,8 @@ const request = require("request");
 
 export default async (req, res) => {
   var instance = new Razorpay({
-    key_id: key_id,
-    key_secret: key_secret,
+    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    key_secret: process.env.NEXT_PUBLIC_RAZORPAY_KEY_SECRET,
   });
   const body = req.body;
   const payment = await instance.payments.fetch(body.razorpay_payment_id);
@@ -34,7 +34,7 @@ export default async (req, res) => {
   const walletFun = () => {
     const data = _.pick(payment, "wallet", "acquirer_data");
     let used = { method: "wallet" };
-    return res.status(200).json({data, used});
+    return res.status(200).json({ data, used });
   };
   switch (method) {
     case "upi":
@@ -47,7 +47,7 @@ export default async (req, res) => {
       walletFun();
       break;
     default:
-      () => res.status(200).json(payment)
+      () => res.status(200).json(payment);
       break;
   }
 };
