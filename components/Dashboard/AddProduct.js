@@ -114,7 +114,7 @@ function AddProduct({ handleClose, categories, getProducts }) {
       .positive("Stock can't be negitive")
       .required("Enter Product Stock Avaliblility")
       .max(500),
-    categoryId: Yup.number("Select Product category").required(
+    categoryId: Yup.string("Select Product category").required(
       "Select Product category"
     ),
     q1: Yup.string().required("Enter Quantity label"),
