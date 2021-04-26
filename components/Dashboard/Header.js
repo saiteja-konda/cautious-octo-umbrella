@@ -77,12 +77,10 @@ function Header(props) {
   };
 
   const router = useRouter();
-  const { getAdmin } = useStoreActions((state) => state.vox);
 
    const LogoutFun = (e) => {
     e.preventDefault();
-    localStorage.removeItem("admin");
-    getAdmin(false);
+    localStorage.removeItem("KEY_ID");
     router.push("/");
   };
 

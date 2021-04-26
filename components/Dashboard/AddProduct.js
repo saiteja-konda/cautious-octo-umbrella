@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../utils/urlConfig";
 
@@ -16,29 +16,11 @@ import "suneditor/dist/css/suneditor.min.css";
 
 import BarLoader from "react-spinners/BarLoader";
 import { css } from "@emotion/core";
+import { EditorContext } from "../../lib/context/EditorContext";
 
 function AddProduct({ handleClose, categories, getProducts }) {
   const formRef = useRef();
-
-  const rawcategories = [
-    {
-      value: "",
-      label: "All Categories ",
-    },
-    {
-      value: "qdw0rjiarl80",
-      label: "Skin",
-    },
-    {
-      value: "rlan84nci2pk",
-      label: "Baby care",
-    },
-    {
-      value: "1ieuzbyl13f3r",
-      label: "Hair",
-    },
-  ];
-
+  const { openthis, setOpenthis } = useContext(EditorContext);
   const hiddenFileInput = React.useRef(null);
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState(null);
@@ -292,7 +274,7 @@ function AddProduct({ handleClose, categories, getProducts }) {
                         variant="outlined"
                         name="categoryId"
                         label="Category"
-                        options={rawcategories}
+                        options={categories}
                         component={Select}
                       />
                       <SunEditor
@@ -543,7 +525,7 @@ function AddProduct({ handleClose, categories, getProducts }) {
                             backgroundColor: "red",
                             color: "#fff",
                           }}
-                          onClick={handleClose}
+                          onClick={() => setOpenthis(false)}
                         >
                           cancel
                         </div>

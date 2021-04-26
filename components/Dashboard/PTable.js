@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IconButton } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverTwoToneIcon from "@material-ui/icons/DeleteForeverTwoTone";
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
+import { EditorContext } from "../../lib/context/EditorContext";
 
 function PTable({
   Products,
   setLoading,
   getProduct,
-  handleOpenEdit,
   deleteProduct,
   onSort,
 }) {
+  const { setOpenthis, setComponent } = useContext(EditorContext);
   return (
     <table className="table table-striped table-hover">
       <thead>
@@ -42,7 +43,8 @@ function PTable({
                     getProduct(product.id);
                     setLoading(true);
                     setTimeout(() => {
-                      handleOpenEdit(), setLoading(false);
+                      setComponent("Edit");
+                      setOpenthis(true), setLoading(false);
                     }, 3000);
                   }}
                 >

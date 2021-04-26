@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "../../utils/urlConfig";
 
@@ -16,6 +16,7 @@ import "suneditor/dist/css/suneditor.min.css";
 
 import BarLoader from "react-spinners/BarLoader";
 import { css } from "@emotion/core";
+import { EditorContext } from "../../lib/context/EditorContext";
 
 function EditProduct({
   handleCloseEdit,
@@ -38,26 +39,7 @@ function EditProduct({
   const [isLoading, setLoading] = useState(false);
   const [dvalue, setDvalue] = useState(product.description);
   const [publish, setPublish] = useState(product.published);
-
-   const rawcategories = [
-    {
-      value: "",
-      label: "All Categories ",
-    },
-    {
-      value: "qdw0rjiarl80",
-      label: "Skin",
-    },
-    {
-      value: "rlan84nci2pk",
-      label: "Baby care",
-    },
-    {
-      value: "1ieuzbyl13f3r",
-      label: "Hair",
-    },
-  ];
-
+  const { setOpenthis } = useContext(EditorContext);
   const override = css`
     display: block;
     // margin: 0 auto;
@@ -322,7 +304,7 @@ function EditProduct({
           .put(`${baseUrl}/products/${product.id}`, changedObject)
           // .then((res) => console.log(res.data))
           .then(() => {
-            getProducts(), setLoading(false), handleCloseEdit(), setDvalue("");
+            getProducts(), setLoading(false), setOpenthis(false), setDvalue("");
             setPreviewSource(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-LIuw85eKZxCJ2cIWs0bAmdWbdlMbPBtoKR6PLl8VjMUelxkCEtB7IHm9j4Vy_xEYAr4&usqp=CAU"
             );
@@ -335,7 +317,7 @@ function EditProduct({
           .put(`${baseUrl}/products/${product.id}`, unChangedObject)
           // .then((res) => console.log(res.data))
           .then(() => {
-            getProducts(), setLoading(false), handleCloseEdit(), setDvalue("");
+            getProducts(), setLoading(false), setOpenthis(false), setDvalue("");
             setPreviewSource(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-LIuw85eKZxCJ2cIWs0bAmdWbdlMbPBtoKR6PLl8VjMUelxkCEtB7IHm9j4Vy_xEYAr4&usqp=CAU"
             );
@@ -379,7 +361,7 @@ function EditProduct({
                         variant="outlined"
                         name="categoryId"
                         label="Category"
-                        options={rawcategories}
+                        options={categories}
                         component={Select}
                       />
                       <SunEditor

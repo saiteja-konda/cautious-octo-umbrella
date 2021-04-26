@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   createMuiTheme,
   makeStyles,
@@ -13,6 +13,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AddProduct from "./AddProduct";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import EditProduct from "./EditProduct";
+import { EditorContext } from "../../lib/context/EditorContext";
 const drawerWidth = 1015;
 
 const useStyles = makeStyles((theme) => ({
@@ -45,51 +46,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductForm({
-  open,
-  openEdit,
-  handleClose,
-  handleCloseEdit,
-}) {
+export default function ProductForm() {
   const { categories, product, tempUrl } = useStoreState((state) => state.vox);
   const { getCategories, getProducts, getProduct, setUrl } = useStoreActions(
     (state) => state.vox
   );
 
-  const chooseDrawer = () => {
-    if (open === true) {
-      return open;
-    } else if (openEdit === true) {
-      return openEdit;
+  const newArray = categories.map((item) => {
+    return { value: item.id, label: item.name };
+  });
+  const refinedArray = newArray.filter((o) => o.value.length > 0);
+
+  const { openthis, setOpenthis, component, setComponent } = useContext(
+    EditorContext
+  );
+  const componentSwitch = () => {
+    switch (component) {
+      case "Add":
+        return (
+          <AddProduct getProducts={getProducts} categories={refinedArray} />
+        );
+      case "Edit":
+        return (
+          <EditProduct
+            getProducts={getProducts}
+            categories={refinedArray}
+            getProduct={getProduct}
+            product={product}
+            tempUrl={tempUrl}
+            setUrl={setUrl}
+          />
+        );
+      default:
+        return "";
     }
   };
 
-  const chooseDrawerComponent = () => {
-    if (open === true) {
-      return (
-        <AddProduct
-          handleClose={handleClose}
-          getProducts={getProducts}
-          categories={categories}
-        />
-      );
-    } else if (openEdit === true) {
-      return (
-        <EditProduct
-          handleCloseEdit={handleCloseEdit}
-          getProducts={getProducts}
-          categories={categories}
-          getProduct={getProduct}
-          product={product}
-          tempUrl={tempUrl}
-          setUrl={setUrl}
-        />
-      );
-    }
-  };
-
-  const setDrawer = chooseDrawer();
-  const setDrawerComponent = chooseDrawerComponent();
+  const switchComponent = componentSwitch();
 
   const classes = useStyles();
   let theme = createMuiTheme({
@@ -123,6 +116,7 @@ export default function ProductForm({
       },
     },
   };
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -131,13 +125,13 @@ export default function ProductForm({
           className={classes.drawer}
           variant="persistent"
           anchor="right"
-          open={setDrawer}
+          open={openthis}
           classes={{
             paper: classes.drawerPaper,
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton color="error" onClick={handleClose}>
+            <IconButton onClick={() => setOpenthis(!openthis)}>
               {theme.direction === "rtl" ? (
                 <ChevronLeftIcon color="error" />
               ) : (
@@ -146,7 +140,7 @@ export default function ProductForm({
             </IconButton>
           </div>
           <Divider />
-          <>{setDrawerComponent}</>
+          <>{switchComponent}</>
         </Drawer>
       </div>
     </ThemeProvider>

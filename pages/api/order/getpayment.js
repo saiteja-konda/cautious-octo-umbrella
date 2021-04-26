@@ -11,7 +11,6 @@ export default async (req, res) => {
   });
   const body = req.body;
   const payment = await instance.payments.fetch(body.razorpay_payment_id);
-  // const payment = await instance.payments.fetch("pay_H3cGXXYSqShvq7");
   const method = _.pick(payment, "method").method;
 
   const upiFun = () => {

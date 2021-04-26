@@ -14,8 +14,9 @@ import { Paginate } from "../../utils/Paginate";
 import ListGroup from "./ListGroup";
 import PTable from "./PTable";
 import _ from "lodash";
+import { EditorContext } from "../../lib/context/EditorContext";
 
-function ProductTable({ handleOpen, handleOpenEdit }) {
+function ProductTable() {
   const { products, categories } = useStoreState((state) => state.vox);
   const { getProduct, getProducts, deleteProduct } = useStoreActions(
     (state) => state.vox
@@ -51,7 +52,7 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
 
   // const sorted = _.orderBy(filtered, [path], [order]);
   const Products = Paginate(filtered, currentPage, pageSize);
-
+  const { setOpenthis, setComponent } = React.useContext(EditorContext);
   useEffect(() => {
     getProducts();
   }, []);
@@ -68,7 +69,12 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
                   </a>
                   <form className="form-inline">
                     <div className="form-group mr-3">
-                      <IconButton onClick={handleOpen}>
+                      <IconButton
+                        onClick={() => {
+                          setComponent("Add");
+                          setOpenthis(true);
+                        }}
+                      >
                         <AddCircleTwoToneIcon color="primary" />
                       </IconButton>
                     </div>
@@ -99,7 +105,6 @@ function ProductTable({ handleOpen, handleOpenEdit }) {
                 Products={Products}
                 setLoading={setLoading}
                 getProduct={getProduct}
-                handleOpenEdit={handleOpenEdit}
                 deleteProduct={deleteProduct}
                 onSort={handleOnSort}
               />

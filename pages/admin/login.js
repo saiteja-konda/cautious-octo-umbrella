@@ -17,7 +17,7 @@ function AdminLogin() {
         let sitePassword = res.data.password;
 
         if (username === siteUsername && password === sitePassword) {
-          localStorage.setItem("admin", true);
+          localStorage.setItem("KEY_ID", process.env.NEXT_PUBLIC_KEY_SECRET);
           router.push("/admin");
         } else {
           alert("Invalid username or password");
