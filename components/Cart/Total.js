@@ -80,7 +80,7 @@ export default function Total({ sum, len, user }) {
             Continue Shopping
           </Button> */}
           {isLoading ? (
-            <button className="btn btn-dark btn-block" type="button" disabled>
+            <button className="btn btn-dark btn-block mb-3" type="button" disabled>
               <span
                 className="spinner-border spinner-border-sm"
                 role="status"

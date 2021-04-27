@@ -39,10 +39,10 @@ const OrderSummary = () => {
     return count;
   };
   const sum = cartTotalCounter();
-  const shppingFees = 85.0;
+  const shippingFees = 85.0;
   const discount = 0.0;
   const tax = 0.0;
-  const total = shppingFees + sum + tax - discount;
+  const total = shippingFees + sum + tax - discount;
 
   return (
     <>
@@ -67,7 +67,7 @@ const OrderSummary = () => {
               <ListItemText>
                 <Typography variant="caption">Shipping Chargers</Typography>
               </ListItemText>
-              <ListItemSecondaryAction>₹{shppingFees}</ListItemSecondaryAction>
+              <ListItemSecondaryAction>₹{shippingFees}</ListItemSecondaryAction>
             </ListItem>
             <ListItem>
               <ListItemText>

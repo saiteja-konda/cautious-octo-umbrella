@@ -78,7 +78,7 @@ function QontoStepIcon(props) {
   );
 }
 
-const Layout = ({ children, toolbar, heading, footer }) => {
+const Layout = ({ children, toolbar, heading, footer, hideSteps }) => {
   const { component } = useContext(CheckoutContext);
   const [activeStep, setActiveStep] = React.useState(component);
 
@@ -110,17 +110,19 @@ const Layout = ({ children, toolbar, heading, footer }) => {
       <NavBar />
       {toolbar ? <Toolbar /> : ""}
       <div className="mt-2" />
-      <Stepper
-        alternativeLabel
-        activeStep={component}
-        connector={<QontoConnector />}
-      >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+      {hideSteps && (
+        <Stepper
+          alternativeLabel
+          activeStep={component}
+          connector={<QontoConnector />}
+        >
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      )}
       {children}
       {footer ? <StickyFooter /> : ""}
     </div>
@@ -131,6 +133,7 @@ Layout.defaultProps = {
   heading: "Baskinnature",
   footer: true,
   toolbar: true,
+  hideSteps: true,
 };
 
 export default Layout;

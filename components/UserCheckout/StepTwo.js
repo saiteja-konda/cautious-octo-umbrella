@@ -80,15 +80,17 @@ const StepTwo = () => {
     return count;
   };
   const sum = cartTotalCounter();
-  const shppingFees = 85.0;
+  const shippingFees = 85.0;
   const discount = 0.0;
   const tax = 0.0;
-  const total = shppingFees + sum + tax - discount;
+  const total = shippingFees + sum + tax - discount;
   const handleConfirmation = () => {
     setLoading(true);
     const description = "Payment for the purchase at Bask In Nature.in";
-
+    const shortID = shortid();
     let line_items = [];
+    const callbackurl = `${process.env.NEXT_PUBLIC_RAZORPAY_CALL_BACK_URL}`;
+    const callbackurlwithinvoice = callbackurl+"invoice="+shortID
     lineItems.forEach((product) => {
       let varaint = product.variants
         .filter((o) => o.price === product.price.toString())
@@ -101,32 +103,30 @@ const StepTwo = () => {
         currency: "INR",
         type: "invoice",
         varaint: varaint[0],
-        shppingFees,
+        shippingFees,
       };
       line_items.push(finalProd);
     });
 
     const invoice = {
-      receipt: shortid(),
+      receipt: shortID,
       description,
       type: "link",
-      amount: (sum + shppingFees) * 100,
-      callback_url: process.env.NEXT_PUBLIC_RAZORPAY_CALL_BACK_URL,
+      amount: (sum + shippingFees) * 100,
+      callback_url: callbackurlwithinvoice,
       callback_method: "get",
-      // line_items,
     };
 
     axios
       .post(`/api/order/payment`, invoice)
       .then((res) => {
         const { data } = res;
-        const { receipt } = invoice;
         setPaymentLink(data.short_url);
       })
       .then(() => setOpen(true));
     getOrder({
       invoice,
-      shppingFees,
+      shippingFees,
       line_items,
       selectedAddress,
       userDetails,
@@ -188,7 +188,7 @@ const StepTwo = () => {
                       </Typography>
                     </ListItemText>
                     <ListItemSecondaryAction>
-                      ₹{shppingFees}
+                      ₹{shippingFees}
                     </ListItemSecondaryAction>
                   </ListItem>
                   <ListItem>

@@ -74,12 +74,48 @@ export default function Invoice({
   userDetails,
   paymentmethod,
   line_items,
-  shppingFees,
+  shippingFees,
   invoice,
   address,
+  method
 }) {
   const classes = useStyles();
 
+  const usePayment = () => {
+    switch (method) {
+      case "card":
+        return (
+          <Typography component="p" variant="caption">
+            Payment method : {paymentmethod.entity} <br />
+            {paymentmethod.name} <br />
+            <b>{paymentmethod.network}</b> {paymentmethod.type} ending with XXXX
+            XXXX XXXX {paymentmethod.last4}
+          </Typography>
+        );
+        break;
+      case "vpa":
+        return (
+          <Typography component="p" variant="caption">
+            Payment method : UPI <br />
+            {paymentmethod.vpa} <br />
+            <b>Reference Number : </b> {paymentmethod.rrn} <br />
+            <b>Transaction ID : </b>
+            {paymentmethod.upi_transaction_id}
+          </Typography>
+        );
+      case "wallet":
+        return (
+          <Typography component="p" variant="caption">
+            Payment method : Wallet <br />
+            {paymentmethod.wallet} <br />
+            <b>Transaction ID : </b> {paymentmethod.transaction_id}
+          </Typography>
+        );
+      default:
+        break;
+    }
+  };
+  const RenderPayment = usePayment();
   return (
     <div className={classes.root}>
       <Container maxWidth="md">
@@ -90,11 +126,14 @@ export default function Invoice({
                 Thank you for shopping with us!
               </Typography>
               <Typography variant="body2" component="h6">
-                Your Order <b>{invoice.receipt}</b> is placed successfully
+                Your Order <b>{invoice.receipt}</b> is received successfully
+              </Typography>
+              <Typography variant="caption" component="p">
+                You will informed shortly once the order confirms
               </Typography>
             </Paper>
           </Grid>
-          
+
           <Grid item xs={12}>
             <Typography variant="h6" component="h6">
               Invoice
@@ -121,12 +160,7 @@ export default function Invoice({
               </Typography>
               <Divider />
               <br />
-              <Typography component="p" variant="caption">
-                Payment method : {paymentmethod.entity} <br />
-                {paymentmethod.name} <br />
-                <b>{paymentmethod.network}</b> {paymentmethod.type} ending with
-                XXXX XXXX XXXX {paymentmethod.last4}
-              </Typography>
+              {RenderPayment}
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -194,7 +228,7 @@ export default function Invoice({
                   <ListItemText secondary="subtotal" />
                   <ListItemSecondaryAction>
                     <Typography color="textSecondary">
-                      ₹{invoice.amount / 100 - shppingFees}
+                      ₹{invoice.amount / 100 - shippingFees}
                     </Typography>
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -202,7 +236,7 @@ export default function Invoice({
                   <ListItemText secondary="shipping charges" />
                   <ListItemSecondaryAction>
                     <Typography color="textSecondary">
-                      ₹{shppingFees}
+                      ₹{shippingFees}
                     </Typography>
                   </ListItemSecondaryAction>
                 </ListItem>

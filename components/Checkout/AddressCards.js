@@ -34,7 +34,7 @@ const AddressCards = ({ items, onSelect, selectedAddress }) => {
       <React.Fragment>
         {chunks.map((el) =>
           el.map((address) => (
-            <Grid item xs={12} sm={6} className="mt-2">
+            <Grid item xs={12} sm={6} key={address.id} className="mt-2">
               <Paper elevation={0} className={classes.paper}>
                 <List className={classes.listroot}>
                   <ListItem alignItems="flex-start">

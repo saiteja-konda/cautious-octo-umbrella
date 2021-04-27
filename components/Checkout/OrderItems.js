@@ -43,7 +43,7 @@ const OrderItems = () => {
       className={classes.root}
     >
       {lineItems.map((item) => (
-        <ListItem>
+        <ListItem key={item.id}>
           <ButtonBase>
             <img
               src={item.image}

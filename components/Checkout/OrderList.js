@@ -22,7 +22,7 @@ const OrderList = ({ selectedAddress }) => {
   const [payButton, setPayButton] = useState("none");
   const [confirmButton, setConfirmButton] = useState("block");
   const [paymentLink, setPaymentLink] = useState("");
-  
+
   const cartTotalCounter = () => {
     let count = 0;
     cart?.lineItems
@@ -33,10 +33,10 @@ const OrderList = ({ selectedAddress }) => {
     return count;
   };
   const sum = cartTotalCounter();
-  const shppingFees = 85.0;
+  const shippingFees = 85.0;
   const discount = 0.0;
   const tax = 0.0;
-  const total = shppingFees + sum + tax - discount;
+  const total = shippingFees + sum + tax - discount;
 
   const handleSubmit = () => {
     setLoading(true);
@@ -47,7 +47,7 @@ const OrderList = ({ selectedAddress }) => {
         name: product.title,
         description: `${product.quantity} item of ${product.title}`,
         quantity: product.quantity,
-        amount: product.price + shppingFees * 100,
+        amount: product.price + shippingFees * 100,
         currency: "INR",
         type: "invoice",
       };
@@ -57,7 +57,7 @@ const OrderList = ({ selectedAddress }) => {
       receipt: shortid(),
       description,
       type: "link",
-      amount: (sum + shppingFees) * 100,
+      amount: (sum + shippingFees) * 100,
       callback_url: "http://localhost:3000/user/checkout/success",
       callback_method: "get",
       // line_items,
@@ -77,7 +77,7 @@ const OrderList = ({ selectedAddress }) => {
     <div>
       <div style={{ backgroundColor: "honeydew", padding: "20px" }}>
         {lineItems?.map((item) => (
-          <OrderItem item={item} />
+          <OrderItem key={item.id} item={item} />
         ))}
         <hr />
         <div style={{ display: "flex" }}>
@@ -116,7 +116,7 @@ const OrderList = ({ selectedAddress }) => {
             >
               <div style={{ marginRight: "28px" }}>₹{sum}</div>
               <div>₹{tax}</div>
-              <div>₹{shppingFees}</div>
+              <div>₹{shippingFees}</div>
               <div>₹{discount}</div>
             </div>
           </div>

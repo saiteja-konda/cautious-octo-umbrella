@@ -30,12 +30,13 @@ export const voxStore = {
   getOrder: action((state, payload) => {
     state.order.orderDetails = payload;
   }),
-  setPaymentDetails: action((state, payload) => {
-    state.order.paymentDetails = payload;
-  }),
-  getPaymentDetails: thunk(async (actions, payload) => {
-    actions.setPaymentDetails(payload);
-  }),
+  
+  // setPaymentDetails: action((state, payload) => {
+  //   state.order.paymentDetails = payload;
+  // }),
+  // getPaymentDetails: thunk(async (actions, payload) => {
+  //   actions.setPaymentDetails(payload);
+  // }),
 
   // Token
 
@@ -383,6 +384,13 @@ export const voxStore = {
     } else actions.decreaseProductQty(product.id);
   }),
 
+  ResetOrder: action((state) => {
+    state.order = {
+      orderDetails: {},
+      paymentDetails: {},
+    };
+  }),
+  
   ResetCart: action((state) => {
     state.cart = {
       id: "false",

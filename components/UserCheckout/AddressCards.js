@@ -60,7 +60,7 @@ const AddressCards = ({ items, selectedAddress, onSelect }) => {
       <React.Fragment>
         {chunks.map((el) =>
           el.map((address) => (
-            <Grid item xs={12} sm={6} className="mt-2">
+            <Grid item xs={12} sm={6} key={address.id}className="mt-2">
               <Paper
                 // elevation={selectedAddress.id === address.id ? 5 : 0}
                 elevation={0}
