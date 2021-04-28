@@ -25,12 +25,13 @@ export const voxStore = {
     orderDetails: {},
     paymentDetails: {},
   },
+  orders: [],
 
   // Order
   getOrder: action((state, payload) => {
     state.order.orderDetails = payload;
   }),
-  
+
   // setPaymentDetails: action((state, payload) => {
   //   state.order.paymentDetails = payload;
   // }),
@@ -390,7 +391,7 @@ export const voxStore = {
       paymentDetails: {},
     };
   }),
-  
+
   ResetCart: action((state) => {
     state.cart = {
       id: "false",

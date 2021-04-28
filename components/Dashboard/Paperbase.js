@@ -14,7 +14,9 @@ import Content from "./Content";
 import Header from "./Header";
 import ComponentContextProvier from "../../lib/context/DashboardContext";
 import RenderComponent from "./RenderComponent";
-import { useStoreActions } from "easy-peasy";
+import { StoreProvider, useStoreActions } from "easy-peasy";
+import { green } from "@material-ui/core/colors";
+import { store0 } from "../../data/store";
 
 function Copyright() {
   return (
@@ -33,7 +35,7 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: "#63ccff",
-      main: "#009688",
+      main: "#1a75ff",
       dark: "#006db3",
     },
   },
@@ -180,33 +182,33 @@ function Paperbase(props) {
   };
   return (
     <ThemeProvider theme={theme}>
-      <ComponentContextProvier>
-        <div className={classes.root}>
-          <CssBaseline />
-          <nav className={classes.drawer}>
-            <Hidden smUp implementation="js">
-              <Navigator
-                PaperProps={{ style: { width: drawerWidth } }}
-                variant="temporary"
-                open={mobileOpen}
-                onClose={handleDrawerToggle}
-              />
-            </Hidden>
-            <Hidden xsDown implementation="css">
-              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-            </Hidden>
-          </nav>
-          <div className={classes.app}>
-            <Header onDrawerToggle={handleDrawerToggle} />
-            <main className={classes.main}>
-              <RenderComponent />
-            </main>
-            <footer className={classes.footer}>
-              <Copyright />
-            </footer>
+        <ComponentContextProvier>
+          <div className={classes.root}>
+            <CssBaseline />
+            <nav className={classes.drawer}>
+              <Hidden smUp implementation="js">
+                <Navigator
+                  PaperProps={{ style: { width: drawerWidth } }}
+                  variant="temporary"
+                  open={mobileOpen}
+                  onClose={handleDrawerToggle}
+                />
+              </Hidden>
+              <Hidden xsDown implementation="css">
+                <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              </Hidden>
+            </nav>
+            <div className={classes.app}>
+              <Header onDrawerToggle={handleDrawerToggle} />
+              <main className={classes.main}>
+                <RenderComponent />
+              </main>
+              <footer className={classes.footer}>
+                <Copyright />
+              </footer>
+            </div>
           </div>
-        </div>
-      </ComponentContextProvier>
+        </ComponentContextProvier>
     </ThemeProvider>
   );
 }

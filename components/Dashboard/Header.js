@@ -18,7 +18,6 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 
-import { useStoreState, useStoreActions } from "easy-peasy";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 

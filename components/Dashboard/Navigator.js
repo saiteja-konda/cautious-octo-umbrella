@@ -17,6 +17,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import GavelIcon from "@material-ui/icons/Gavel";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SecurityIcon from "@material-ui/icons/Security";
+import FaceIcon from "@material-ui/icons/Face";
+import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import { DashboardContext } from "../../lib/context/DashboardContext";
 import Link from "next/link";
 const categories = [
@@ -32,6 +35,14 @@ const categories = [
     children: [
       { id: "Articles", icon: <DescriptionIcon /> },
       { id: "Newsletter", icon: <AnnouncementIcon /> },
+    ],
+  },
+  {
+    id: "Promotions",
+    children: [
+      { id: "Banners", icon: <ViewCarouselIcon />, active: true },
+      { id: "Referees", icon: <FaceIcon /> },
+      { id: "Testmonials", icon: <FavoriteIcon /> },
     ],
   },
   {
@@ -90,7 +101,7 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   const { classes, ...other } = props;
-  const { setComponent } = useContext(DashboardContext);
+  const { setComponent, component } = useContext(DashboardContext);
 
   const handleChoice = (id) => {
     setComponent(id);
@@ -132,7 +143,7 @@ function Navigator(props) {
               <ListItem
                 key={childId}
                 button
-                className={clsx(classes.item, active && classes.itemActiveItem)}
+                className={clsx(classes.item, childId === component ? classes.itemActiveItem : "")}
                 onClick={() => handleChoice(childId)}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>

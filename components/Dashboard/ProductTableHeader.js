@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,19 +12,11 @@ import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from "@material-ui/icons/Refresh";
-import LatestOrders from "./LatestOrders";
-import { useStoreActions, useStoreState } from "easy-peasy";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-
-import _ from "lodash";
+import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 
 const styles = (theme) => ({
   paper: {
-    maxWidth: 936,
+    // maxWidth: 936,
     margin: "auto",
     overflow: "hidden",
   },
@@ -50,29 +42,25 @@ const styles = (theme) => ({
   },
 });
 
-function Order(props) {
-  const { classes } = props;
-  const { orders } = useStoreState((store) => store.rox);
-  const { getOrders } = useStoreActions((store) => store.rox);
+function ProductTableHeader(props) {
+  const {
+    classes,
+    setComponent,
+    setOpenthis,
+    string,
+    setString,
+    setLoading,
+    getProducts,
+    handleSearch,
+  } = props;
 
-  useEffect(() => {
-    getOrders();
-  }, []);
-  const [string, setString] = useState(null);
-  const [filteredData, setFilteredData] = useState([]);
-
-  function handleSearch() {
-    if (string != null) {
-      var results = _.filter(orders, function (item) {
-        return item.id.toLowerCase().indexOf(string.toLowerCase()) > -1;
-      });
-    }
-    setFilteredData(results);
-  }
-
-  const data = string === null || string.length < 3 ? orders : filteredData;
+  const handleReload = async () => {
+    setLoading(true);
+    getProducts();
+    setTimeout(() => setLoading(false), 2000);
+  };
   return (
-    <main className={classes.main}>
+    <main>
       <Paper className={classes.paper}>
         <AppBar
           className={classes.searchBar}
@@ -83,7 +71,7 @@ function Order(props) {
           <Toolbar>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
-                <SearchIcon color="inherit" />
+                <SearchIcon className={classes.block} color="inherit" />
               </Grid>
               <Grid item xs>
                 <TextField
@@ -93,7 +81,7 @@ function Order(props) {
                     setString(e.target.value);
                     handleSearch();
                   }}
-                  placeholder="Search Orders by Order Invoice"
+                  placeholder="Search Products by Title"
                   InputProps={{
                     disableUnderline: true,
                     className: classes.searchInput,
@@ -105,12 +93,23 @@ function Order(props) {
                   variant="contained"
                   color="primary"
                   className={classes.addUser}
-                  onClick={handleSearch}
                 >
                   Search
                 </Button>
-                <Tooltip title="Reload">
+                <Tooltip title="Add New Product">
                   <IconButton>
+                    <AddCircleTwoToneIcon
+                      className={classes.block}
+                      color="primary"
+                      onClick={() => {
+                        setComponent("Add");
+                        setOpenthis(true);
+                      }}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Reload">
+                  <IconButton onClick={handleReload}>
                     <RefreshIcon className={classes.block} color="inherit" />
                   </IconButton>
                 </Tooltip>
@@ -118,20 +117,13 @@ function Order(props) {
             </Grid>
           </Toolbar>
         </AppBar>
-        <div className={classes.contentWrapper}>
-          <Typography color="textSecondary" align="center">
-            Beta Version
-          </Typography>
-
-          <LatestOrders orders={data} />
-        </div>
       </Paper>
     </main>
   );
 }
 
-Order.propTypes = {
+ProductTableHeader.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Order);
+export default withStyles(styles)(ProductTableHeader);
