@@ -18,6 +18,8 @@ import AddIcon from "@material-ui/icons/Add";
 import _ from "lodash";
 import { CardHeader, Fab } from "@material-ui/core";
 import { store0 } from "../../data/store";
+import ImageUploader from "../../utils/ImageUploader";
+import { WidgetLoader } from "react-cloudinary-upload-widget";
 
 const styles = (theme) => ({
   paper: {
@@ -50,7 +52,7 @@ const styles = (theme) => ({
 function Carousel(props) {
   const { classes } = props;
   const { Promos } = useStoreState((store) => store.rox);
-  const { getPromos } = useStoreActions((store) => store.rox);
+  const { getPromos, getNewPromo } = useStoreActions((store) => store.rox);
 
   useEffect(() => getPromos(), []);
 
@@ -82,8 +84,10 @@ function Carousel(props) {
             alignItems="center"
           >
             <Typography color="textSecondary" align="center" className="mr-2">
-              Add New Image {" "}
+              Add New Image{" "}
             </Typography>
+            <ImageUploader getNewPromo={getNewPromo} />
+            <WidgetLoader />
             <Fab color="primary">
               <AddIcon />
             </Fab>

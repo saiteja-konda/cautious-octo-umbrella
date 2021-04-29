@@ -8,7 +8,12 @@ export const roxStore = {
   setPromos: action((state, payload) => {
     state.Promos = payload.variants;
   }),
-
+  addNewPromo: action((state, payload) => {
+    state.Promos.push(payload);
+  }),
+  getNewPromo: thunk(async (actions, payload) => {
+    actions.addNewPromo(payload);
+  }),
   getPromos: thunk(async (actions) => {
     axios
       .get(`${baseUrl}/promo`)
