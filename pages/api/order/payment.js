@@ -1,5 +1,3 @@
-import { key_id, key_secret } from "../../../components/Checkout/keys";
-
 const Razorpay = require("razorpay");
 
 export default async (req, res) => {

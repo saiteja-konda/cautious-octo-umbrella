@@ -5,8 +5,9 @@ import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import Success from "./Success";
 import { useRouter } from "next/router";
+import Complete from "./complete";
 
-const RenderComponent = () => {
+const RenderComponent = ({invite}) => {
   const { component, setComponent } = useContext(CheckoutContext);
   const router = useRouter();
   const query = router.query;
@@ -21,11 +22,13 @@ const RenderComponent = () => {
     case 0:
       return <StepZero />;
     case 1:
-      return <StepOne />;
+      return <StepOne invite={invite}/>;
     case 2:
       return <StepTwo />;
     case 3:
       return <Success />;
+    case 4:
+      return <Complete />;
     default:
       return <StepZero />;
   }

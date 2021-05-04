@@ -53,6 +53,7 @@ export default function Total({ sum, len, user }) {
       const token = localStorage.getItem("token");
       const id = jwt_decode(JSON.stringify(token)).id;
       getAddresses(id);
+      
       router.push(`/user/checkout`);
     } else {
       window.alert("Please login to continue");
@@ -61,11 +62,7 @@ export default function Total({ sum, len, user }) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Container
-        component="main"
-        className={classes.main}
-        maxWidth="lg"
-      ></Container>
+
       <footer className={classes.footer}>
         <Container maxWidth="lg">
           <Divider />

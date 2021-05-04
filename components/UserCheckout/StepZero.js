@@ -1,5 +1,3 @@
-import React, { useContext, useEffect, useState } from "react";
-
 import {
   Button,
   Container,
@@ -8,17 +6,15 @@ import {
   Paper,
   Snackbar,
 } from "@material-ui/core";
+import { deepPurple } from "@material-ui/core/colors";
 import green from "@material-ui/core/colors/green";
-
+import MuiAlert from "@material-ui/lab/Alert";
 import { useStoreActions, useStoreState } from "easy-peasy";
-
-import Layout from "./Layout";
-import AddressCards from "./AddressCards";
+import React, { useContext, useEffect, useState } from "react";
 import { CheckoutContext } from "../../lib/context/CheckoutContext";
 import CreateAddress from "../Account/Addresses/CreateAddress";
-import { deepPurple } from "@material-ui/core/colors";
+import AddressCards from "./AddressCards";
 
-import MuiAlert from "@material-ui/lab/Alert";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -124,11 +120,15 @@ const StepZero = () => {
                   onSelect={setAddress}
                 />
               </Paper>
-              <CreateAddress
-                username={userDetails.id}
-                postAddress={postAddress}
-                title={"Add New Address"}
-              />
+              {selectedAddress === "null" ? (
+                <CreateAddress
+                  username={userDetails.id}
+                  postAddress={postAddress}
+                  title={"Add New Address"}
+                />
+              ) : (
+                ""
+              )}
             </Paper>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert severity="error" onClose={handleClose}>

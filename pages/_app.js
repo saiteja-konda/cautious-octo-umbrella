@@ -1,20 +1,17 @@
-import React, { createContext } from "react";
-import PropTypes from "prop-types";
-import Head from "next/head";
-import App from "next/app";
-
-import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import theme from "../lib/theme";
+import { ThemeProvider } from "@material-ui/core/styles";
 import { StoreProvider } from "easy-peasy";
-import { store } from "../data/store";
-import { useState } from "react";
-import WhatsAppWidget from "react-whatsapp-widget";
+import App from "next/app";
+import Head from "next/head";
+import PropTypes from "prop-types";
+import React, { createContext, useState } from "react";
+import "react-multi-carousel/lib/styles.css";
 import "react-whatsapp-widget/dist/index.css";
+import { store } from "../data/store";
+import { fetchAPI } from "../lib/api";
+import theme from "../lib/theme";
 import "../styles/globals.scss";
 import "../styles/style.scss";
-import "react-multi-carousel/lib/styles.css";
-import { fetchAPI } from "../lib/api";
 
 export const NavContext = createContext();
 
@@ -23,7 +20,7 @@ export default function MyApp(props) {
   const { products, categories } = pageProps;
 
   const [user, setUser] = useState(false);
-
+  const [invite, setInvite] = useState(false);
   React.useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
@@ -43,7 +40,9 @@ export default function MyApp(props) {
       <StoreProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <NavContext.Provider value={{ products, categories, user, setUser }}>
+          <NavContext.Provider
+            value={{ products, categories, user, setUser, invite, setInvite }}
+          >
             <Component store={store} {...pageProps} />
           </NavContext.Provider>
         </ThemeProvider>
@@ -51,13 +50,14 @@ export default function MyApp(props) {
     </React.Fragment>
   );
 }
-
 MyApp.getInitialProps = async (ctx) => {
   const products = await fetchAPI("/products");
   const categories = await fetchAPI("/categories");
+  const promos = await fetchAPI("/promo");
+  const { variants } = promos;
   const appProps = await App.getInitialProps(ctx);
 
-  return { ...appProps, pageProps: { products, categories } };
+  return { ...appProps, pageProps: { products, categories, variants } };
 };
 
 MyApp.propTypes = {

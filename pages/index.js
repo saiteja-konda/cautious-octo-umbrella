@@ -1,16 +1,15 @@
 import Head from "next/head";
-import { fetchAPI } from "../lib/api";
-import StickyFooter from "../components/StickyFooter";
-import Newsletter from "../components/Newsletter";
-import Testmonials from "../components/Testmonials";
-import ProductsSection from "../components/Product/ProductsSection";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import NavBar from "../components/Navigation/NavBar";
+import Newsletter from "../components/Newsletter";
+import ProductsSection from "../components/Product/ProductsSection";
+import StickyFooter from "../components/StickyFooter";
+import Testmonials from "../components/Testmonials";
+import { NavContext } from "./_app";
 
-const Home = ({ user, setUser, products, categories }) => {
-  const paragraph =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem molestias soluta vero voluptates sapiente magnam dolorem cum.";
-
+const Home = ({ user, setUser, products, variants }) => {
   const tiles = [
     {
       id: "1",
@@ -34,6 +33,12 @@ const Home = ({ user, setUser, products, categories }) => {
         "https://res.cloudinary.com/saiteja/image/upload/v1618581591/bondi_media/3_jgyzi5.jpg",
     },
   ];
+  const router = useRouter();
+  const { setInvite } = useContext(NavContext);
+  useEffect(() => {
+    const { invite } = router.query;
+    setInvite(invite);
+  }, []);
   return (
     <div
       style={{
@@ -46,7 +51,7 @@ const Home = ({ user, setUser, products, categories }) => {
       </Head>
 
       <NavBar />
-      <HeroSection />
+      <HeroSection variants={variants} />
       {tiles.map((tile) => (
         <>
           <ProductsSection

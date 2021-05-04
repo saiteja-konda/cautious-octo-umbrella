@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { fetchAPI } from "../../lib/api";
-import { useStoreActions, useStoreState } from "easy-peasy";
-import { Button, Grid, makeStyles, Select } from "@material-ui/core";
-import { SideBySideMagnifier } from "react-image-magnifiers";
+import { Button, makeStyles, Select } from "@material-ui/core";
+import { grey, yellow } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
-
+import { useStoreActions } from "easy-peasy";
 import parse from "html-react-parser";
-
-import StickyFooter from "../../components/StickyFooter";
+import React, { useEffect, useState } from "react";
+import { SideBySideMagnifier } from "react-image-magnifiers";
 import NavBar from "../../components/Navigation/NavBar";
-import ProductsSection from "../../components/Product/ProductsSection";
 import PillGroup from "../../components/Product/PillGroup";
-import { lightGreen, lime, yellow, grey } from "@material-ui/core/colors";
+import ProductsSection from "../../components/Product/ProductsSection";
+import StickyFooter from "../../components/StickyFooter";
+import { fetchAPI } from "../../lib/api";
+
 const useStyles = makeStyles({
   button: {
     textTransform: "none",

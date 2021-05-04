@@ -7,12 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { deepPurple } from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
 import { useStoreState } from "easy-peasy";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: deepPurple[800],
+    backgroundColor: green[800],
     color: theme.palette.common.white,
   },
   body: {
@@ -23,7 +23,7 @@ const StyledTableCell = withStyles((theme) => ({
 const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
-      backgroundColor: deepPurple[50],
+      backgroundColor: green[50],
     },
   },
 }))(TableRow);

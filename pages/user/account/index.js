@@ -1,6 +1,6 @@
-import Account from "../../../components/Account";
 import { useStoreActions } from "easy-peasy";
 import { useEffect } from "react";
+import Account from "../../../components/Account";
 const account = () => {
   const { getToken } = useStoreActions((store) => store.vox);
   useEffect(() => {

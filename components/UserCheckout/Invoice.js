@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { useStoreState } from "easy-peasy";
 import _ from "lodash";
-import { deepPurple, green } from "@material-ui/core/colors";
+import { green, } from "@material-ui/core/colors";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -25,7 +25,7 @@ import TableRow from "@material-ui/core/TableRow";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: deepPurple[800],
+    backgroundColor: green[800],
     color: theme.palette.common.white,
   },
   body: {
@@ -36,7 +36,7 @@ const StyledTableCell = withStyles((theme) => ({
 const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
-      backgroundColor: deepPurple[50],
+      backgroundColor: green[50],
     },
   },
 }))(TableRow);

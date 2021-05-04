@@ -1,20 +1,16 @@
-import { useStoreState } from "easy-peasy";
-import React from "react";
-import NavBar from "../Navigation/NavBar";
-
-import { makeStyles } from "@material-ui/core/styles";
 import {
+  Divider,
+  Grid,
   List,
   ListItem,
-  ListItemText,
-  Divider,
   ListItemSecondaryAction,
-  Toolbar,
+  ListItemText,
   Typography,
-  Button,
-  Grid,
 } from "@material-ui/core";
-
+import { green } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import { useStoreState } from "easy-peasy";
+import React from "react";
 import OrderItems from "../Checkout/OrderItems";
 
 const useStyles2 = makeStyles((theme) => ({
@@ -24,8 +20,9 @@ const useStyles2 = makeStyles((theme) => ({
     backgroundColor: "#ede7fd",
     color: "#000",
   },
+ 
 }));
-const OrderSummary = () => {
+const OrderSummary = ({ discount, setDiscount }) => {
   const { cart, len } = useStoreState((store) => store.vox);
   const { lineItems } = cart;
   const classes = useStyles2();
@@ -40,10 +37,10 @@ const OrderSummary = () => {
   };
   const sum = cartTotalCounter();
   const shippingFees = 85.0;
-  const discount = 0.0;
-  const tax = 0.0;
-  const total = shippingFees + sum + tax - discount;
-
+  const subtotal = shippingFees + sum;
+  const total = 
+    discount <= 0 ? subtotal : subtotal - (subtotal * discount) / 100;
+  const discountedPrice = subtotal - (subtotal - (subtotal * discount) / 100);
   return (
     <>
       <Grid>
@@ -69,12 +66,18 @@ const OrderSummary = () => {
               </ListItemText>
               <ListItemSecondaryAction>₹{shippingFees}</ListItemSecondaryAction>
             </ListItem>
-            <ListItem>
-              <ListItemText>
-                <Typography variant="caption">Tax</Typography>
-              </ListItemText>
-              <ListItemSecondaryAction>₹0.00</ListItemSecondaryAction>
-            </ListItem>
+            {discount > 0 ? (
+              <ListItem>
+                <ListItemText>
+                  <Typography variant="caption">Discount</Typography>
+                </ListItemText>
+                <ListItemSecondaryAction className={classes.discount}>
+                  - ₹{discountedPrice}
+                </ListItemSecondaryAction>
+              </ListItem>
+            ) : (
+              ""
+            )}
             <Divider />
             <ListItem>
               <ListItemText>

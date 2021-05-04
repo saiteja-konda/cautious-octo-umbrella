@@ -1,29 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import shortid from "shortid";
-
 import {
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  ListItemSecondaryAction,
   Button,
   Container,
+  Divider,
   Grid,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
   Paper,
   Typography,
 } from "@material-ui/core";
+import { deepPurple, green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { CheckoutContext } from "../../lib/context/CheckoutContext";
-import CustomizedTables from "./Table";
+import axios from "axios";
 import clsx from "clsx";
-import { deepPurple } from "@material-ui/core/colors";
 import { useStoreActions, useStoreState } from "easy-peasy";
+import React, { useContext, useEffect, useState } from "react";
+import shortid from "shortid";
+import { CheckoutContext } from "../../lib/context/CheckoutContext";
 import LinearBuffer from "../../utils/Process";
-
 import PaymentModal from "./PaymentModal";
+import CustomizedTables from "./Table";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -50,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: deepPurple[300],
     color: "#fff",
   },
+  discount: {
+    color: green[800],
+  },
 }));
 
 const StepTwo = () => {
@@ -61,12 +62,20 @@ const StepTwo = () => {
   }, []);
   const classes = useStyles();
 
-  const { setComponent, selectedAddress, setPaymentLink, setOpen } = useContext(
-    CheckoutContext
-  );
+  const {
+    setComponent,
+    selectedAddress,
+    setPaymentLink,
+    setOpen,
+    discount,
+    coupon,
+    couponApplied,
+  } = useContext(CheckoutContext);
   const address = selectedAddress;
 
-  const { cart, len, userDetails } = useStoreState((store) => store.vox);
+  const { cart, len, userDetails, referee } = useStoreState(
+    (store) => store.vox
+  );
   const { getOrder } = useStoreActions((store) => store.vox);
   const [isLoading, setLoading] = useState(false);
   const { lineItems } = cart;
@@ -81,16 +90,17 @@ const StepTwo = () => {
   };
   const sum = cartTotalCounter();
   const shippingFees = 85.0;
-  const discount = 0.0;
-  const tax = 0.0;
-  const total = shippingFees + sum + tax - discount;
-  const handleConfirmation = () => {
+  const subtotal = shippingFees + sum;
+  const total =
+    discount <= 0 ? subtotal : subtotal - (subtotal * discount) / 100;
+  const discountedPrice = subtotal - (subtotal - (subtotal * discount) / 100);
+  const handleConfirmation = async () => {
     setLoading(true);
     const description = "Payment for the purchase at Bask In Nature.in";
     const shortID = shortid();
     let line_items = [];
     const callbackurl = `${process.env.NEXT_PUBLIC_RAZORPAY_CALL_BACK_URL}`;
-    const callbackurlwithinvoice = callbackurl+"invoice="+shortID
+    const callbackurlwithinvoice = callbackurl + "invoice=" + shortID;
     lineItems.forEach((product) => {
       let varaint = product.variants
         .filter((o) => o.price === product.price.toString())
@@ -112,7 +122,7 @@ const StepTwo = () => {
       receipt: shortID,
       description,
       type: "link",
-      amount: (sum + shippingFees) * 100,
+      amount: total * 100,
       callback_url: callbackurlwithinvoice,
       callback_method: "get",
     };
@@ -124,12 +134,14 @@ const StepTwo = () => {
         setPaymentLink(data.short_url);
       })
       .then(() => setOpen(true));
+
     getOrder({
       invoice,
       shippingFees,
       line_items,
       selectedAddress,
       userDetails,
+      referee,
     });
   };
   return (
@@ -191,12 +203,18 @@ const StepTwo = () => {
                       ₹{shippingFees}
                     </ListItemSecondaryAction>
                   </ListItem>
-                  <ListItem>
-                    <ListItemText>
-                      <Typography variant="caption">Tax</Typography>
-                    </ListItemText>
-                    <ListItemSecondaryAction>₹0.00</ListItemSecondaryAction>
-                  </ListItem>
+                  {discount > 0 ? (
+                    <ListItem>
+                      <ListItemText>
+                        <Typography variant="caption">Discount</Typography>
+                      </ListItemText>
+                      <ListItemSecondaryAction className={classes.discount}>
+                        - ₹{discountedPrice}
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ) : (
+                    ""
+                  )}
                   <Divider />
                   <ListItem>
                     <ListItemText>

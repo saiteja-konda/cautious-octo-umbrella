@@ -12,6 +12,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Check from "@material-ui/icons/Check";
 import StepConnector from "@material-ui/core/StepConnector";
 import { CheckoutContext } from "../../lib/context/CheckoutContext";
+import { green } from "@material-ui/core/colors";
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -21,16 +22,18 @@ const QontoConnector = withStyles({
   },
   active: {
     "& $line": {
-      borderColor: "#784af4",
+      borderColor: green[800],
     },
   },
   completed: {
     "& $line": {
-      borderColor: "#784af4",
+      // borderColor: "#784af4",
+      borderColor: green[800],
     },
   },
   line: {
-    borderColor: "#eaeaf0",
+    // borderColor: "#eaeaf0",
+    borderColor: green[100],
     borderTopWidth: 3,
     borderRadius: 1,
   },
@@ -38,13 +41,15 @@ const QontoConnector = withStyles({
 
 const useQontoStepIconStyles = makeStyles({
   root: {
-    color: "#eaeaf0",
+    // color: "#eaeaf0",
+    color: green[100],
     display: "flex",
     height: 22,
     alignItems: "center",
   },
   active: {
-    color: "#784af4",
+    color: green[100],
+    // color: "#784af4",
   },
   circle: {
     width: 8,
@@ -53,7 +58,8 @@ const useQontoStepIconStyles = makeStyles({
     backgroundColor: "currentColor",
   },
   completed: {
-    color: "#784af4",
+    color: green[800],
+    // color: "#784af4",
     zIndex: 1,
     fontSize: 18,
   },
@@ -90,6 +96,8 @@ const Layout = ({ children, toolbar, heading, footer, hideSteps }) => {
         return "What is an ad group anyways?";
       case 2:
         return "This is the bit I really care about!";
+      case 3 :
+        return "Final Step"
       default:
         return "Unknown step";
     }
@@ -99,6 +107,7 @@ const Layout = ({ children, toolbar, heading, footer, hideSteps }) => {
       "Shipping Address and Details",
       "Review Order",
       "Confirmation and Payment",
+      "Order Summary"
     ];
   }
 

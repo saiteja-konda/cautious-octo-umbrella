@@ -1,8 +1,8 @@
-import { action, thunk, computed } from "easy-peasy";
 import axios from "axios";
-import { baseUrl, authUrl } from "../utils/urlConfig";
-import shortid from "shortid";
+import { action, computed, thunk } from "easy-peasy";
 import jwt_decode from "jwt-decode";
+import shortid from "shortid";
+import { authUrl, baseUrl } from "../utils/urlConfig";
 
 export const voxStore = {
   products: [],
@@ -25,22 +25,32 @@ export const voxStore = {
     orderDetails: {},
     paymentDetails: {},
   },
+  referee: {},
+  response:{},
   orders: [],
+
+
+
+
+  // Response 
+  setResponse:action((state, payload) =>{
+    state.response = payload
+  }),
+  getResponse: thunk(async(actions, payload) =>{
+    actions.setResponse(payload)
+  }),
 
   // Order
   getOrder: action((state, payload) => {
     state.order.orderDetails = payload;
   }),
-
-  // setPaymentDetails: action((state, payload) => {
-  //   state.order.paymentDetails = payload;
-  // }),
-  // getPaymentDetails: thunk(async (actions, payload) => {
-  //   actions.setPaymentDetails(payload);
-  // }),
-
-  // Token
-
+  getReferee: action((state, payload) => {
+    state.referee = payload;
+  }),
+  setReferee: thunk(async (actions, payload) => {
+    actions.getReferee(payload);
+  }),
+  
   setUserDetails: action((state, payload) => {
     const {
       username,

@@ -1,26 +1,43 @@
-import React, { useState, useEffect, useContet, useContext } from "react";
+import { Badge, Button, IconButton, makeStyles } from "@material-ui/core";
+import { green, grey } from "@material-ui/core/colors";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
+import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import jwt_decode from "jwt-decode";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarText,
+  NavbarToggler,
   NavItem,
   NavLink,
-  NavbarText,
-  Button,
 } from "reactstrap";
-import Link from "next/link";
-import { IconButton, Badge } from "@material-ui/core";
-import MenuOpenIcon from "@material-ui/icons/MenuOpen";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import { NavContext } from "../../pages/_app";
 import Cart from "../Cart/Cart";
 import Options from "./Options";
-import { useRouter } from "next/router";
-import { NavContext } from "../../pages/_app";
-import jwt_decode from "jwt-decode";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    textTransform: "none",
+    backgroundColor: green[800],
+    color: grey[200],
+    marginRight:"10px",
+    "&:hover": {
+      backgroundColor: green[300],
+      color: grey["800"],
+    },
+  },
+  button2: {
+    textTransform: "none",
+    color: grey[700],
+    backgroundColor: green[200],
+  },
+}));
 const NavBar = ({ shadow }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -35,6 +52,7 @@ const NavBar = ({ shadow }) => {
   const [userName, setUserName] = useState(false);
 
   const router = useRouter();
+  const classes = useStyles();
 
   const showCart = () => {
     if (!openCart) {
@@ -67,40 +85,42 @@ const NavBar = ({ shadow }) => {
     if (!user) {
       return (
         <>
-          <button
-            className="btn btn-sm btn-light mr-2"
+          <Button
+            size="small"
             onClick={() => router.push("/user/auth/login")}
           >
             Login
-          </button>
-          <button
-            className="btn btn-sm btn-light mr-2"
+          </Button>
+          <Button
+            size="small"
             onClick={() => router.push("/user/auth/signup")}
           >
             Signup
-          </button>
+          </Button>
         </>
       );
     } else {
       return (
         <>
           <Link href="/user/account">
-            <button className="btn btn-sm btn-dark mr-2">{userName}</button>
+            <Button size="small" className={classes.button}>
+              {userName}
+            </Button>
           </Link>
           <Link href="/">
-            <button
-              className="btn btn-sm btn-outline-secondary  mr-2"
+            <Button
+              size="small"
+              className={classes.button2}
               onClick={handleLogout}
             >
               Logout
-            </button>
+            </Button>
           </Link>
         </>
       );
     }
   };
   const RenderOptions = options();
-
   return (
     <div>
       <Navbar
@@ -111,7 +131,7 @@ const NavBar = ({ shadow }) => {
         style={{
           backgroundColor: "#ffffff",
           color: "#000000",
-          boxShadow: "2px 2px 30px #ede7f6",
+          boxShadow: `2px 2px 30px ${green[50]}`,
         }}
       >
         <NavbarBrand href="/">
@@ -169,7 +189,7 @@ const NavBar = ({ shadow }) => {
             onClick={showCart}
           >
             <Badge badgeContent={cartlen} color="error">
-              <LocalMallIcon style={{ color: "#2ab7ca" }} />
+              <LocalMallIcon style={{ color: green[800] }} />
             </Badge>
           </IconButton>
           {RenderOptions}

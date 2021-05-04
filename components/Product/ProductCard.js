@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-
-import excerpts from "excerpts";
-import { useStoreState, useStoreActions } from "easy-peasy";
+import { Button, makeStyles } from "@material-ui/core";
+import { green, grey, yellow } from "@material-ui/core/colors";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import Link from "next/link";
-
-import { ToastContainer, toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PillGroup from "./PillGroup";
-import { Button, makeStyles } from "@material-ui/core";
-import { lightGreen, lime, yellow, grey } from "@material-ui/core/colors";
 
 function ProductCard({ title, image, description, product }) {
   const { addToCart } = useStoreActions((state) => state.vox);
@@ -38,11 +35,12 @@ function ProductCard({ title, image, description, product }) {
       textTransform: "none",
       fontWeight: "Bolder",
       marginTop: "20px",
-      backgroundColor: yellow["A400"],
-      boxShadow: "2px 2px 15px #fff59d",
-      color: grey["800"],
+
+      backgroundColor: green[800],
+      // boxShadow: "2px 2px 15px #fff59d",
+      color: grey[200],
       "&:hover": {
-        backgroundColor: yellow["A700"],
+        backgroundColor: green[300],
         color: grey["800"],
       },
     },
@@ -70,7 +68,7 @@ function ProductCard({ title, image, description, product }) {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="card m-2" style={{ width: "100%", height: "340px" }}>
+      <div className="card m-2" style={{ width: "100%", minHeight: "340px" }}>
         <Link href={`/products/${product.id}`}>
           <img
             className=""
@@ -81,7 +79,7 @@ function ProductCard({ title, image, description, product }) {
           />
         </Link>
 
-        <div className="card-body">
+        <div className="card-body" >
           <Link href={`/products/${product.id}`}>
             <b style={{ cursor: "pointer" }} className="text-center m-0">
               {title}
@@ -117,6 +115,7 @@ function ProductCard({ title, image, description, product }) {
               )}
             </div>
           </div>
+          
           <b className=" text-center mr-0 ml-0 mb-0">
             ₹{selected === null ? ops.price : selected}
           </b>
